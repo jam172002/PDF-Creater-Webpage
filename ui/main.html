@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .confirmation {
+            display: none;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Generate PDF Report</h2>
+        <button id="generatePdfBtn"><i class="fas fa-file-pdf"></i> Generate PDF</button>
+        <div class="confirmation" id="confirmationMessage">
+            <strong>Confirmation:</strong> Are you sure you want to generate the PDF? You can review your inputs by clicking the "Previous" button.
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        document.getElementById("generatePdfBtn").addEventListener("click", async function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Show confirmation message
+            const confirmationMessage = document.getElementById("confirmationMessage");
+            confirmationMessage.style.display = "block";
+
+            // Confirmation dialog
+            const confirmation = confirm("Are you sure you want to generate the PDF? You can review your inputs by clicking the 'Previous' button.");
+            if (!confirmation) {
+                confirmationMessage.style.display = "none"; // Hide confirmation message if canceled
+                return; // Exit if the user cancels
+            }
+
+            
+        });
+
+      
+    </script>
+    <script src="Page_1.js"></script>
+    <script src="Page_2.js"></script>
+    <script src="Page_3.js"></script>
+    <script src="Page_4.js"></script>
+    <script src="Page_5.js"></script>
+    <script src="Page_6.js"></script>
+    <script src="Page_7.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valuation Report Generator Section 4</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Valuation Report Generator Section 4</h1>
+        <form id="valuationForm">          
+
+            <!-- Container 4 -->            
+            <div class="form-section" id="section4">
+                <h4>B) Extra Items</h4>
+                <!-- Extra Items Section -->
+                <div class="form-group">
+                    <label>Portico<span class="required">*</span></label>
+                    <input type="text" id="porticoStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Ornamental Front Door Status<span class="required">*</span></label>
+                    <input type="text" id="frontDoorStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Sit out / Verandah with steel grills <span class="required">*</span></label>
+                    <input type="text" id="verandahStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Bore well / Overhead Tank / Sump / Solar <span class="required">*</span></label>
+                    <input type="text" id="boreWellStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Extra Steel / Collapsible Gates <span class="required">*</span></label>
+                    <input type="text" id="gatesStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Extra Items Total (Rs)<span class="required">*</span></label>
+                    <input type="number" id="extraItemsTotal" required >
+                </div>
+
+                <h4> C) Amenities</h4>
+                <!-- Amenities Section -->
+                <div class="form-group">
+                    <label>Wardrobes Status<span class="required">*</span></label>
+                    <input type="text" id="wardrobesStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Glazed Tiles Status<span class="required">*</span></label>
+                    <input type="text" id="glazedTilesStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Bath Tubs Status<span class="required">*</span></label>
+                    <input type="text" id="bathTubsStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Marble Flooring Status<span class="required">*</span></label>
+                    <input type="text" id="marbleFlooringStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Interior Decorations Status<span class="required">*</span></label>
+                    <input type="text" id="interiorStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Architectural Works Status<span class="required">*</span></label>
+                    <input type="text" id="architecturalStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Paneling Works Status<span class="required">*</span></label>
+                    <input type="text" id="panelingStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Aluminium Works Status<span class="required">*</span></label>
+                    <input type="text" id="aluminiumStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Hand Rails Status<span class="required">*</span></label>
+                    <input type="text" id="handRailsStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>False Ceiling Status<span class="required">*</span></label>
+                    <input type="text" id="falseCeilingStatus" required>
+                </div>
+                <div class="form-group">
+                    <label>Amenities Total (Rs)<span class="required">*</span></label>
+                    <input type="number" id="amenitiesTotal" required readonly>
+                </div>
+
+                <!-- MISCELLANEOUS Section -->
+                <h4> D) MISCELLANEOUS  </h4>
+                <div class="form-group">
+                    <label>Separate toilet room  <span class="required">*</span></label>
+                    <input type="number" id="separateToilet" required>
+                </div>
+                <div class="form-group">
+                    <label>Separate lumber room  <span class="required">*</span></label>
+                    <input type="number" id="separateLumber" required>
+                </div>
+                <div class="form-group">
+                    <label>Miscellaneous Total <span class="required">*</span></label>
+                    <input type="number" id="miscellaneousTotal" required readonly>
+                </div>  
+
+                <!-- SERVICES Section -->
+                <h4> E) SERVICES   </h4>
+                <div class="form-group">
+                    <label>Water supply arrangements <span class="required">*</span></label>
+                    <input type="number" id="waterSupplyArrangement" required>
+                </div>
+                <div class="form-group">
+                    <label>Drainage arrangements <span class="required">*</span></label>
+                    <input type="number" id="drainageArrangements" required>
+                </div>
+                <div class="form-group">
+                    <label>Compound wall / Gate <span class="required">*</span></label>
+                    <input type="number" id="compoundWall" required>
+                </div>
+                <div class="form-group">
+                    <label>C.B. Deposits, Fittings, Power etc., <span class="required">*</span></label>
+                    <input type="number" id="depositsFittings" required>
+                </div>
+                <div class="form-group">
+                    <label>Pavement <span class="required">*</span></label>
+                    <input type="number" id="pavement" required>
+                </div>
+                <div class="form-group">
+                    <label>Services Total<span class="required">*</span></label>
+                    <input type="number" id="servicesTotal" required readonly>
+                </div>
+
+                <!-- Grand Total Section -->
+                <h4>Grand Total</h4>
+                <div class="form-group">
+                    <label>Grand Total (Rs)<span class="required">*</span></label>
+                    <input type="number" id="grandTotal" required readonly>
+                </div>              
+
+                <button type="button" onclick="prevSection(4)">Previous</button>
+                <button type="button" onclick="nextSection(4)">Next</button> 
+                <button id="generatePdfBtn" type="submit" >Generate Pdf</button>
+            </div>
+
+        </div>
+        </form>
+    </div>
+
+    <script>
+        function nextSection(currentSection) {
+            // Validate current section
+            const currentDiv = document.getElementById(`section${currentSection}`);
+            const requiredFields = currentDiv.querySelectorAll('[required]');
+            let isValid = true;
+            let missingFields = [];
+
+            // Check all required fields
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                    // Get the field label
+                    const label = field.previousElementSibling.textContent.replace('*', '').trim();
+                    missingFields.push(label);
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in the following fields:\n\n' + missingFields.join('\n'));
+                return;
+            }
+
+            // If validation passes, proceed to next section             
+             window.location.href = 'section5.html';
+        }
+
+        function prevSection(currentSection) {
+            // Hide current section and show previous section
+            window.location.href = 'section3.html';
+        }
+
+
+    </script>
+
+    <script src="page_4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+
+    <script>
+// Function to calculate totals
+        function calculateTotals() {
+            // Extra Items
+            const extraItems = [
+                document.getElementById('porticoStatus').value,
+                document.getElementById('frontDoorStatus').value,
+                document.getElementById('verandahStatus').value,
+                document.getElementById('boreWellStatus').value,
+                document.getElementById('gatesStatus').value
+            ];
+
+            const extraItemsTotal = extraItems.reduce((sum, item) => {
+                const value = parseFloat(item); // Convert to number
+                return !isNaN(value) ? sum + value : sum; // Only add if it's a valid number
+            }, 0);
+            document.getElementById('extraItemsTotal').value = extraItemsTotal;
+
+            // Amenities
+            const amenities = [
+                document.getElementById('wardrobesStatus').value,
+                document.getElementById('glazedTilesStatus').value,
+                document.getElementById('bathTubsStatus').value,
+                document.getElementById('marbleFlooringStatus').value,
+                document.getElementById('interiorStatus').value,
+                document.getElementById('architecturalStatus').value,
+                document.getElementById('panelingStatus').value,
+                document.getElementById('aluminiumStatus').value,
+                document.getElementById('handRailsStatus').value,
+                document.getElementById('falseCeilingStatus').value
+            ];
+
+            const amenitiesTotal = amenities.reduce((sum, item) => {
+                const value = parseFloat(item); // Convert to number
+                return !isNaN(value) ? sum + value : sum; // Only add if it's a valid number
+            }, 0);
+            document.getElementById('amenitiesTotal').value = amenitiesTotal;
+
+            // Miscellaneous
+            const miscellaneous = [
+                document.getElementById('separateToilet').value,
+                document.getElementById('separateLumber').value
+            ];
+
+            const miscellaneousTotal = miscellaneous.reduce((sum, item) => {
+                const value = parseFloat(item); // Convert to number
+                return !isNaN(value) ? sum + value : sum; // Only add if it's a valid number
+            }, 0);
+            document.getElementById('miscellaneousTotal').value = miscellaneousTotal;
+
+            // Services
+            const services = [
+                document.getElementById('waterSupplyArrangement').value,
+                document.getElementById('drainageArrangements').value,
+                document.getElementById('compoundWall').value,
+                document.getElementById('depositsFittings').value,
+                document.getElementById('pavement').value
+            ];
+
+            const servicesTotal = services.reduce((sum, item) => {
+                const value = parseFloat(item); // Convert to number
+                return !isNaN(value) ? sum + value : sum; // Only add if it's a valid number
+            }, 0);
+            document.getElementById('servicesTotal').value = servicesTotal;
+
+            // Grand Total
+            const grandTotal = extraItemsTotal + amenitiesTotal + miscellaneousTotal + servicesTotal;
+            document.getElementById('grandTotal').value = grandTotal;
+
+            // Save to local storage
+            const totals = {
+                extraItemsTotal,
+                amenitiesTotal,
+                miscellaneousTotal,
+                servicesTotal,
+                grandTotal
+            };
+            localStorage.setItem('totals', JSON.stringify(totals));
+        }
+
+        const inputFields = [
+            'porticoStatus', 'frontDoorStatus', 'verandahStatus', 'boreWellStatus', 'gatesStatus',
+            'wardrobesStatus', 'glazedTilesStatus', 'bathTubsStatus', 'marbleFlooringStatus',
+            'interiorStatus', 'architecturalStatus', 'panelingStatus', 'aluminiumStatus',
+            'handRailsStatus', 'falseCeilingStatus', 'separateToilet', 'separateLumber',
+            'waterSupplyArrangement', 'drainageArrangements', 'compoundWall', 'depositsFittings', 'pavement'
+        ];
+
+        inputFields.forEach(id => {
+            document.getElementById(id).addEventListener('input', calculateTotals);
+        });
+
+        // Form submission handler
+        document.getElementById('valuationForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Validate all required fields
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const Container_4 = {                
+                // Extra Items
+                porticoStatus: document.getElementById('porticoStatus').value,
+                frontDoorStatus: document.getElementById('frontDoorStatus').value,
+                verandahStatus: document.getElementById('verandahStatus').value,
+                boreWellStatus: document.getElementById('boreWellStatus').value,
+                gatesStatus: document.getElementById('gatesStatus').value,
+                extraItemsTotal: document.getElementById('extraItemsTotal').value,
+
+                // Amenities
+                wardrobesStatus: document.getElementById('wardrobesStatus').value,
+                glazedTilesStatus: document.getElementById('glazedTilesStatus').value,
+                bathTubsStatus: document.getElementById('bathTubsStatus').value,
+                marbleFlooringStatus: document.getElementById('marbleFlooringStatus').value,
+                interiorStatus: document.getElementById('interiorStatus').value,
+                architecturalStatus: document.getElementById('architecturalStatus').value,
+                panelingStatus: document.getElementById('panelingStatus').value,
+                aluminiumStatus: document.getElementById('aluminiumStatus').value,
+                handRailsStatus: document.getElementById('handRailsStatus').value,
+                falseCeilingStatus: document.getElementById('falseCeilingStatus').value,
+                amenitiesTotal: document.getElementById('amenitiesTotal').value,
+
+                // Miscellaneous
+                separateToilet: document.getElementById('separateToilet').value,
+                separateLumber: document.getElementById('separateLumber').value,
+                miscellaneousTotal: document.getElementById('miscellaneousTotal').value,
+
+                // Services
+                waterSupplyArrangement: document.getElementById('waterSupplyArrangement').value,
+                drainageArrangements: document.getElementById('drainageArrangements').value,
+                compoundWall: document.getElementById('compoundWall').value,
+                depositsFittings: document.getElementById('depositsFittings').value,
+                pavement: document.getElementById('pavement').value,
+                servicesTotal: document.getElementById('servicesTotal').value,
+
+                // Grand Total
+                grandTotal: document.getElementById('grandTotal').value
+            };
+
+            localStorage.setItem('Container_4', JSON.stringify(Container_4));
+            console.log("Captured Data:", Container_4);
+        });
+    </script>
+
+    <script>
+       document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("generatePdfBtn").addEventListener("click", async function() {
+        const Container_4 = JSON.parse(localStorage.getItem('Container_4'));
+        console.log("Container_4 Data:", Container_4); // Check if data is available
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        try {
+            await Container4(doc); // Ensure this function is defined and returns a promise
+            addFooter(doc);
+            doc.save("generated_report_Page4.pdf");
+        } catch (error) {
+            console.error("Error generating PDF:", error);
+        }
+    });
+});
+
+
+        function addFooter(doc) {
+        const leftMargin = 25.7;  
+        const rightMargin = 17.5; 
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        
+        // Add horizontal line at the bottom
+        const footerY = pageHeight - 28.7 ;
+        doc.setLineWidth(0.1);
+        //doc.line(leftMargin, footerY, pageWidth - rightMargin, footerY);    
+        
+        // Page number on right
+        doc.text('Page 4', pageWidth - rightMargin - 40, footerY);
+        doc.text('Ref No.', pageWidth - rightMargin - 40, footerY + 3);
+        // Reference number 
+        doc.text('TP/JCB/K-BKR/R-09/12/2024-25', pageWidth - rightMargin - 40, footerY + 6);
+    }
+
+    </script>
+
+</body>
+
+</html>

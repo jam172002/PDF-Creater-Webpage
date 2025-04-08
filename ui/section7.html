@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valuation Report Generator Section 6</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        #previewContainer img,
+        #glPreviewContainer img {
+            max-width: 100%; /* Responsive image */
+            height: auto; /* Maintain aspect ratio */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Valuation Report Generator Section 7</h1>
+        <form id="valuationForm">      
+            <div class="form-section" id="section7">
+            <div class="form-group">
+                <label>Upload Image of Property 1<span class="required">*</span></label>
+                <input type="file" id="image1" accept="image/*" required>
+                <div>
+                    <label for="image1">Width (px):</label>
+                    <input type="number" id="image1Width" placeholder="Suggested: 100" value="100">
+                    <label for="image1">Height (px):</label>
+                    <input type="number" id="image1Height" placeholder="Suggested: 60" value="60">
+                </div>
+                <div id="previewContainer1"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Upload Image of Property 2<span class="required">*</span></label>
+                <input type="file" id="image2" accept="image/*" required>
+                <div>
+                    <label for="image2">Width (px):</label>
+                    <input type="number" id="image2Width" placeholder="Suggested: 100" value="100">
+                    <label for="image2">Height (px):</label>
+                    <input type="number" id="image2Height" placeholder="Suggested: 60" value="60">
+                </div>
+                <div id="previewContainer2"></div>
+            </div>
+            <div class="form-group">
+                <label>Upload Image of Property 3<span class="required">*</span></label>
+                <input type="file" id="image3" accept="image/*" required>
+                <div>
+                    <label for="image3">Width (px):</label>
+                    <input type="number" id="image3Width" placeholder="Suggested: 100" value="100">
+                    <label for="image3">Height (px):</label>
+                    <input type="number" id="image3Height" placeholder="Suggested: 60" value="60">
+                </div>
+                <div id="previewContainer3"></div>
+            </div>
+            <div class="form-group">
+                <label>Upload Image of Property 4<span class="required">*</span></label>
+                <input type="file" id="image4" accept="image/*" required>
+                <div>
+                    <label for="image4">Width (px):</label>
+                    <input type="number" id="image4Width" placeholder="Suggested: 100" value="100">
+                    <label for="image4">Height (px):</label>
+                    <input type="number" id="image4Height" placeholder="Suggested: 60" value="60">
+                </div>
+                <div id="previewContainer4"></div>
+            </div>
+            <div class="form-group">
+                <label>Upload Image of Property 5<span class="required">*</span></label>
+                <input type="file" id="image5" accept="image/*" required>
+                <div>
+                    <label for="image5">Width (px):</label>
+                    <input type="number" id="image5Width" placeholder="Suggested: 100" value="100">
+                    <label for="image5">Height (px):</label>
+                    <input type="number" id="image5Height" placeholder="Suggested: 60" value="60">
+                </div>
+                <div id="previewContainer5"></div>
+            </div>
+            <div class="form-group">
+                <label>Upload Image of Property 6<span class="required">*</span></label>
+                <input type="file" id="image6" accept="image/*" required>
+                <div>
+                    <label for="image6">Width (px):</label>
+                    <input type="number" id="image6Width" placeholder="Suggested: 100" value="100">
+                    <label for="image6">Height (px):</label>
+                    <input type="number" id="image6Height" placeholder="Suggested: 60" value="60">
+                </div>
+                <div id="previewContainer6"></div>
+            </div>
+            <div class="form-group">
+                <label>Upload Image of Property 7<span class="required">*</span></label>
+                <input type="file" id="image7" accept="image/*" required>
+                <div>
+                    <label for="image7">Width (px):</label>
+                    <input type="number" id="image7Width" placeholder="Suggested: 100" value="100">
+                    <label for="image7">Height (px):</label>
+                    <input type="number" id="image7Height" placeholder="Suggested: 60" value="60">
+                </div>
+                <div id="previewContainer7"></div>
+            </div>
+            <div class="form-group">
+                <label>Upload Image of Property 8<span class="required">*</span></label>
+                <input type="file" id="image8" accept="image/*" required>
+                <div>
+                    <label for="image8">Width (px):</label>
+                    <input type="number" id="image8Width" placeholder="Suggested: 100" value="100">
+                    <label for="image8">Height (px):</label>
+                    <input type="number" id="image8Height" placeholder="Suggested: 60" value="60">
+                </div>
+                <div id="previewContainer8"></div>
+            </div>
+            <div class="form-group">
+                <label>Upload Image of Property 9<span class="required">*</span></label>
+                <input type="file" id="image9" accept="image/*" required>
+                <div>
+                    <label for="image9">Width (px):</label>
+                    <input type="number" id="image9Width" placeholder="Suggested: 100" value="100">
+                    <label for="image9">Height (px):</label>
+                    <input type="number" id="image9Height" placeholder="Suggested: 60" value="60">
+                </div>
+                <div id="previewContainer9"></div>
+            </div>                      
+            <button type="button" onclick="nextSection(7)">Next</button> 
+            <button type="button" onclick="prevSection(7)">Previous</button>
+            <button id="generatePdfBtn" type="submit">Generate Pdf</button>
+
+        </div>
+        </form>
+    </div>
+
+    <script>
+        function nextSection(currentSection) {
+            // Validate current section
+            const currentDiv = document.getElementById(`section${currentSection}`);
+            const requiredFields = currentDiv.querySelectorAll('[required]');
+            let isValid = true;
+            let missingFields = [];
+
+            // Check all required fields
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                    // Get the field label
+                    const label = field.previousElementSibling.textContent.replace('*', '').trim();
+                    missingFields.push(label);
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in the following fields:\n\n' + missingFields.join('\n'));
+                return;
+            }
+
+            // If validation passes, proceed to next section             
+             window.location.href = 'section8.html';
+        }
+          function prevSection(currentSection) {
+            // Hide current section and show previous section
+            window.location.href = 'section6.html';
+        }
+
+        // Array to hold image data
+        const imagesData = [];
+    
+       // Function to preview the uploaded image and store its data
+        function previewImage(input, previewContainerId, widthInputId, heightInputId) {
+            const file = input.files[0];
+            const previewContainer = document.getElementById(previewContainerId);
+            const widthInput = document.getElementById(widthInputId);
+            const heightInput = document.getElementById(heightInputId);
+
+            if (file) {
+                // Clear previously stored images data in local storage
+                localStorage.removeItem('imagesData');
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Show image preview
+                    previewContainer.innerHTML = `<img src="${e.target.result}" alt="Image Preview" style="width: ${widthInput.value}px; height: ${heightInput.value}px;">`;
+
+                    // Store image data in the array
+                    const imageData = {
+                        src: e.target.result, // Base64 image data
+                        width: parseInt(widthInput.value), // Width from input
+                        height: parseInt(heightInput.value) // Height from input
+                    };
+                    imagesData.push(imageData); // Add to the array
+
+                    // Save updated imagesData to local storage
+                    localStorage.setItem('imagesData', JSON.stringify(imagesData));
+                    console.log("Captured Data:", imagesData);
+                };
+                reader.readAsDataURL(file); // Read the file as a data URL
+            } else {
+                previewContainer.innerHTML = ''; // Clear preview if no file is selected
+            }
+        }
+    
+        localStorage.setItem('imagesData', JSON.stringify(imagesData));
+            console.log("Captured Data:", imagesData);
+        // Function to set up event listeners for image uploads
+        function setupImagePreview() {
+            const imageInputs = [
+                { id: 'image1', previewContainer: 'previewContainer1', widthInput: 'image1Width', heightInput: 'image1Height' },
+                { id: 'image2', previewContainer: 'previewContainer2', widthInput: 'image2Width', heightInput: 'image2Height' },
+                { id: 'image3', previewContainer: 'previewContainer3', widthInput: 'image3Width', heightInput: 'image3Height' },
+                { id: 'image4', previewContainer: 'previewContainer4', widthInput: 'image4Width', heightInput: 'image4Height' },
+                { id: 'image5', previewContainer: 'previewContainer5', widthInput: 'image5Width', heightInput: 'image5Height' },
+                { id: 'image6', previewContainer: 'previewContainer6', widthInput: 'image6Width', heightInput: 'image6Height' },
+                { id: 'image7', previewContainer: 'previewContainer7', widthInput: 'image7Width', heightInput: 'image7Height' },
+                { id: 'image8', previewContainer: 'previewContainer8', widthInput: 'image8Width', heightInput: 'image8Height' },
+                { id: 'image9', previewContainer: 'previewContainer9', widthInput: 'image9Width', heightInput: 'image9Height' },
+            ];
+    
+            imageInputs.forEach(input => {
+                document.getElementById(input.id).addEventListener('change', function() {
+                    previewImage(this, input.previewContainer, input.widthInput, input.heightInput);
+                });
+            });
+        }
+    
+        // Call the setup function on page load
+        setupImagePreview();
+    
+        // PDF generation
+        document.getElementById("generatePdfBtn").addEventListener("click", async function(event) {
+            event.preventDefault(); // Prevent form submission
+    
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+    
+            try {
+                await Container7(doc, imagesData); // Pass the imagesData array
+                addFooter(doc);
+                doc.save("generated_report_Page7.pdf");
+            } catch (error) {
+                console.error("Error generating PDF:", error);
+            }
+        });
+    
+        function addFooter(doc) {
+            const leftMargin = 25.7;  
+            const rightMargin = 17.5; 
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            
+            // Add horizontal line at the bottom
+            const footerY = pageHeight - 28.7;
+            doc.setLineWidth(0.1);
+            doc.setFont('helvetica', 'normal');
+            // Page number on right
+            doc.text('Page 6', pageWidth - rightMargin - 55, footerY);
+            doc.text('Ref No.', pageWidth - rightMargin - 55, footerY + 4);
+            // Reference number 
+            doc.text('TP/JCB/K-BKR/R-09/12/2024-25', pageWidth - rightMargin - 55, footerY + 8);
+        }
+    </script>
+
+    <script src="page_7.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+</body>
+
+</html>

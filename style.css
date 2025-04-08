@@ -1,0 +1,187 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="tel"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.required {
+    color: red;
+    margin-left: 3px;
+}
+
+.boundaries-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.accommodations-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4169E1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #3151b2;
+}
+
+.building-value-table {            
+    gap: 20px;
+    width: 100%;            
+    align-items: center;
+}
+
+.building-value-table th,
+.building-value-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.building-value-table th {
+    background-color: #f4f4f4;
+}
+
+.add-row-btn {
+    margin-bottom: 20px;
+    background-color: #4CAF50;
+}
+
+.delete-row-btn {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+.row {
+    display: flex;
+    gap: 10px; /* Spacing between inputs */
+    flex-wrap: nowrap; /* Prevents wrapping */
+    align-items: center;
+}
+
+.form-group {
+    flex: 1; /* Makes all inputs take equal space */
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-section button {
+    width: auto;
+    margin-right: 10px;
+    padding: 10px 20px;
+}
+
+.form-section button[type="submit"] {
+    width: auto;
+}
+
+/* Style for the buttons container */
+.form-section {
+    margin-bottom: 20px;
+}
+
+.total-row {
+    display: flex; /* Use flexbox for equal width distribution */
+    justify-content: space-between; /* Space out the items evenly */
+    align-items: center; /* Center items vertically */
+    margin-top: 20px; /* Add some space above the total row */
+    padding: 10px; /* Add padding for better spacing */
+    gap: 10px;
+    border: 1px solid #ddd; /* Optional: Add a border around the total row */
+    background-color: #f9f9f9; /* Optional: Light background color for visibility */
+}
+
+#previewContainer img {
+    width: 1000px; /* Adjust the width as needed */
+    height: 1000px;
+    margin: 10px;
+}
+
+.document-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.document-column {
+    flex: 1;
+    margin-right: 10px;
+}
+.document-column:last-child {
+    margin-right: 0;
+}

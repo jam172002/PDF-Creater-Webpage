@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valuation Report Generator Section 5</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Valuation Report Generator Section 5</h1>
+        <form id="valuationForm">          
+
+            <!-- Container 5 -->
+        <div class="form-section" id="section5">
+            <h4>TOTAL ABSTRACT OF THE ENTIRE PROPERTY</h4>
+            <h4>I- MARKET VALUE OF THE PROPERTY</h4>
+            <!-- I- MARKET VALUE OF THE PROPERTY -->
+            <div class="form-group">
+                <label>MARKET VALUE OF LAND (Rs.)<span class="required">*</span></label>
+                <input type="text" id="landValue" required readonly>
+            </div>
+            <div class="form-group">
+                <label>MARKET VALUE OF BUILDING<span class="required">*</span></label>
+                <input type="text" id="buildingValue" required readonly>
+            </div>
+            <div class="form-group">
+                <label>MARKET VALUE OF EXTRA ITEM<span class="required">*</span></label>
+                <input type="text" id="extraItemsValue" required readonly>
+            </div>
+            <div class="form-group">
+                <label>MARKET VALUE OF AMENITIES<span class="required">*</span></label>
+                <input type="text" id="amenitiesValue" required readonly>
+            </div>
+            <div class="form-group">
+                <label>MARKET VALUE OF MISCELLANEOUS<span class="required">*</span></label>
+                <input type="text" id="miscellaneousValue" required readonly>
+            </div>
+            <div class="form-group">
+                <label>MARKET VALUE OF SERVICES<span class="required">*</span></label>
+                <input type="number" id="servicesValue" required readonly>
+            </div>
+            <div class="form-group">
+                <label>TOTAL MARKET VALUE<span class="required">*</span></label>
+                <input type="number" id="totalMarketValue" required readonly>
+            </div>
+            <div class="form-group">
+                <label>SAY<span class="required">*</span></label>
+                <input type="number" id="sayMarketValue" required>
+            </div>
+            <div class="form-group">
+                <label>REALISABLE SALE VALUE<span class="required">*</span></label>
+                <input type="number" id="realisableSaleValue" required>
+            </div>
+            <div class="form-group">
+                <label>FORCED SALE VALUE<span class="required">*</span></label>
+                <input type="number" id="forcedSaleValue" required>
+            </div>
+
+            <h4> II GUIDANCE VALUE OF THE PROPERTY</h4>
+            <!--  II GUIDANCE VALUE OF THE PROPERTY -->
+            <div class="form-group">
+                <label>GUIDANCE VALUE OF LAND<span class="required">*</span></label>
+                <input type="text" id="gLandValue" required>
+            </div>
+            <div class="form-group">
+                <label>GUIDANCE VALUE OF BUILDING<span class="required">*</span></label>
+                <input type="text" id="gBuildingValue" required>
+            </div>
+            <div class="form-group">
+                <label> TOTAL GUIDANCE VALUE<span class="required">*</span></label>
+                <input type="text" id="totalGuidanceValue" required readonly>
+            </div>
+            <div class="form-group">
+                <label>SAY GUIDANCE VALUE<span class="required">*</span></label>
+                <input type="text" id="sayGuidanceValue" required>
+            </div>       
+            
+            <h4>VALUATION CERTIFICATE</h4>
+            <div class="form-group">                
+                <textarea id="valuationCertificate" name="valuationCertificate" rows="4" cols="50">As a result of my appraisal and analysis, it is my considered opinion that the present fair market value of the above property in the prevailing condition with aforesaid specifications is Rs.3,73,00,000/- RUPEES THREE CRORE SEVENTY THREE LAKHS ONLY. The Realizable value of the property is Rs.3,35,00,000/- RUPEES THREE CRORE THIRTY FIVE  LAKHS ONLY and the Distress / Forced Sale value is Rs.2,90,00,000/-  RUPEES TWO CRORE NINTY LAKHS ONLY.</textarea><br>
+            </div>
+            
+            <h4>Declaration</h4>
+            <div class="form-group">                
+                <textarea id="declaration" name="valuationCertificate" rows="1" cols="50">I hereby declare that</textarea><br>
+            </div>
+
+            <div class="form-group">     
+                <label>Declaration Line 1<span class="required">*</span></label>           
+                <textarea id="declaration1" name="valuationCertificate" rows="1" cols="50">i) The information provided is true and correct to the best of my knowledge and belief.</textarea><br>
+            </div>
+            <div class="form-group">     
+                <label>Declaration Line 2<span class="required">*</span></label>           
+                <textarea id="declaration2" name="valuationCertificate" rows="1" cols="50">ii) The analysis and conclusion are limited by the reported assumptions and conditions.</textarea><br>
+            </div>
+            <div class="form-group">     
+                <label>Declaration Line 3<span class="required">*</span></label>           
+                <textarea id="declaration3" name="valuationCertificate" rows="1" cols="50">iii) I have read the Handbook on policy, Standard and Procedures for real Estate valuation by banks and HFIs in India, 2011, issued by IBA and NHB, fully understood the provisions of the same and followed the provisions of the same to the best of my ability and this report is in conformity to the standards of Reporting enshrined in the above Handbook.</textarea><br>
+            </div>
+            <div class="form-group">     
+                <label>Declaration Line 4<span class="required">*</span></label>           
+                <textarea id="declaration4" name="valuationCertificate" rows="1" cols="50">iv) I have no direct or indirect interest in the above property valued.</textarea><br>
+            </div>
+            <div class="form-group">     
+                <label>Declaration Line 5<span class="required">*</span></label>           
+                <textarea id="declaration5" name="valuationCertificate" rows="1" cols="50">v) The Property was inspected by me on 03/12/2024 along with the Owner.</textarea><br>
+            </div>
+            <div class="form-group">     
+                <label>Declaration Line 6<span class="required">*</span></label>           
+                <textarea id="declaration6" name="valuationCertificate" rows="1" cols="50"> vi) I am a registered valuer under section 34AB of Wealth tax act, 1957, CAT-I/Reg.No.02/PCIT-I/CCIT/BNG-1/2023-24 for valuing property. The valuation is based on the information provided by the owner and the documents made available to me.</textarea><br>
+            </div>
+            <div class="form-group">     
+                <label>Declaration Line 7<span class="required">*</span></label>           
+                <textarea id="declaration7" name="valuationCertificate" rows="1" cols="50"> vii) The valuation made with reference to the photocopies given only irrespective of the legal opinion.</textarea><br>
+            </div>
+            <div class="form-group">     
+                <label>Declaration Line 8<span class="required">*</span></label>           
+                <textarea id="declaration8" name="valuationCertificate" rows="1" cols="50">viii) The validity of the report is only for 3 months and is to be used purpose intended for and not for any other purpose </textarea><br>
+            </div>
+            <button type="button" onclick="prevSection(5)">Previous</button>
+            <button type="button" onclick="nextSection(5)">Next</button> 
+            <button id="generatePdfBtn" type="submit">Generate Pdf</button>
+
+        </div>
+        </form>
+    </div>
+
+    <script>
+        function nextSection(currentSection) {
+            // Validate current section
+            const currentDiv = document.getElementById(`section${currentSection}`);
+            const requiredFields = currentDiv.querySelectorAll('[required]');
+            let isValid = true;
+            let missingFields = [];
+
+            // Check all required fields
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                    // Get the field label
+                    const label = field.previousElementSibling.textContent.replace('*', '').trim();
+                    missingFields.push(label);
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in the following fields:\n\n' + missingFields.join('\n'));
+                return;
+            }
+
+            // If validation passes, proceed to next section             
+             window.location.href = 'section6.html';
+        }
+
+        function prevSection(currentSection) {
+            // Hide current section and show previous section
+            window.location.href = 'section4.html';
+        }
+
+        // Function to calculate total market value and guidance values
+        function calculateValues() {
+            const Container_4 = JSON.parse(localStorage.getItem('Container_4'));
+            const Container_3 = JSON.parse(localStorage.getItem('Container_3'));
+
+            console.log("Container_4:", Container_4);
+            console.log("Container_3:", Container_3);
+            // Retrieve values from Container_4
+            const landValue = parseFloat(Container_3.landValue) || 0;
+            const buildingValue = parseFloat(Container_3.buildingValue) || 0;
+            const extraItemsValue = parseFloat(Container_4.extraItemsTotal) || 0;
+            const amenitiesValue = parseFloat(Container_4.amenitiesTotal) || 0;
+            const miscellaneousValue = parseFloat(Container_4.miscellaneousTotal) || 0;
+            const servicesValue = parseFloat(Container_4.servicesTotal) || 0;
+
+            // Calculate total market value
+            const totalMarketValue = landValue + buildingValue + extraItemsValue + amenitiesValue + miscellaneousValue + servicesValue;
+
+            // Set the total market value in the UI
+            document.getElementById('totalMarketValue').value = totalMarketValue
+             // Set the total market value in the UI
+             document.getElementById('totalMarketValue').value = totalMarketValue.toFixed(2);
+
+            // Set the SAY MARKET VALUE, REALISABLE SALE VALUE, and FORCED SALE VALUE to the same total market value
+            document.getElementById('sayMarketValue').value = totalMarketValue.toFixed(2);
+            document.getElementById('realisableSaleValue').value = totalMarketValue.toFixed(2);
+            document.getElementById('forcedSaleValue').value = totalMarketValue.toFixed(2);
+            }
+
+            // Function to calculate total guidance value
+            function calculateGuidanceValues() {
+            const gLandValue = parseFloat(document.getElementById('gLandValue').value) || 0;
+            const gBuildingValue = parseFloat(document.getElementById('gBuildingValue').value) || 0;
+
+            // Calculate total guidance value
+            const totalGuidanceValue = gLandValue + gBuildingValue;
+
+            // Set the total guidance value in the UI
+            document.getElementById('totalGuidanceValue').value = totalGuidanceValue.toFixed(2);
+            document.getElementById('sayGuidanceValue').value = totalGuidanceValue.toFixed(2);
+            }
+
+            // Event listeners to calculate values when the page loads and when guidance values are updated
+            window.onload = function() {
+                const Container_4 = JSON.parse(localStorage.getItem('Container_4')) || {};
+                const Container_3 = JSON.parse(localStorage.getItem('Container_3')) || {};
+
+                // Set values in the form fields
+                document.getElementById('landValue').value = Container_3.landValue || '';
+                document.getElementById('buildingValue').value = Container_3.buildingValue || '';
+                document.getElementById('extraItemsValue').value = Container_4.extraItemsTotal || '';
+                document.getElementById('amenitiesValue').value = Container_4.amenitiesTotal || '';
+                document.getElementById('miscellaneousValue').value = Container_4.miscellaneousTotal || '';
+                document.getElementById('servicesValue').value = Container_4.servicesTotal || '';
+                
+                // Call the function to calculate total market value
+                calculateValues();
+            };
+
+            // Add event listeners to the guidance value inputs
+            document.getElementById('gLandValue').addEventListener('input', calculateGuidanceValues);
+            document.getElementById('gBuildingValue').addEventListener('input', calculateGuidanceValues);
+            </script>
+
+    <script>
+        // Function to validate and store data
+        document.getElementById('valuationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Validate all required fields
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const Container_5 = {                
+                landValue: document.getElementById('landValue').value,
+                buildingValue: document.getElementById('buildingValue').value,
+                extraItemsValue: document.getElementById('extraItemsValue').value,
+                amenitiesValue: document.getElementById('amenitiesValue').value,
+                miscellaneousValue: document.getElementById('miscellaneousValue').value,
+                servicesValue: document.getElementById('servicesValue').value,
+                totalMarketValue: document.getElementById('totalMarketValue').value,
+                sayMarketValue: document.getElementById('sayMarketValue').value,
+                realisableSaleValue: document.getElementById('realisableSaleValue').value,
+                forcedSaleValue: document.getElementById('forcedSaleValue').value,
+                gLandValue: document.getElementById('gLandValue').value,
+                gBuildingValue: document.getElementById('gBuildingValue').value,
+                totalGuidanceValue: document.getElementById('totalGuidanceValue').value,
+                sayGuidanceValue: document.getElementById('sayGuidanceValue').value,
+                valuationCertificate: document.getElementById('valuationCertificate').value,
+                declaration: document.getElementById('declaration').value,
+                declaration1: document.getElementById('declaration1').value,
+                declaration2: document.getElementById('declaration2').value,
+                declaration3: document.getElementById('declaration3').value,
+                declaration4: document.getElementById('declaration4').value,
+                declaration5: document.getElementById('declaration5').value,
+                declaration6: document.getElementById('declaration6').value,
+                declaration7: document.getElementById('declaration7').value,
+                declaration8: document.getElementById('declaration8').value,
+            };
+
+            localStorage.setItem('Container_5', JSON.stringify(Container_5));
+            console.log("Captured Data:", Container_5);
+        });
+
+        // PDF generation
+        document.getElementById("generatePdfBtn").addEventListener("click", async function() {
+            const Container_5 = JSON.parse(localStorage.getItem('Container_5'));
+            console.log("Container_5 Data:", Container_5); // Check if data is available
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            try {
+                await Container5(doc, Container_5); // Ensure this function is defined and returns a promise
+                addFooter(doc);
+                doc.save("generated_report_Page5.pdf");
+            } catch (error) {
+                console.error("Error generating PDF:", error);
+            }
+        });
+
+        function addFooter(doc) {
+            const leftMargin = 25.7;  
+            const rightMargin = 17.5; 
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            
+            // Add horizontal line at the bottom
+            const footerY = pageHeight - 28.7;
+            doc.setLineWidth(0.1);
+            //doc.line(leftMargin, footerY, pageWidth - rightMargin, footerY);    
+            doc.setFont('helvetica', 'bold');
+            // Page number on right
+            doc.text('Page 5', pageWidth - rightMargin - 55, footerY);
+            doc.text('Ref No.', pageWidth - rightMargin - 55, footerY + 4);
+            // Reference number 
+            doc.text('TP/JCB/K-BKR/R-09/12/2024-25', pageWidth - rightMargin - 55, footerY + 8);
+        }
+
+    </script>
+
+    <script src="page_5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+</body>
+
+</html>

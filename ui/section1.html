@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valuation Report Generator Section 1</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Valuation Report Generator Section 1</h1>
+        <form id="valuationFormSection1">
+
+            <div class="form-group">
+                <label>Bank Details<span class="required">*</span></label>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <!-- Bank Manager Title -->
+                    <input type="text" id="managerTitle" value="To," readonly
+                        style="width: 50px; background-color: #f4f4f4;">
+
+                    <!-- Manager Designation -->
+                    <input type="text" id="managerDesignation" placeholder="THE MANAGER (Branch Head)" required>
+
+                    <!-- Bank Name -->
+                    <input type="text" id="bankName" placeholder="THE JANATHA CO-OPERATIVE BANK Ltd" required>
+
+                    <!-- Branch Location -->
+                    <input type="text" id="branchLocation" placeholder="MALLESHWARAM" required>
+                </div>
+            </div>
+
+            <!-- Container 1 -->
+            <div class="form-section" id="section1" style="display: block;">
+
+                <div class="form-group">
+                    <h3 style="color:#4169E1"><b>1 Purpose of Valuation<span class="required">*</span></b></h3>                    
+                    <div style="display: flex; gap: 10px;">
+                        <select id="mainPurpose" style="width: 50%;" required onchange="updateSubPurpose()">
+                            <option value="">Select Main Purpose</option>
+                            <option value="Own Purpose">Own Purpose</option>
+                            <option value="Bank's Purpose">Bank's Purpose</option>
+                        </select>
+
+                        <select id="subPurpose" style="width: 50%;" required>
+                            <option value="">Select Sub Purpose</option>
+                            <option value="CAPITAL GAINS">CAPITAL GAINS</option>
+                            <option value="NETWORTH">NETWORTH</option>
+                            <option value="TO KNOW THE FMV">TO KNOW THE FMV</option>
+                            <option value="PURCHASE">PURCHASE</option>
+                            <option value="CONSTRUCTION">CONSTRUCTION</option>
+                            <option value="IMPROVEMENTS">IMPROVEMENTS</option>
+                            <option value="INTERIORS">INTERIORS</option>
+                            <option value="TOP-UP">TOP-UP</option>
+                            <option value="MORTGAGE">MORTGAGE</option>
+                            <option value="REVALUATION">REVALUATION</option>
+                            <option value="EDUCATION">EDUCATION</option>
+                            <option value="VISA">VISA</option>
+                            <option value="COLLATERAL">COLLATERAL</option>
+                            <option value="TAKE OVER">TAKE OVER</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Type of Property<span class="required">*</span></label>
+                    <select id="propertyType" required>
+                        <option value="">Select Property Type</option>
+                        <option value="SITE / LAND">SITE / LAND</option>
+                        <option value="LAND & BUILDING">LAND & BUILDING</option>
+                        <option value="UNDER CONSTRUCTION LAND & BUILDING">UNDER CONSTRUCTION LAND & BUILDING</option>
+                        <option value="FLAT">FLAT</option>
+                        <option value="UNDER CONSTRUCTION FLAT">UNDER CONSTRUCTION FLAT</option>
+                        <option value="COMMERCIAL LAND BUILDING">COMMERCIAL LAND BUILDING</option>
+                        <option value="INDUSTRIAL LAND & BUILDING">INDUSTRIAL LAND & BUILDING</option>
+                        <option value="AGRICULTURAL LAND">AGRICULTURAL LAND</option>
+                        <option value="AGRICULTURAL LAND & BUILDING">AGRICULTURAL LAND & BUILDING</option>
+                    </select>
+                </div>
+
+                <script>
+                    function updateSubPurpose() {
+                        const mainPurpose = document.getElementById('mainPurpose').value;
+                        const subPurpose = document.getElementById('subPurpose');
+
+                        const ownPurposeOptions = ["CAPITAL GAINS", "NETWORTH", "TO KNOW THE FMV"];
+                        const bankPurposeOptions = ["PURCHASE", "CONSTRUCTION", "MORTGAGE", "REVALUATION", "COLLATERAL"];
+
+                        subPurpose.innerHTML = "<option value=''>Select Sub Purpose</option>";
+
+                        let optionsToAdd = [];
+                        if (mainPurpose === "Own Purpose") {
+                            optionsToAdd = ownPurposeOptions;
+                        } else if (mainPurpose === "Bank's Purpose") {
+                            optionsToAdd = bankPurposeOptions;
+                        }
+
+                        optionsToAdd.forEach(optionText => {
+                            const option = document.createElement("option");
+                            option.value = optionText;
+                            option.textContent = optionText;
+                            subPurpose.appendChild(option);
+                        });
+
+                        subPurpose.disabled = optionsToAdd.length === 0;
+                    }
+
+
+                    // Initialize the sub-purpose dropdown state
+                    document.addEventListener('DOMContentLoaded', function () {
+                        updateSubPurpose();
+                    });
+                </script>
+
+                <div class="form-group">
+                    <h3 style="color:#4169E1"><b>2 Name of Customer (s)/ Borrower unit (for which valuation report is sought) <span class="required">*</span></b></h3>                    
+                    <input type="text" id="name_of_borrower" required>
+                </div>
+
+                <h3 style="color:#4169E1"><b>3 Customer Details</b></h3>
+
+                <div>
+
+                    <div class="form-group">
+                        <label>a) Name of Customer/Applicant <span class="required">*</span></label>
+
+                        <input type="text" id="customerName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>b) Persons Accompanying / Contact No. <span class="required">*</span></label>
+                        <input type="text" id="person_accompanying_contact_no" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>c) Name of Purchaser<span class="required">*</span></label>
+                        <input type="text" id="name_of_purchaser" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>d) Application No<span class="required">*</span></label>
+                        <input type="text" id="application_no" required>
+                    </div>
+
+                    
+                </div>
+
+                <h3 style="color:#4169E1"><b>4 Property Details</b></h3>
+                <div>
+                    <div class="form-group">
+                        <label>a) Address<span class="required">*</span></label>
+                        <input type="text" id="address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>b) Nearby Landmark/Google Map /
+                            Independent access to the property <span class="required">*</span></label>
+                        <input type="text" id="nearby_landmark" required>
+                    </div>
+
+                </div>
+
+                <h3 style="color:#4169E1"><b>5 Document Details</b></h3>
+                <div>
+                    <div class="form-group">
+                        <label>a) Layout Plan<span class="required">*</span></label>                        
+                    </div>
+
+                    <div class="form-group">
+                        <label>i) Yes/No<span class="required">*</span></label>
+                        <select id="lp_yesNo" required>
+                            <option value="Not Provided">Not Provided</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>                           
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ii) Name of Approving Authority<span class="required">*</span></label>
+                        <input type="text" id="lp_name_of_approving_authority" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>iii) Approval No / Date / Details<span class="required">*</span></label>
+                        <input type="text" id="lp_approval_no_details" required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>a) Building Plan<span class="required">*</span></label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>i) Yes/No<span class="required">*</span></label>
+                        <select id="bp_yesNo" required>
+                            <option value="Not Provided">Not Provided</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>                           
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ii) Name of Approving Authority<span class="required">*</span></label>
+                        <input type="text" id="bp_name_of_approving_authority" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>iii) Approval No / Date / Details<span class="required">*</span></label>
+                        <input type="text" id="bp_approval_no_details" required>
+                    </div>
+
+                    
+                    <label>c) Legal & Other Documents<span class="required">*</span></label>
+                        <div class="document-row">
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('saleAgreementDate', this); updateOutput();"> i) Sale Agreement</label>
+                                <input type="date" id="saleAgreementDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('absoluteSaleDeedDate', this); updateOutput();"> ii) Absolute Sale Deed</label>
+                                <input type="date" id="absoluteSaleDeedDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('motherDeedDate', this); updateOutput();"> iii) Mother Deed</label>
+                                <input type="date" id="motherDeedDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                        </div>
+                        <div class="document-row">
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('saleDeedDate', this); updateOutput();"> iv) Sale Deed</label>
+                                <input type="date" id="saleDeedDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('giftDeedDate', this); updateOutput();"> v) Gift Deed</label>
+                                <input type="date" id="giftDeedDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('partitionDeedDate', this); updateOutput();"> vi) Partition Deed</label>
+                                <input type="date" id="partitionDeedDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                        </div>
+                        <div class="document-row">
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('khataCertificateDate', this); updateOutput();"> vii) Khata Certificate</label>
+                                <input type="date" id="khataCertificateDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('khataExtractDate', this); updateOutput();"> viii) Khata Extract</label>
+                                <input type="date" id="khataExtractDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('formA', this); updateOutput();"> ix) Form A</label>
+                                <input type="date" id="formA" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                        </div>
+                        <div class="document-row">
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('taxPaidReceiptDate', this); updateOutput();"> x) Tax Paid Receipt</label>
+                                <input type="date" id="taxPaidReceiptDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('ECDate', this); updateOutput();"> xi) E.C</label>
+                                <input type="date" id="ECDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('RTCDate', this); updateOutput();"> xii) RTC</label>
+                                <input type="date" id="RTCDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>
+                        </div>
+                        <div class="document-row">
+                            <div class="document-column">
+                                <label><input type="checkbox" onchange="toggleDate('podiKathatDate', this); updateOutput();"> xiii) PODI KATHA</label>
+                                <input type="date" id="podiKathatDate" placeholder="Date" disabled onchange="updateOutput()">
+                            </div>                            
+                        <div class="document-column">
+                            <label><input type="checkbox" onchange="toggleDate('PAHANIDate', this); updateOutput();"> xiv) PAHANI</label>
+                            <input type="date" id="PAHANIDate" placeholder="Date" disabled onchange="updateOutput()">
+                        </div>
+                        <div class="document-column">
+                            <label></label>                            
+                        </div>
+                    </div>    
+                    <div id="output">No documents selected.</div>                
+                </div>
+
+                <script>
+                    function toggleDate(dateInputId, checkbox) {
+                        const dateInput = document.getElementById(dateInputId);
+                        dateInput.disabled = !checkbox.checked;
+                    }
+                
+                    function updateOutput() {
+                        const documents = [
+                            { id: 'saleAgreementDate', title: 'Sale Agreement' },
+                            { id: 'absoluteSaleDeedDate', title: 'Absolute Sale Deed' },
+                            { id: 'motherDeedDate', title: 'Mother Deed' },
+                            { id: 'saleDeedDate', title: 'Sale Deed' },
+                            { id: 'giftDeedDate', title: 'Gift Deed' },
+                            { id: 'partitionDeedDate', title: 'Partition Deed' },
+                            { id: 'khataCertificateDate', title: 'Khata Certificate' },
+                            { id: 'khataExtractDate', title: 'Khata Extract' },
+                            { id: 'formA', title: 'Form A' },
+                            { id: 'taxPaidReceiptDate', title: 'Tax Paid Receipt' },
+                            { id: 'ECDate', title: 'E.C' },
+                            { id: 'RTCDate', title: 'RTC' },
+                            { id: 'podiKathatDate', title: 'PODI KATHA' },
+                            { id: 'PAHANIDate', title: 'PAHANI' }
+                        ];
+                
+                        let output = [];
+                        documents.forEach(doc => {
+                            const dateInput = document.getElementById(doc.id);
+                            if (!dateInput.disabled && dateInput.value) {
+                                output.push(`${doc.title} dated: ${dateInput.value}`);
+                            }
+                        });
+                
+                        console.log(output);
+                        document.getElementById('output').innerText = output.length > 0 ? output.join(', ') : 'No documents selected.';
+                    }
+                </script>
+
+                <h3 style="color:#4169E1"><b>6 Physical Details</b></h3>
+
+                    <div class="form-group">
+                        
+                        <label>a) Adjoining Properties</label>
+                        <div class="boundaries-grid">
+                            <div class="form-group">
+                                <label>i) East<span class="required">*</span></label>
+                                <input type="text" id="eastBoundaryDoc" placeholder="As per Document" required>
+                                <input type="text" id="eastBoundaryActual" placeholder="As per Actuals" required>
+                            </div>
+                            <div class="form-group">
+                                <label>ii) West<span class="required">*</span></label>
+                                <input type="text" id="westBoundaryDoc" placeholder="As per Document" required>
+                                <input type="text" id="westBoundaryActual" placeholder="As per Actuals" required>
+                            </div>
+                            <div class="form-group">
+                                <label>iii) North<span class="required">*</span></label>
+                                <input type="text" id="northBoundaryDoc" placeholder="As per Document" required>
+                                <input type="text" id="northBoundaryActual" placeholder="As per Actuals" required>
+                            </div>
+                            <div class="form-group">
+                                <label>iv) South<span class="required">*</span></label>
+                                <input type="text" id="southBoundaryDoc" placeholder="As per Document" required>
+                                <input type="text" id="southBoundaryActual" placeholder="As per Actuals" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+    
+                    <div class="form-group">
+                        <label>b) Matching of Boundaries<span class="required">*</span></label>
+                        <select id="boundaryMatch" required>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="Not Applicable">Not Applicable</option>                        
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label>c) Plot Demarcated<span class="required">*</span></label>
+                        <select id="plotDemarcation" required>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="Not Applicable">Not Applicable</option>
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label>d) Approved and Land Use<span class="required">*</span></label>
+                        <input type="text" id="landUse" required>
+                        <select id="landUse" required>
+                            <option value="Residential">Residential</option>
+                            <option value="Residential Main">Residential Main</option>
+                            <option value="Residential Mixed">Residential Mixed</option>
+                            <option value="Residential cum Commercial">Residential cum Commercial</option>
+                            <option value="Commercial">Commercial</option>
+                            <option value="Commercial cum Residential">Commercial cum Residential</option>
+                            <option value="Agricultural">Agricultural</option>
+                            <option value="Defence">Defence</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label>e) Types of property<span class="required">*</span></label>
+                        <input type="text" id="typeOfProperty" required>
+                        <select id="propertyType" required>
+                            <option value="Residential Building">Residential Building</option>
+                            <option value="Residential cum Commercial Building">Residential cum Commercial Building</option>
+                            <option value="Commercial Building">Commercial Building</option>
+                            <option value="Commercial cum Residential Building">Commercial cum Residential Building</option>
+                            <option value="Isntitutional Building">Isntitutional Building</option>
+                            <option value="Industrial Building">Industrial Building</option>
+                            <option value="Industrial Shed">Industrial Shed</option>
+                            <option value="Pre-Engineered Building">Pre-Engineered Building</option>
+                            <option value="M.S Building">M.S Building</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button type="button" onclick="nextSection(1)">Next</button>
+
+                <button id="generatePdfBtn" type="submit" >Gnerate Pdf</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function nextSection(currentSection) {
+            // Validate current section
+            const currentDiv = document.getElementById(`section${currentSection}`);
+            const requiredFields = currentDiv.querySelectorAll('[required]');
+            let isValid = true;
+            let missingFields = [];
+
+            // Check all required fields
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                    // Get the field label
+                    const label = field.previousElementSibling ? field.previousElementSibling.textContent.replace('*', '').trim() : field.id;
+                    missingFields.push(label);
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in the following fields:\n\n' + missingFields.join('\n'));
+                return;
+            }
+
+            // If validation passes, load the next section page
+            window.location.href = 'section2.html';
+        }
+
+        
+
+    </script>
+   
+    <script src="page_1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    
+    <script>
+        // Form submission handler
+        document.getElementById('valuationFormSection1').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Validate all required fields
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Capture form data correctly
+            const Container_1 = {
+                bankInfo: {
+                    managerDesignation: document.getElementById('managerDesignation').value,
+                    bankName: document.getElementById('bankName').value,
+                    branchLocation: document.getElementById('branchLocation').value,
+                },
+
+                propertyDetails: {
+                    propertyType: document.getElementById('propertyType').value,
+                    mainPurpose: document.getElementById('mainPurpose').value,
+                    subPurpose: document.getElementById('subPurpose').value,
+                    nameOfBorrower: document.getElementById('name_of_borrower').value,
+                },
+                customerDetails: {
+                    customerName: document.getElementById('customerName').value,
+                    personAccompanyingContactNo: document.getElementById('person_accompanying_contact_no').value,
+                    nameOfPurchaser: document.getElementById('name_of_purchaser').value,
+                    applicationNo: document.getElementById('application_no').value,
+                },
+                propertyLocation: {
+                    address: document.getElementById('address').value,
+                    nearbyLandmark: document.getElementById('nearby_landmark').value,
+                },
+                documentDetails: {                    
+                    lp_yesNo: document.getElementById('lp_yesNo').value,
+                    lp_nameOfApprovingAuthority: document.getElementById('lp_name_of_approving_authority').value,
+                    lp_approvalNoDetails: document.getElementById('lp_approval_no_details').value,
+
+                    bp_yesNo: document.getElementById('bp_yesNo').value,
+                    bp_nameOfApprovingAuthority: document.getElementById('bp_name_of_approving_authority').value,
+                    bp_approvalNoDetails: document.getElementById('bp_approval_no_details').value,
+                    legalDocuments: document.getElementById('output').innerText,
+                },
+                boundaries: {
+                    east: {
+                        doc: document.getElementById('eastBoundaryDoc').value,
+                        actual: document.getElementById('eastBoundaryActual').value,
+                    },
+                    west: {
+                        doc: document.getElementById('westBoundaryDoc').value,
+                        actual: document.getElementById('westBoundaryActual').value,
+                    },
+                    north: {
+                        doc: document.getElementById('northBoundaryDoc').value,
+                        actual: document.getElementById('northBoundaryActual').value,
+                    },
+                    south: {
+                        doc: document.getElementById('southBoundaryDoc').value,
+                        actual: document.getElementById('southBoundaryActual').value,
+                    }
+                },
+                otherDetails: {
+                    boundaryMatch: document.getElementById('boundaryMatch').value,
+                    plotDemarcation: document.getElementById('plotDemarcation').value,
+                    landUse: document.getElementById('landUse').value,
+                    typeOfProperty: document.getElementById('typeOfProperty').value,
+                }
+            };
+            localStorage.removeItem('Container_1');
+            // Save data to localStorage
+            localStorage.setItem('Container_1', JSON.stringify(Container_1));
+            console.log("Captured Data:", Container_1);
+       
+        });
+
+    </script>
+
+<script>
+    const Container_1 = JSON.parse(localStorage.getItem('Container_1'));
+    console.log(Container_1);
+
+    document.getElementById("generatePdfBtn").addEventListener("click", function() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        //const pageWidth = doc.internal.pageSize.getWidth();
+        //const pageHeight = doc.internal.pageSize.getHeight();
+        //console.log("Page Width in Points:", pageWidth);
+        //console.log("Page Height in Points:", pageHeight);
+        Container1(doc).then(() => {
+            addFooter(doc); // Ensure footer is added after content is placed
+            doc.save("generated_report.pdf");
+        }).catch(error => console.error("Error generating PDF:", error));
+    });
+
+    function addFooter(doc) {
+        const leftMargin = 25.7;  
+        const rightMargin = 17.5; 
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+         // Add horizontal line at the bottom
+         const footerY = pageHeight - 28.7 ;
+        doc.setLineWidth(0.1);
+        //doc.line(leftMargin, footerY, pageWidth - rightMargin, footerY);    
+        
+        // Page number on right
+        doc.text('Page 2', pageWidth - rightMargin - 40, footerY);
+        doc.text('Ref No.', pageWidth - rightMargin - 40, footerY + 3.5);
+        // Reference number 
+        doc.text('TP/JCB/K-BKR/R-09/12/2024-25', pageWidth - rightMargin - 40, footerY + 7);
+    }
+</script>
+
+
+
+</body>
+
+</html>

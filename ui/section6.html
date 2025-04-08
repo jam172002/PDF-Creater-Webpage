@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valuation Report Generator Section 6</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        #previewContainer img,
+        #glPreviewContainer img {
+            max-width: 100%; /* Responsive image */
+            height: auto; /* Maintain aspect ratio */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Valuation Report Generator Section 6</h1>
+        <form id="valuationForm">    
+            <div class="form-section" id="section6">
+            <div class="form-group">
+                <label>Upload Image of Google Map of Land<span class="required">*</span></label>
+                <input type="file" id="googleMap" accept="image/*" required>
+                <div>
+                    <label for="googleMapWidth">Width (px):</label>
+                    <input type="number" id="googleMapWidth" placeholder="Suggested: 100" value="100">
+                    <label for="googleMapHeight">Height (px):</label>
+                    <input type="number" id="googleMapHeight" placeholder="Suggested: 60" value="60">
+                </div>
+                <div id="previewContainer"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>GUIDELINE RATE<span class="required">*</span></label>
+                <input type="file" id="glImage" accept="image/*" required>
+                <div>
+                    <label for="glImageWidth">Width (px):</label>
+                    <input type="number" id="glImageWidth" placeholder="Suggested: 100" value="100">
+                    <label for="glImageHeight">Height (px):</label>
+                    <input type="number" id="glImageHeight" placeholder="Suggested: 60" value="60">
+                </div>
+                <div id="glPreviewContainer"></div>
+            </div>
+            <button type="button" onclick="prevSection(6)">Previous</button>
+            <button type="button" onclick="nextSection(6)">Next</button> 
+            <button id="generatePdfBtn" type="submit">Generate Pdf</button>
+        </div>
+        </form>
+    </div>
+
+    <script>
+
+        function nextSection(currentSection) {
+            // Validate current section
+            const currentDiv = document.getElementById(`section${currentSection}`);
+            const requiredFields = currentDiv.querySelectorAll('[required]');
+            let isValid = true;
+            let missingFields = [];
+
+            // Check all required fields
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                    // Get the field label
+                    const label = field.previousElementSibling.textContent.replace('*', '').trim();
+                    missingFields.push(label);
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in the following fields:\n\n' + missingFields.join('\n'));
+                return;
+            }
+
+            // If validation passes, proceed to next section             
+             window.location.href = 'section7.html';
+        }
+
+        function prevSection(currentSection) {
+            // Hide current section and show previous section
+            window.location.href = 'section5.html';
+        }
+
+
+        // Function to preview the uploaded image and store its data
+        function previewImage(input, previewContainerId, widthInputId, heightInputId, storageKey) {
+            const file = input.files[0];
+            const previewContainer = document.getElementById(previewContainerId);
+            const widthInput = document.getElementById(widthInputId);
+            const heightInput = document.getElementById(heightInputId);
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Show image preview
+                    previewContainer.innerHTML = `<img src="${e.target.result}" alt="Image Preview" style="width: ${widthInput.value}px; height: ${heightInput.value}px;">`;
+
+                    // Store image data and dimensions in localStorage
+                    const imageData = {
+                        src: e.target.result,
+                        width: parseInt(widthInput.value),
+                        height: parseInt(heightInput.value)
+                    };
+                    localStorage.setItem(storageKey, JSON.stringify(imageData));
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.innerHTML = '';
+            }
+        }
+
+// Event listeners for image uploads
+document.getElementById('googleMap').addEventListener('change', function() {
+    previewImage(this, 'previewContainer', 'googleMapWidth', 'googleMapHeight', 'googleMapData');
+});
+
+document.getElementById('glImage').addEventListener('change', function() {
+    previewImage(this, 'glPreviewContainer', 'glImageWidth', 'glImageHeight', 'glImageData');
+});
+        // Function to validate and store data
+        document.getElementById('valuationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Validate all required fields
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const Container_6 = {                
+                googleMap: document.getElementById('googleMap').value,
+                glImage: document.getElementById('glImage').value,                
+            };
+
+            localStorage.setItem('Container_6', JSON.stringify(Container_6));
+            console.log("Captured Data:", Container_6);
+        });
+
+        // PDF generation
+        document.getElementById("generatePdfBtn").addEventListener("click", async function() {
+            const Container_6 = JSON.parse(localStorage.getItem('Container_6'));
+            console.log("Container_6 Data:", Container_6); // Check if data is available
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            try {
+                await Container6(doc, Container_6); // Ensure this function is defined and returns a promise
+                addFooter(doc);
+                doc.save("generated_report_Page6.pdf");
+            } catch (error) {
+                console.error("Error generating PDF:", error);
+            }
+        });
+
+        function addFooter(doc) {
+            const leftMargin = 25.7;  
+            const rightMargin = 17.5; 
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            
+            // Add horizontal line at the bottom
+            const footerY = pageHeight - 28.7;
+            doc.setLineWidth(0.1);
+            doc.setFont('helvetica', 'bold');
+            // Page number on right
+            doc.text('Page 6', pageWidth - rightMargin - 55, footerY);
+            doc.text('Ref No.', pageWidth - rightMargin - 55, footerY + 4);
+            // Reference number 
+            doc.text('TP/JCB/K-BKR/R-09/12/2024-25', pageWidth - rightMargin - 55, footerY + 8);
+        }
+
+    </script>
+
+    <script src="page_6.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+</body>
+
+</html>

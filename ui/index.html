@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry Guidelines</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            color: #28a745;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: #e9ecef;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Entry Guidelines</h1>
+        <h2>Please Follow These Guidelines:</h2>
+        <ul>
+            <li>Fill in all required fields carefully to ensure accurate data collection.</li>
+            <li>You can come back to change any data at any time by navigating to the previous sections.</li>
+            <li>Images selected should be in JPEG format for optimal quality.</li>
+            <li>Ensure that the dimensions of the images are appropriate for the report (e.g., 100px width and 60px height).</li>
+            <li>If any image has higher dimensions it result in failure of image printing.</li>
+            <li>Review your entries before generating the PDF to avoid any mistakes.</li>
+            <li>Almost all rows have dynamic height and will grow upone adding more content</li>
+        </ul>
+        <button onclick="startDataEntry()">Start Data Entry</button>
+    </div>
+
+    <script>
+        function startDataEntry() {
+            // Redirect to the first section of the data entry form
+            window.location.href = 'section1.html'; // Change this to your actual first section page
+        }
+    </script>
+</body>
+</html>

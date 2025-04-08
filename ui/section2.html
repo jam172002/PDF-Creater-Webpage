@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valuation Report Generator Section 2</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Valuation Report Generator Section 2</h1>
+        <form id="valuationForm">
+
+            <!-- Container 2 -->
+            <div class="form-section" id="section2" >
+                <h3 style="color:#4169E1"><b>Physical Details</b></h3>        
+
+                <div class="form-group">
+                    <label>Details of Accommodations</label>
+                    <div class="accommodations-grid">
+                        <div class="form-group">
+                            <label>Living/Dining<span class="required">*</span></label>
+                            <input type="text" id="livingStatus" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Bedroom & Pooja Room<span class="required">*</span></label>
+                            <input type="text" id="bedroomStatus" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Toilet<span class="required">*</span></label>
+                            <input type="text" id="toiletStatus" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Kitchen<span class="required">*</span></label>
+                            <input type="text" id="kitchenStatus" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Total No of Floors<span class="required">*</span></label>
+                    <input type="text" id="totalFloors" required>
+                </div>
+
+                <div class="form-group">
+                    <label> Floor on which the property is located </label><span class="required">*</span></label>
+                    <input type="text" id="propertyFloor" required>
+                </div>
+
+                <div class="form-group">
+                    <label> Year of construction </label><span class="required">*</span></label>
+                    <input type="text" id="constructionYear" required>
+                </div>
+
+                <div class="form-group">
+                    <label> Approx. age of the Property </label><span class="required">*</span></label>
+                    <input type="text" id="propertyAge" required>
+                </div>
+
+                <div class="form-group">
+                    <label> Residual age of the Property </label><span class="required">*</span></label>
+                    <input type="text" id="residualAge" required>
+                </div>
+
+                <div class="form-group">
+                    <label> Type of structure </label><span class="required">*</span></label>
+                    <input type="text" id="structureType" required>
+                </div>
+
+                <div class="form-group">
+                    <label> Amenities provided </label><span class="required">*</span></label>
+                    <input type="text" id="amenities" required>
+                </div>
+
+                <h3 style="color:#4169E1"><b>Tenure / Occupancy Details </b></h3>
+                <h3 style="color:#4169E1"><b>Status of Tenure </b></h3>                
+
+                <div class="form-group">
+                    <label>Owned /Rented<span class="required">*</span></label>
+                    <input type="text" id="ownedOrRented" required>
+                </div>
+
+                <div class="form-group">
+                    <label>No. of years of Occupancy<span class="required">*</span></label>
+                    <input type="text" id="occupancyYears" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Relationship of tenant or owner<span class="required">*</span></label>
+                    <input type="text" id="relationOfTenant" required>
+                </div>
+
+                <h3 style="color:#4169E1"><b>Building Status & Valuation</b></h3>
+
+                <div class="form-group">
+                    <label>Existing building<span class="required">*</span></label>
+                    <input type="text" id="existingBuilding" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Stage of construction<span class="required">*</span></label>
+                    <input type="text" id="constructionStage" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Work completion<span class="required">*</span></label>
+                    <input type="text" id="workCompletion" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nature and extent of violations<span class="required">*</span></label>
+                    <textarea id="violations" required></textarea>
+                </div>
+
+                <h4>Area Details</h4>
+                <div class="form-group">
+                    <label>Site Area<span class="required">*</span></label>
+                    <label>East to West<span class="required">*</span></label>
+                    <input type="text" id="eastToWest" required>
+                    <label>North to South<span class="required">*</span></label>
+                    <input type="text" id="northToSouth" required>
+                    <label>Totally measuring <span class="required">*</span></label>
+                    <input type="text" id="totallyMeasuring" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Carpet area<span class="required">*</span></label>
+                    <input type="text" id="carpetArea" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Saleable area<span class="required">*</span></label>
+                    <input type="text" id="saleableArea" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Remarks<span class="required">*</span></label>
+                    <input type="text" id="remarks" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Plinth area<span class="required">*</span></label>
+                    <input type="text" id="plinthArea" required>
+                </div>
+
+                <button type="button" onclick="prevSection(2)">Previous</button>
+                <button type="button" onclick="nextSection(2)">Next</button>
+                <button id="generatePdfBtn" type="submit" >Gnerate Pdf</button>
+            </div>                    
+        </form>
+    </div>
+
+    <script>
+        function nextSection(currentSection) {
+            // Validate current section
+            const currentDiv = document.getElementById(`section${currentSection}`);
+            const requiredFields = currentDiv.querySelectorAll('[required]');
+            let isValid = true;
+            let missingFields = [];
+
+            // Check all required fields
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                    // Get the field label
+                    const label = field.previousElementSibling.textContent.replace('*', '').trim();
+                    missingFields.push(label);
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in the following fields:\n\n' + missingFields.join('\n'));
+                return;
+            }
+
+            // If validation passes, proceed to next section
+            // If validation passes, load the next section page
+            window.location.href = 'section3.html';
+        }
+
+        function prevSection() {
+             // If validation passes, load the previous section page
+             window.location.href = 'section1.html';
+        }
+
+
+    </script>
+
+    <script src="page_2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+
+    <script>
+
+        // Form submission handler
+        document.getElementById('valuationForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Validate all required fields
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const Container_2 = {
+            livingStatus: document.getElementById('livingStatus').value,
+            bedroomStatus: document.getElementById('bedroomStatus').value,
+            toiletStatus: document.getElementById('toiletStatus').value,
+            kitchenStatus: document.getElementById('kitchenStatus').value,
+            totalFloors: document.getElementById('totalFloors').value,
+            propertyFloor: document.getElementById('propertyFloor').value,
+            constructionYear: document.getElementById('constructionYear').value,
+            propertyAge: document.getElementById('propertyAge').value,
+            residualAge: document.getElementById('residualAge').value,
+            structureType: document.getElementById('structureType').value,
+            amenities: document.getElementById('amenities').value,
+            ownedOrRented: document.getElementById('ownedOrRented').value,
+            occupancyYears: document.getElementById('occupancyYears').value,
+            relationOfTenant: document.getElementById('relationOfTenant').value,
+            existingBuilding: document.getElementById('existingBuilding').value,
+            constructionStage: document.getElementById('constructionStage').value,
+            workCompletion: document.getElementById('workCompletion').value,
+            violations: document.getElementById('violations').value,
+            eastToWest: document.getElementById('eastToWest').value,
+            northToSouth: document.getElementById('northToSouth').value,
+            totallyMeasuring: document.getElementById('totallyMeasuring').value,
+            plinthArea: document.getElementById('plinthArea').value,
+            carpetArea: document.getElementById('carpetArea').value,  
+            saleableArea: document.getElementById('saleableArea').value,  
+            remarks: document.getElementById('remarks').value 
+        };
+
+        //localStorage.removeItem('Container_2');
+            // Save data to localStorage
+            localStorage.setItem('Container_2', JSON.stringify(Container_2));
+            console.log("Captured Data:", Container_2);
+            alert('Data captured successfully!');
+          
+        });
+    </script>
+
+<script>
+    const Container_2 = JSON.parse(localStorage.getItem('Container_2'));
+    console.log(Container_2);
+
+    document.getElementById("generatePdfBtn").addEventListener("click", function() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        Container2(doc).then(() => {
+            addFooter(doc); 
+            doc.save("generated_report_Page2.pdf");
+        }).catch(error => console.error("Error generating PDF:", error));
+    });
+
+    function addFooter(doc) {
+        const leftMargin = 25.7;  
+        const rightMargin = 17.5; 
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+         // Add horizontal line at the bottom
+         const footerY = pageHeight - 28.7 ;
+        doc.setLineWidth(0.1);
+        //doc.line(leftMargin, footerY, pageWidth - rightMargin, footerY);    
+        
+        // Page number on right
+        doc.text('Page 2', pageWidth - rightMargin - 40, footerY);
+        doc.text('Ref No.', pageWidth - rightMargin - 40, footerY + 3);
+        // Reference number 
+        doc.text('TP/JCB/K-BKR/R-09/12/2024-25', pageWidth - rightMargin - 40, footerY + 6);
+    }
+</script>
+
+</body>
+
+</html>
