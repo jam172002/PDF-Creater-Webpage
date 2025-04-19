@@ -30,43 +30,60 @@ function Container2(doc) {
 
             let table = createTable(doc, yPosition, '', '');
             let yPos = table.getPosition();
-            yPos = table.addRow('f)', 'Details of Accommodations', 'As per Actual');
-            yPos = table.addRow('i', 'Living/ Dinning', Container_2.livingStatus);
-            yPos = table.addRow('ii', 'Bed Room & Pooja Room', Container_2.bedroomStatus);
-            yPos = table.addRow('iii', 'Toilet', Container_2.toiletStatus);
-            yPos = table.addRow('iv', 'Kitchen', Container_2.kitchenStatus);
-            yPos = table.addRow('g', 'Total No of Floors', Container_2.totalFloors);
+            yPos = table.addAdjoiningPropertiesRow('f', 'Details of Accommodations:', 'Floor', 'Usage', true);        
+            Container_2.accommodationDetails.forEach(item => {
+                yPos = table.addAdjoiningPropertiesRow('', '', item.floor, item.usage);
+            });
+            
+           
+            yPos = table.addAdjoiningPropertiesRow('g', 'Total No of Floors:', 'As per Plan', 'As per Actuals', true);
+            yPos = table.addAdjoiningPropertiesRow('', '', Container_2.totalFloors.asPerPlan, Container_2.totalFloors.asPerActual);
+                    
             yPos = table.addRow('h', 'Floor on which the property is located', Container_2.propertyFloor);
-            yPos = table.addRow('i', 'Year of construction', constructionYear);
+            yPos = table.addRow('i', 'Year of construction', Container_2.constructionYear);
             yPos = table.addRow('j', 'Approx. age of the Property', Container_2.propertyAge);
             yPos = table.addRow('h', 'Residual age of the Property', Container_2.residualAge);
             yPos = table.addRow('k', 'Type of structure', Container_2.structureType);
             yPos = table.addRow('l', 'Amenities provided', Container_2.amenities);
+
             yPos = table.addRow('7', 'Tenure / Occupancy Details', '', 8, true);
             yPos = table.addRow('', 'Status of Tenure', '', 8, true);
             yPos = table.addRow('i', 'Owned /Rented', Container_2.ownedOrRented);
             yPos = table.addRow('ii', 'No. of years of Occupancy', Container_2.occupancyYears);
             yPos = table.addRow('iii', 'Relationship of tenant or owner', Container_2.relationOfTenant);
+
             yPos = table.addRow('8', 'Building Status', '', 8, true);
             yPos = table.addRow('i', 'Existing building', Container_2.existingBuilding);
-            yPos = table.addRow('ii', 'Stage of construction', Container_2.constructionStage, 16);
+            yPos = table.addRow('ii', 'Stage of construction', Container_2.constructionStage);
             yPos = table.addRow('iii', 'If under construction, extent of completion ', Container_2.workCompletion);
-            yPos = table.addRow('9', 'Violations if any observed', '', 8, true);
-            yPos = table.addRow('i', 'Nature and extent of violations', Container_2.violations, 16);
-            yPos = table.addRow('10', 'Area Details of the Property', '', 8, true);
 
-            //yPos = table.addRow('i', 'Site Area', '', null, true);
-            const siteAreaData = {
-                row1: ['East to West', Container_2.eastToWest],
-                row2: ['North to South', Container_2.northToSouth],
-                row3: ['Totally Measuring', Container_2.totallyMeasuring],
-            };
-            yPos = table.addAddressRow('i', 'Site Area', siteAreaData);
+            yPos = table.addRow('9', 'Violations if any observed', '', 8, true);
+            yPos = table.addRow('i', 'Nature and extent of violations', Container_2.violations);
+
+            yPos = table.addRow('10', 'Area Details of the Property', '', 8, true);
+            yPos = table.addAdjoiningPropertiesRow('a', 'Adjoining Properties:', 'As per Document', 'As per Actuals',true);
+            yPos = table.addAdjoiningPropertiesRow('', 'East to West', Container_2.siteAreaDetails.asPerDocument.eastToWest, Container_2.siteAreaDetails.asPerActual.northToSouth);
+            yPos = table.addAdjoiningPropertiesRow('', 'North to South', Container_2.siteAreaDetails.asPerDocument.eastToWest, Container_2.siteAreaDetails.asPerActual.northToSouth);
+            yPos = table.addAdjoiningPropertiesRow('', 'Totally Measuring', Container_2.siteAreaDetails.asPerDocument.totallyMeasuring, Container_2.siteAreaDetails.asPerActual.totallyMeasuring);
+            
 
             yPos = table.addRow('ii', 'Plinth area', Container_2.plinthArea);
             yPos = table.addRow('iii', 'Carpet area', Container_2.carpetArea);
             yPos = table.addRow('iv', 'Saleable area', Container_2.saleableArea);
             yPos = table.addRow('v', 'Remarks', Container_2.remarks);
+            yPos = table.addRow('11', 'Valuation Note', '', 8, true);
+            yPos = table.addRow('a (i) ', 'Mention the value as per Government Approved Rates also', Container_2.govtValue);
+
+            yPos = table.addRow('ii', 'In case of variation of 20 % or more in the valuation proposed by the valuer and the Guideline value provided in the State Govt. notification or Income Tax Gazette justification on variation has to be given',Container_2.variationJustification);
+            yPos = table.addRow('b', 'Summary of Valuation', '', 8, true);
+            yPos = table.addRow('i', 'Guideline Rate ',Container_2.guidelineRate);
+            yPos = table.addRow('ii', 'Market Rate',Container_2.marketRate);
+
+            yPos = table.addRow('iii', 'Land Value ',Container_2.landValue);
+            yPos = table.addRow('iv', 'Building Value ',Container_2.buildingValue);
+            yPos = table.addRow('v', 'Extra items, Amenities & Services',Container_2.extraItems);
+            yPost = table.addRow('vi', 'Fair Market Value (SAY)', Container_2.fairMarketValue);
+            yPost = table.addRow('(vii)', ' Expected Rental Value ', Container_2.rentalValue);
 
         // Resolve the promise after the table is completed
         resolve(yPos);
@@ -144,7 +161,7 @@ function Container2(doc) {
            
            // Use the maximum number of lines to determine height
            const maxLines = Math.max(descriptionLines, valueLines);
-           const lineHeight = 3.5; // Reduced base height per line
+           const lineHeight = 3.1; // Reduced base height per line
            const padding = 1; // Minimum padding
            
            // Calculate height based on content
@@ -194,12 +211,73 @@ function Container2(doc) {
            yPosition += rowHeight;
            return yPosition;
         }
+
+        function addAdjoiningPropertiesRow(number, description, docValue, actualValue, bold = false, height = null) {
+            doc.setFontSize(8);
+        
+            const col1Width = 7;
+            const col2Width = 85;
+            const remainingWidth = tableWidth - col1Width - col2Width;
+            const col3Width = remainingWidth / 2;
+            const col4Width = remainingWidth / 2;
+        
+            // Split text for line measurement
+            const splitDescription = doc.splitTextToSize(description, col2Width - 4);
+            const splitDocValue = doc.splitTextToSize(docValue, col3Width - 4);
+            const splitActualValue = doc.splitTextToSize(actualValue, col4Width - 4);
+        
+            // Line counts
+            const descriptionLines = splitDescription.length;
+            const docValueLines = splitDocValue.length;
+            const actualValueLines = splitActualValue.length;
+        
+            const maxLines = Math.max(descriptionLines, docValueLines, actualValueLines);
+        
+            // Height logic
+            const lineHeight = 3.1;
+            const padding = 1;
+            let calculatedHeight;
+        
+            if (maxLines === 1) {
+                calculatedHeight = lineHeight + padding * 2;
+            } else {
+                calculatedHeight = (maxLines * lineHeight) + padding * 2;
+            }
+        
+            const rowHeight = height ? Math.max(calculatedHeight, height) : calculatedHeight;
+        
+            // Draw cell boxes
+            doc.rect(leftMargin, yPosition, col1Width, rowHeight);
+            doc.rect(leftMargin + col1Width, yPosition, col2Width, rowHeight);
+            doc.rect(leftMargin + col1Width + col2Width, yPosition, col3Width, rowHeight);
+            doc.rect(leftMargin + col1Width + col2Width + col3Width, yPosition, col4Width, rowHeight);
+        
+            // Set font style
+            if (bold) {
+                doc.setFont('helvetica', 'bold');
+            } else {
+                doc.setFont('helvetica', 'normal');
+            }
+        
+            // Text alignment
+            const textTop = yPosition + 3;
+        
+            // Draw content
+            if (number) doc.text(number.toString(), leftMargin + 2, textTop);
+        
+            doc.text(splitDescription, leftMargin + col1Width + 2, textTop);
+            doc.text(splitDocValue, leftMargin + col1Width + col2Width + 2, textTop);
+            doc.text(splitActualValue, leftMargin + col1Width + col2Width + col3Width + 2, textTop);
+        
+            yPosition += rowHeight;
+            return yPosition;
+        }
+        
     
         return {
             addRow,
-            addSplitColumnRow,
-            addAddressRow,
             addAdjoiningPropertiesRow,
+            addAddressRow,
             getPosition: () => yPosition
         };
     }

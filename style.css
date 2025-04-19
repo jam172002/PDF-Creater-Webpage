@@ -185,3 +185,52 @@ button:hover {
 .document-column:last-child {
     margin-right: 0;
 }
+
+
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th,
+table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+/* Section f - Accommodation Details */
+#section-f table td:first-child {
+    width: 30%;
+}
+
+#section-f table td:nth-child(2) {
+    width: 20%;
+}
+
+#section-f table td:nth-child(3) {
+    width: 50%;
+}
+
+/* Add spacing between FLOOR label and checkbox */
+#section-f input[type="checkbox"] {
+    margin-left: 15px;
+    transform: scale(1.2);
+    accent-color: green; /* Green tick box */
+}
+
+/* Section g - Sanction vs Actual Plan */
+#section-g table td {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* spacing between checkbox and label text */
+}
+
+/* Keep floor name aligned nicely with checkbox */
+#section-g input[type="checkbox"] {
+    transform: scale(1.2);
+    accent-color: green;
+}

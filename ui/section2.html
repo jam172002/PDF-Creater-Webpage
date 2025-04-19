@@ -15,139 +15,461 @@
 
             <!-- Container 2 -->
             <div class="form-section" id="section2" >
-                <h3 style="color:#4169E1"><b>Physical Details</b></h3>        
+                <h3 style="color:#4169E1"><b>6 Physical Details</b></h3>        
 
                 <div class="form-group">
-                    <label>Details of Accommodations</label>
-                    <div class="accommodations-grid">
-                        <div class="form-group">
-                            <label>Living/Dining<span class="required">*</span></label>
-                            <input type="text" id="livingStatus" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Bedroom & Pooja Room<span class="required">*</span></label>
-                            <input type="text" id="bedroomStatus" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Toilet<span class="required">*</span></label>
-                            <input type="text" id="toiletStatus" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Kitchen<span class="required">*</span></label>
-                            <input type="text" id="kitchenStatus" required>
-                        </div>
-                    </div>
-                </div>
+                    <label><strong>f) Details of Accommodation</strong></label>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>FLOOR</th>
+                          <th>Tick to Include</th>
+                          <th>Usage (AS PER ACTUAL)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Stilt FLOOR</td>
+                          <td><input type="checkbox" id="stiltCheckbox"></td>
+                          <td>
+                            <select id="stiltUsage">
+                              <option value="">Select usage</option>
+                              <option>Parking</option>
+                              <option>Commercial</option>
+                              <option>Residential</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <!-- Repeat rows for each floor -->
+                        <tr>
+                          <td>Basement FLOOR</td>
+                          <td><input type="checkbox" id="basementCheckbox"></td>
+                          <td>
+                            <select id="basementUsage">
+                              <option value="">Select usage</option>
+                              <option>Storage</option>
+                              <option>Office</option>
+                              <option>Residential</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Ground Floor</td>
+                          <td><input type="checkbox" id="groundCheckbox"></td>
+                          <td>
+                            <select id="groundUsage">
+                              <option value="">Select usage</option>
+                              <option>Shop</option>
+                              <option>Office</option>
+                              <option>Residential</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <!-- Add more floors as needed -->
+                        <tr>
+                          <td>First Floor</td>
+                          <td><input type="checkbox" id="firstCheckbox"></td>
+                          <td>
+                            <select id="firstUsage">
+                              <option value="">Select usage</option>
+                              <option>Residential</option>
+                              <option>Office</option>
+                              <option>Commercial</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Second Floor</td>
+                          <td><input type="checkbox" id="secondCheckbox"></td>
+                          <td>
+                            <select id="secondUsage">
+                              <option value="">Select usage</option>
+                              <option>Residential</option>
+                              <option>Office</option>
+                              <option>Commercial</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Third Floor</td>
+                          <td><input type="checkbox" id="thirdCheckbox"></td>
+                          <td>
+                            <select id="thirdUsage">
+                              <option value="">Select usage</option>
+                              <option>Residential</option>
+                              <option>Office</option>
+                              <option>Commercial</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Fourth Floor</td>
+                          <td><input type="checkbox" id="fourthCheckbox"></td>
+                          <td>
+                            <select id="fourthUsage">
+                              <option value="">Select usage</option>
+                              <option>Residential</option>
+                              <option>Office</option>
+                              <option>Commercial</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Terrace Floor</td>
+                          <td><input type="checkbox" id="terraceCheckbox"></td>
+                          <td>
+                            <select id="terraceUsage">
+                                <option value="">Select usage</option>                                
+                                <option>Open Terrace</option>
+                                <option>Terrace Garden</option>
+                                <option>Solar Panel Installation</option>
+                                <option>Water Tank / Utilities</option>
+                                <option>Servant Quarters</option>
+                                <option>Penthouse</option>
+                                <option>Temporary Shed / Covered Space</option>
+                                <option>Not in Use</option>
+                            </select>
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                  
+
+                  <div class="form-group">
+                    <label><strong>g) Total number of floors</strong></label>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>AS PER SANCTION PLAN</th>
+                          <th>AS PER ACTUAL</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><input type="checkbox" id="planStilt"> Stilt Floor</td>
+                          <td><input type="checkbox" id="actualStilt"> Stilt Floor</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" id="planGround"> Ground Floor</td>
+                          <td><input type="checkbox" id="actualGround"> Ground Floor</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" id="planFirst"> First Floor</td>
+                          <td><input type="checkbox" id="actualFirst"> First Floor</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" id="planSecond"> Second Floor</td>
+                          <td><input type="checkbox" id="actualSecond"> Second Floor</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" id="planThird"> Third Floor</td>
+                          <td><input type="checkbox" id="actualThird"> Third Floor</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" id="planFourth"> Fourth Floor</td>
+                          <td><input type="checkbox" id="actualFourth"> Fourth Floor</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" id="planTerrace"> Terrace Floor</td>
+                          <td><input type="checkbox" id="actualTerrace"> Terrace Floor</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" id="planBasement"> Basement Floor</td>
+                          <td><input type="checkbox" id="actualBasement"> Basement Floor</td>
+                        </tr>
+                       
+                      </tbody>
+                    </table>
+                  </div>
+                  
 
                 <div class="form-group">
-                    <label>Total No of Floors<span class="required">*</span></label>
-                    <input type="text" id="totalFloors" required>
-                </div>
-
-                <div class="form-group">
-                    <label> Floor on which the property is located </label><span class="required">*</span></label>
+                    <label>h) Floor on which the property is located </label><span class="required">*</span></label>
                     <input type="text" id="propertyFloor" required>
                 </div>
 
                 <div class="form-group">
-                    <label> Year of construction </label><span class="required">*</span></label>
-                    <input type="text" id="constructionYear" required>
-                </div>
+                    <label>i) Year of construction <span class="required">*</span></label>
+                    <select id="constructionOption" onchange="handleConstructionChange()" required>
+                      <option value="">Select an option</option>
+                      <option value="new">Newly Constructed</option>
+                      <option value="year">Specify Year</option>
+                    </select>
+                    <input type="number" id="constructionYear" placeholder="Enter year e.g. 2019" style="margin-top: 5px;" disabled oninput="calculatePropertyAge()">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>j) Approx. age of the Property <span class="required">*</span></label>
+                    <input type="number" id="propertyAge" readonly required>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>k) Residual age of the Property <span class="required">*</span></label>
+                    <input type="number" id="residualAge" required>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>l) Type of structure <span class="required">*</span></label>
+                    <select id="structureType" required>
+                      <option value="">Select type</option>
+                      <option>Load bearing structure</option>
+                      <option>RCC framed structure</option>
+                      <option>Pre-Engineered Building</option>
+                      <option>M S Building</option>
+                    </select>
+                  </div>
+                  <script>
+                    function handleConstructionChange() {
+                      const selection = document.getElementById("constructionOption").value;
+                      const yearInput = document.getElementById("constructionYear");
+                      const propertyAgeInput = document.getElementById("propertyAge");
+                      const residualAgeInput = document.getElementById("residualAge");
+                    
+                      if (selection === "new") {
+                        yearInput.value = "";
+                        yearInput.disabled = true;
+                        propertyAgeInput.value = 0;
+                        residualAgeInput.value = 60;
+                      } else if (selection === "year") {
+                        yearInput.disabled = false;
+                        propertyAgeInput.value = "";
+                        residualAgeInput.value = "";
+                      } else {
+                        yearInput.disabled = true;
+                        yearInput.value = "";
+                        propertyAgeInput.value = "";
+                        residualAgeInput.value = "";
+                      }
+                    }
+                    
+                    function calculatePropertyAge() {
+                      const currentYear = new Date().getFullYear();
+                      const year = parseInt(document.getElementById("constructionYear").value);
+                      const propertyAgeInput = document.getElementById("propertyAge");
+                      const residualAgeInput = document.getElementById("residualAge");
+                    
+                      if (!isNaN(year) && year <= currentYear) {
+                        const age = currentYear - year;
+                        propertyAgeInput.value = age;
+                        residualAgeInput.value = 60 - age;
+                      } else {
+                        propertyAgeInput.value = "";
+                        residualAgeInput.value = "";
+                      }
 
-                <div class="form-group">
-                    <label> Approx. age of the Property </label><span class="required">*</span></label>
-                    <input type="text" id="propertyAge" required>
-                </div>
-
-                <div class="form-group">
-                    <label> Residual age of the Property </label><span class="required">*</span></label>
-                    <input type="text" id="residualAge" required>
-                </div>
-
-                <div class="form-group">
-                    <label> Type of structure </label><span class="required">*</span></label>
-                    <input type="text" id="structureType" required>
-                </div>
+                      Container_2.constructionYear = year.value;
+                      Container_2.propertyAge = propertyAgeInput.value;
+                      Container_2.residualAge = residualAgeInput.value;
+                    }
+                    </script>
+                                      
 
                 <div class="form-group">
                     <label> Amenities provided </label><span class="required">*</span></label>
                     <input type="text" id="amenities" required>
                 </div>
 
-                <h3 style="color:#4169E1"><b>Tenure / Occupancy Details </b></h3>
-                <h3 style="color:#4169E1"><b>Status of Tenure </b></h3>                
+                <h3 style="color:#4169E1"><b>7 Tenure / Occupancy Details </b></h3>
+                <h4 style="color:#3f4147"><b>Status of Tenure</b></h4>                
 
                 <div class="form-group">
-                    <label>Owned /Rented<span class="required">*</span></label>
-                    <input type="text" id="ownedOrRented" required>
+                    <label>i) Owned/Rented<span class="required">*</span></label>
+                    <select id="ownedOrRented" required>
+                        <option value="">Select Status of Tenure</option>
+                        <option>Owned</option>
+                        <option>Rented</option>
+                      </select>
                 </div>
 
                 <div class="form-group">
-                    <label>No. of years of Occupancy<span class="required">*</span></label>
+                    <label>ii) No. of years of Occupancy<span class="required">*</span></label>
                     <input type="text" id="occupancyYears" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Relationship of tenant or owner<span class="required">*</span></label>
+                    <label>iii) Relationship of tenant or owner<span class="required">*</span></label>
                     <input type="text" id="relationOfTenant" required>
                 </div>
 
-                <h3 style="color:#4169E1"><b>Building Status & Valuation</b></h3>
+                <h3 style="color:#4169E1"><b>8 Building Status</b></h3>
 
                 <div class="form-group">
-                    <label>Existing building<span class="required">*</span></label>
-                    <input type="text" id="existingBuilding" required>
+                    <label>i) Existing building<span class="required">*</span></label>                    
+                    <select id="existingBuilding" required>
+                        <option value="">Select Existing Building</option>
+                        <option>Under Construction</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </select>
                 </div>
 
                 <div class="form-group">
-                    <label>Stage of construction<span class="required">*</span></label>
+                    <label>ii) Stage of construction<span class="required">*</span></label>
                     <input type="text" id="constructionStage" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Work completion<span class="required">*</span></label>
+                    <label>iii) If under construction, extent of completion <span class="required">*</span></label>
                     <input type="text" id="workCompletion" required>
                 </div>
 
+                <h3 style="color:#4169E1"><b>9 Violations if any Observed </b></h3>
+
                 <div class="form-group">
-                    <label>Nature and extent of violations<span class="required">*</span></label>
+                    <label>i) Nature and extent of violations<span class="required">*</span></label>
                     <textarea id="violations" required></textarea>
                 </div>
 
-                <h4>Area Details</h4>
+                <h3 style="color:#4169E1"><b>10 Area Details of the Property  </b></h3>
                 <div class="form-group">
-                    <label>Site Area<span class="required">*</span></label>
-                    <label>East to West<span class="required">*</span></label>
-                    <input type="text" id="eastToWest" required>
-                    <label>North to South<span class="required">*</span></label>
-                    <input type="text" id="northToSouth" required>
-                    <label>Totally measuring <span class="required">*</span></label>
-                    <input type="text" id="totallyMeasuring" required>
+                    <label>i) Site Area<span class="required">*</span></label>
+                    <div style="display: flex; gap: 20px;">
+                        <!-- As per Document -->
+                        <div>
+                            <h4>As per Document</h4>
+                            <label>East to West:</label>
+                            <input type="text" id="eastToWest_doc" required>
+                            <label>North to South:</label>
+                            <input type="text" id="northToSouth_doc" required>
+                            <label>Totally Measuring:</label>
+                            <input type="text" id="totallyMeasuring_doc" readonly>
+                        </div>
+                
+                        <!-- As per Actual -->
+                        <div>
+                            <h4>As per Actual</h4>
+                            <label>East to West:</label>
+                            <input type="text" id="eastToWest_actual" required>
+                            <label>North to South:</label>
+                            <input type="text" id="northToSouth_actual" required>
+                            <label>Totally Measuring:</label>
+                            <input type="text" id="totallyMeasuring_actual" readonly>
+                        </div>
+                
+                        <!-- As per Plan -->
+                        <div>
+                            <h4>As per Plan</h4>
+                            <label>East to West:</label>
+                            <input type="text" id="eastToWest_plan" required>
+                            <label>North to South:</label>
+                            <input type="text" id="northToSouth_plan" required>
+                            <label>Totally Measuring:</label>
+                            <input type="text" id="totallyMeasuring_plan" readonly>
+                        </div>
+                    </div>
                 </div>
 
+                <script>
+                    function parseMeasurement(input) {
+                        const feetInInches = 12;
+                        let totalInches = 0;
+
+                        const feetMatch = input.match(/(\d+)\s*'/);
+                        const inchMatch = input.match(/(\d+)\s*"/);
+
+                        if (feetMatch) totalInches += parseInt(feetMatch[1]) * feetInInches;
+                        if (inchMatch) totalInches += parseInt(inchMatch[1]);
+
+                        return totalInches / feetInInches; // return in feet (float)
+                    }
+
+                    function calculateArea(eastToWest, northToSouth) {
+                        return (parseMeasurement(eastToWest) * parseMeasurement(northToSouth)).toFixed(2) + ' sq.ft';
+                    }
+
+                    function autoCalculateAreas() {
+                        const eastWestTypes = ['doc', 'actual', 'plan'];
+
+                        eastWestTypes.forEach(type => {
+                            const ew = document.getElementById(`eastToWest_${type}`).value;
+                            const ns = document.getElementById(`northToSouth_${type}`).value;
+
+                            if (ew && ns) {
+                                document.getElementById(`totallyMeasuring_${type}`).value = calculateArea(ew, ns);
+                            }
+                        });
+                    }
+
+                    // Auto calculate on input change
+                    ['doc', 'actual', 'plan'].forEach(type => {
+                        document.getElementById(`eastToWest_${type}`).addEventListener('input', autoCalculateAreas);
+                        document.getElementById(`northToSouth_${type}`).addEventListener('input', autoCalculateAreas);
+                    });
+
+                </script>
+
                 <div class="form-group">
-                    <label>Carpet area<span class="required">*</span></label>
+                    <label>ii) Plinth area<span class="required">*</span></label>
+                    <input type="text" id="plinthArea" required>
+                </div>
+                <div class="form-group">
+                    <label>iii) Carpet area<span class="required">*</span></label>
                     <input type="text" id="carpetArea" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Saleable area<span class="required">*</span></label>
+                    <label>iv) Saleable area<span class="required">*</span></label>
                     <input type="text" id="saleableArea" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Remarks<span class="required">*</span></label>
+                    <label>v) Remarks<span class="required">*</span></label>
                     <input type="text" id="remarks" required>
+                </div>         
+                
+                <h3 style="color:#4169E1"><b>11 Valuation Note</b></h3>
+                <h4 style="color:#3f4147"><b>a </b></h4>                
+                <div class="form-group">
+                    <label>i) Mention the value as per Government Approved Rates also. <span class="required">*</span></label>
+                    <input type="text" id="govtValue" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Plinth area<span class="required">*</span></label>
-                    <input type="text" id="plinthArea" required>
+                    <label>ii) In case of variation of 20 % or more in the valuation proposed by the valuer and the Guideline value provided in the State Govt. notification or Income Tax Gazette justification on variation has to be given<span class="required">*</span></label>
+                    <input type="text" id="variationJustification" required>
+                </div>
+
+                <h4 style="color:#3f4147"><b>b Summary of Valuation </b></h4> 
+                <div class="form-group">
+                    <label>i) Guideline Rate<span class="required">*</span></label>
+                    <input type="text" id="guidelineRate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>ii) Market Rate<span class="required">*</span></label>
+                    <input type="text" id="marketRate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>iii) Land Value<span class="required">*</span></label>
+                    <input type="text" id="landValue" required>
+                </div>
+
+                <div class="form-group">
+                    <label>iv) Building Value<span class="required">*</span></label>
+                    <input type="text" id="buildingValue" required>
+                </div>
+
+                <div class="form-group">
+                    <label>v) Extra Items, Amenities & Services<span class="required">*</span></label>
+                    <input type="text" id="extraItems" required>
+                </div>
+
+                <div class="form-group">
+                    <label>vi) Fair Market Value (SAY) <span class="required">*</span></label>
+                    <input type="text" id="fairMarketValue" required>
+                </div>
+
+                <div class="form-group">
+                    <label>vii) Expected Rental Value<span class="required">*</span></label>
+                    <input type="text" id="rentalValue" required>
                 </div>
 
                 <button type="button" onclick="prevSection(2)">Previous</button>
                 <button type="button" onclick="nextSection(2)">Next</button>
-                <button id="generatePdfBtn" type="submit" >Gnerate Pdf</button>
+                <button id="generatePdfBtn" type="submit" >Generate Pdf</button>
             </div>                    
         </form>
     </div>
@@ -221,32 +543,92 @@
             }
 
             const Container_2 = {
-            livingStatus: document.getElementById('livingStatus').value,
-            bedroomStatus: document.getElementById('bedroomStatus').value,
-            toiletStatus: document.getElementById('toiletStatus').value,
-            kitchenStatus: document.getElementById('kitchenStatus').value,
-            totalFloors: document.getElementById('totalFloors').value,
-            propertyFloor: document.getElementById('propertyFloor').value,
-            constructionYear: document.getElementById('constructionYear').value,
-            propertyAge: document.getElementById('propertyAge').value,
-            residualAge: document.getElementById('residualAge').value,
-            structureType: document.getElementById('structureType').value,
-            amenities: document.getElementById('amenities').value,
-            ownedOrRented: document.getElementById('ownedOrRented').value,
-            occupancyYears: document.getElementById('occupancyYears').value,
-            relationOfTenant: document.getElementById('relationOfTenant').value,
-            existingBuilding: document.getElementById('existingBuilding').value,
-            constructionStage: document.getElementById('constructionStage').value,
-            workCompletion: document.getElementById('workCompletion').value,
-            violations: document.getElementById('violations').value,
-            eastToWest: document.getElementById('eastToWest').value,
-            northToSouth: document.getElementById('northToSouth').value,
-            totallyMeasuring: document.getElementById('totallyMeasuring').value,
-            plinthArea: document.getElementById('plinthArea').value,
-            carpetArea: document.getElementById('carpetArea').value,  
-            saleableArea: document.getElementById('saleableArea').value,  
-            remarks: document.getElementById('remarks').value 
-        };
+                // Existing fields
+                propertyFloor: document.getElementById('propertyFloor').value,
+
+                constructionYear: document.getElementById('constructionYear').value,
+                propertyAge: document.getElementById('propertyAge').value,
+                residualAge: document.getElementById('residualAge').value,
+                structureType: document.getElementById('structureType').value,
+
+                amenities: document.getElementById('amenities').value,
+                ownedOrRented: document.getElementById('ownedOrRented').value,
+                occupancyYears: document.getElementById('occupancyYears').value,
+                relationOfTenant: document.getElementById('relationOfTenant').value,
+                existingBuilding: document.getElementById('existingBuilding').value,
+                constructionStage: document.getElementById('constructionStage').value,
+                workCompletion: document.getElementById('workCompletion').value,
+                violations: document.getElementById('violations').value,
+                
+                siteAreaDetails: {
+                    asPerDocument: {
+                        eastToWest: document.getElementById('eastToWest_doc').value,
+                        northToSouth: document.getElementById('northToSouth_doc').value,
+                        totallyMeasuring: document.getElementById('totallyMeasuring_doc').value,
+                    },
+                    asPerActual: {
+                        eastToWest: document.getElementById('eastToWest_actual').value,
+                        northToSouth: document.getElementById('northToSouth_actual').value,
+                        totallyMeasuring: document.getElementById('totallyMeasuring_actual').value,
+                    },
+                    asPerPlan: {
+                        eastToWest: document.getElementById('eastToWest_plan').value,
+                        northToSouth: document.getElementById('northToSouth_plan').value,
+                        totallyMeasuring: document.getElementById('totallyMeasuring_plan').value,
+                    }
+                },
+
+                plinthArea: document.getElementById('plinthArea').value,
+                carpetArea: document.getElementById('carpetArea').value,
+                saleableArea: document.getElementById('saleableArea').value,
+                remarks: document.getElementById('remarks').value,
+                govtValue: document.getElementById('govtValue').value,
+                variationJustification: document.getElementById('variationJustification').value,
+                guidelineRate: document.getElementById('guidelineRate').value,
+                marketRate: document.getElementById('marketRate').value,
+                landValue: document.getElementById('landValue').value,
+                buildingValue: document.getElementById('buildingValue').value,
+                extraItems: document.getElementById('extraItems').value,
+                fairMarketValue: document.getElementById('fairMarketValue').value,
+                rentalValue: document.getElementById('rentalValue').value,
+
+                // Section f) Accommodation details
+                accommodationDetails: [
+                    { floor: 'Stilt Floor', included: document.getElementById('stiltCheckbox').checked, usage: document.getElementById('stiltUsage').value },
+                    { floor: 'Basement Floor', included: document.getElementById('basementCheckbox').checked, usage: document.getElementById('basementUsage').value },
+                    { floor: 'Ground Floor', included: document.getElementById('groundCheckbox').checked, usage: document.getElementById('groundUsage').value },
+                    { floor: 'First Floor', included: document.getElementById('firstCheckbox').checked, usage: document.getElementById('firstUsage').value },
+                    { floor: 'Second Floor', included: document.getElementById('secondCheckbox').checked, usage: document.getElementById('secondUsage').value },
+                    { floor: 'Third Floor', included: document.getElementById('thirdCheckbox').checked, usage: document.getElementById('thirdUsage').value },
+                    { floor: 'Fourth Floor', included: document.getElementById('fourthCheckbox').checked, usage: document.getElementById('fourthUsage').value },
+                    { floor: 'Terrace Floor', included: document.getElementById('terraceCheckbox').checked, usage: document.getElementById('terraceUsage').value },
+                ].filter(item => item.included), // only include selected ones
+
+                // Section g) Total Floors (as per sanction + as per actual)
+                totalFloors: (() => {
+                    const floors = [
+                        { name: 'Basement Floor', plan: 'planBasement', actual: 'actualBasement' },
+                        { name: 'Stilt Floor', plan: 'planStilt', actual: 'actualStilt' },
+                        { name: 'Ground Floor', plan: 'planGround', actual: 'actualGround' },
+                        { name: 'First Floor', plan: 'planFirst', actual: 'actualFirst' },
+                        { name: 'Second Floor', plan: 'planSecond', actual: 'actualSecond' },
+                        { name: 'Third Floor', plan: 'planThird', actual: 'actualThird' },
+                        { name: 'Fourth Floor', plan: 'planFourth', actual: 'actualFourth' },
+                        { name: 'Terrace Floor', plan: 'planTerrace', actual: 'actualTerrace' },
+                    ];
+
+                    const getFloors = (type) =>
+                        floors
+                            .filter(f => document.getElementById(f[type]).checked)
+                            .map(f => f.name)
+                            .join(' + ');
+
+                    return {
+                        asPerPlan: getFloors('plan') + (getFloors('plan') ? ' (AS PER PLAN)' : ''),
+                        asPerActual: getFloors('actual') + (getFloors('actual') ? ' (AS PER ACTUAL)' : '')
+                    };
+                })()
+            };
 
         //localStorage.removeItem('Container_2');
             // Save data to localStorage
