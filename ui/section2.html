@@ -509,7 +509,121 @@
              // If validation passes, load the previous section page
              window.location.href = 'section1.html';
         }
+        
 
+        document.addEventListener("DOMContentLoaded", function () {
+                const storageKey = 'Container_2';
+                const storedData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+            
+                function restoreValue(id, value) {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    if (el.type === 'checkbox') {
+                        el.checked = value;
+                    } else {
+                        el.value = value;
+                    }
+                }
+            
+                // === Restore Simple Fields ===
+                const simpleFields = [
+                    'propertyFloor', 'constructionYear', 'propertyAge', 'residualAge', 'structureType',
+                    'amenities', 'ownedOrRented', 'occupancyYears', 'relationOfTenant', 'existingBuilding',
+                    'constructionStage', 'workCompletion', 'violations', 'plinthArea', 'carpetArea',
+                    'saleableArea', 'remarks', 'govtValue', 'variationJustification', 'guidelineRate',
+                    'marketRate', 'landValue', 'buildingValue', 'extraItems', 'fairMarketValue', 'rentalValue'
+                ];
+                simpleFields.forEach(id => {
+                    if (storedData[id] !== undefined) restoreValue(id, storedData[id]);
+                });
+            
+                // === Restore Site Area Details (10.i) ===
+                if (storedData.siteAreaDetails) {
+                    const map = {
+                        asPerDocument: 'doc',
+                        asPerActual: 'actual',
+                        asPerPlan: 'plan'
+                    };
+            
+                    for (const section in map) {
+                        const type = map[section];
+                        const data = storedData.siteAreaDetails[section];
+                        if (data) {
+                            restoreValue(`eastToWest_${type}`, data.eastToWest);
+                            restoreValue(`northToSouth_${type}`, data.northToSouth);
+                            restoreValue(`totallyMeasuring_${type}`, data.totallyMeasuring);
+                        }
+                    }
+            
+                    // Recalculate areas
+                    if (typeof autoCalculateAreas === 'function') {
+                        setTimeout(autoCalculateAreas, 100);
+                    }
+                }
+            
+                // === Restore Accommodation Details (Section f) ===
+                if (Array.isArray(storedData.accommodationDetails)) {
+                    const floorMap = {
+                        'Stilt Floor': 'stilt',
+                        'Basement Floor': 'basement',
+                        'Ground Floor': 'ground',
+                        'First Floor': 'first',
+                        'Second Floor': 'second',
+                        'Third Floor': 'third',
+                        'Fourth Floor': 'fourth',
+                        'Terrace Floor': 'terrace'
+                    };
+            
+                    storedData.accommodationDetails.forEach(detail => {
+                        const key = floorMap[detail.floor];
+                        if (key) {
+                            restoreValue(`${key}Checkbox`, true);
+                            restoreValue(`${key}Usage`, detail.usage);
+                        }
+                    });
+                }
+            
+                // === Restore Total Floors (Section g) ===
+                if (storedData.totalFloors) {
+                    const allCheckboxes = {
+                        planBasement: 'Basement Floor',
+                        actualBasement: 'Basement Floor',
+                        planStilt: 'Stilt Floor',
+                        actualStilt: 'Stilt Floor',
+                        planGround: 'Ground Floor',
+                        actualGround: 'Ground Floor',
+                        planFirst: 'First Floor',
+                        actualFirst: 'First Floor',
+                        planSecond: 'Second Floor',
+                        actualSecond: 'Second Floor',
+                        planThird: 'Third Floor',
+                        actualThird: 'Third Floor',
+                        planFourth: 'Fourth Floor',
+                        actualFourth: 'Fourth Floor',
+                        planTerrace: 'Terrace Floor',
+                        actualTerrace: 'Terrace Floor'
+                    };
+            
+                    Object.keys(allCheckboxes).forEach(id => {
+                        const floorName = allCheckboxes[id];
+                        const valueStr = id.startsWith('plan') ? storedData.totalFloors.asPerPlan : storedData.totalFloors.asPerActual;
+                        if (valueStr && valueStr.includes(floorName)) {
+                            restoreValue(id, true);
+                        }
+                    });
+                }
+            
+                // === Reconnect inputs for live saving ===
+                const inputs = document.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    const eventType = input.type === 'checkbox' ? 'change' : 'input';
+                    input.addEventListener(eventType, () => {
+                        const updatedData = JSON.parse(localStorage.getItem(storageKey)) || {};
+                        updatedData[input.id] = input.type === 'checkbox' ? input.checked : input.value;
+                        localStorage.setItem(storageKey, JSON.stringify(updatedData));
+                    });
+                });
+            });
 
     </script>
 
@@ -517,7 +631,110 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
-
+    <script>
+      function captureAndSaveContainer2() {
+          const floors = [
+              { floor: 'Stilt Floor', key: 'stilt' },
+              { floor: 'Basement Floor', key: 'basement' },
+              { floor: 'Ground Floor', key: 'ground' },
+              { floor: 'First Floor', key: 'first' },
+              { floor: 'Second Floor', key: 'second' },
+              { floor: 'Third Floor', key: 'third' },
+              { floor: 'Fourth Floor', key: 'fourth' },
+              { floor: 'Terrace Floor', key: 'terrace' }
+          ];
+      
+          const Container_2 = {
+              propertyFloor: getVal('propertyFloor'),
+              constructionYear: getVal('constructionYear'),
+              propertyAge: getVal('propertyAge'),
+              residualAge: getVal('residualAge'),
+              structureType: getVal('structureType'),
+      
+              amenities: getVal('amenities'),
+              ownedOrRented: getVal('ownedOrRented'),
+              occupancyYears: getVal('occupancyYears'),
+              relationOfTenant: getVal('relationOfTenant'),
+              existingBuilding: getVal('existingBuilding'),
+              constructionStage: getVal('constructionStage'),
+              workCompletion: getVal('workCompletion'),
+              violations: getVal('violations'),
+      
+              siteAreaDetails: {
+                  asPerDocument: {
+                      eastToWest: getVal('eastToWest_doc'),
+                      northToSouth: getVal('northToSouth_doc'),
+                      totallyMeasuring: getVal('totallyMeasuring_doc'),
+                  },
+                  asPerActual: {
+                      eastToWest: getVal('eastToWest_actual'),
+                      northToSouth: getVal('northToSouth_actual'),
+                      totallyMeasuring: getVal('totallyMeasuring_actual'),
+                  },
+                  asPerPlan: {
+                      eastToWest: getVal('eastToWest_plan'),
+                      northToSouth: getVal('northToSouth_plan'),
+                      totallyMeasuring: getVal('totallyMeasuring_plan'),
+                  }
+              },
+      
+              plinthArea: getVal('plinthArea'),
+              carpetArea: getVal('carpetArea'),
+              saleableArea: getVal('saleableArea'),
+              remarks: getVal('remarks'),
+              govtValue: getVal('govtValue'),
+              variationJustification: getVal('variationJustification'),
+              guidelineRate: getVal('guidelineRate'),
+              marketRate: getVal('marketRate'),
+              landValue: getVal('landValue'),
+              buildingValue: getVal('buildingValue'),
+              extraItems: getVal('extraItems'),
+              fairMarketValue: getVal('fairMarketValue'),
+              rentalValue: getVal('rentalValue'),
+      
+              accommodationDetails: floors.map(f => ({
+                  floor: f.floor,
+                  included: document.getElementById(`${f.key}Checkbox`).checked,
+                  usage: getVal(`${f.key}Usage`)
+              })).filter(f => f.included),
+      
+              totalFloors: (() => {
+                  const allFloors = [
+                      { name: 'Basement Floor', plan: 'planBasement', actual: 'actualBasement' },
+                      { name: 'Stilt Floor', plan: 'planStilt', actual: 'actualStilt' },
+                      { name: 'Ground Floor', plan: 'planGround', actual: 'actualGround' },
+                      { name: 'First Floor', plan: 'planFirst', actual: 'actualFirst' },
+                      { name: 'Second Floor', plan: 'planSecond', actual: 'actualSecond' },
+                      { name: 'Third Floor', plan: 'planThird', actual: 'actualThird' },
+                      { name: 'Fourth Floor', plan: 'planFourth', actual: 'actualFourth' },
+                      { name: 'Terrace Floor', plan: 'planTerrace', actual: 'actualTerrace' }
+                  ];
+                  const getFloors = type =>
+                      allFloors.filter(f => document.getElementById(f[type]).checked).map(f => f.name).join(' + ');
+                  return {
+                      asPerPlan: getFloors('plan') + (getFloors('plan') ? ' (AS PER PLAN)' : ''),
+                      asPerActual: getFloors('actual') + (getFloors('actual') ? ' (AS PER ACTUAL)' : '')
+                  };
+              })()
+          };
+      
+          localStorage.setItem('Container_2', JSON.stringify(Container_2));
+      }
+      
+      function getVal(id) {
+          const el = document.getElementById(id);
+          return el ? el.value : '';
+      }
+      
+      // Attach listeners for all form inputs
+      document.addEventListener("DOMContentLoaded", () => {
+          document.querySelectorAll('input, select, textarea').forEach(el => {
+              const type = el.type === 'checkbox' ? 'change' : 'input';
+              el.addEventListener(type, captureAndSaveContainer2);
+          });
+      });
+      </script>
+      
     <script>
 
         // Form submission handler
@@ -542,6 +759,7 @@
                 return;
             }
 
+            
             const Container_2 = {
                 // Existing fields
                 propertyFloor: document.getElementById('propertyFloor').value,
@@ -664,10 +882,10 @@
         //doc.line(leftMargin, footerY, pageWidth - rightMargin, footerY);    
         
         // Page number on right
-        doc.text('Page 2', pageWidth - rightMargin - 40, footerY);
-        doc.text('Ref No.', pageWidth - rightMargin - 40, footerY + 3);
+        doc.text('Page 2', pageWidth - rightMargin - 16, footerY + 3.5);
+        doc.text('Ref No.', leftMargin, footerY + 3.5);
         // Reference number 
-        doc.text('TP/JCB/K-BKR/R-09/12/2024-25', pageWidth - rightMargin - 40, footerY + 6);
+        doc.text('TP/JCB/K-BKR/R-09/12/2024-25',leftMargin, footerY + 7);
     }
 </script>
 

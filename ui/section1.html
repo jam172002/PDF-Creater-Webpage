@@ -371,7 +371,7 @@
     
                     <div class="form-group">
                         <label>d) Approved and Land Use<span class="required">*</span></label>
-                        <input type="text" id="landUse" required>
+                    
                         <select id="landUse" required>
                             <option value="Residential">Residential</option>
                             <option value="Residential Main">Residential Main</option>
@@ -387,7 +387,7 @@
     
                     <div class="form-group">
                         <label>e) Types of property<span class="required">*</span></label>
-                        <input type="text" id="typeOfProperty" required>
+                        
                         <select id="propertyType" required>
                             <option value="Residential Building">Residential Building</option>
                             <option value="Residential cum Commercial Building">Residential cum Commercial Building</option>
@@ -537,6 +537,68 @@
        
         });
 
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const storageKey = 'Container_1';
+            const storedData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+
+            // Function to set field value
+            function setFieldValue(id, value) {
+                const el = document.getElementById(id);
+                if (!el) return;
+
+                if (el.type === 'checkbox') {
+                    el.checked = value;
+                    const dateInput = document.getElementById(id.replace("Checkbox", "Date"));
+                    if (dateInput) {
+                        dateInput.disabled = !value;
+                    }
+                } else if (el.type === 'date') {
+                    el.value = value;
+                    el.disabled = false;
+                } else {
+                    el.value = value;
+                }
+            }
+
+            // Load values into UI
+            for (const key in storedData) {
+                setFieldValue(key, storedData[key]);
+            }
+
+            // Delay sub-purpose restore until after it's rebuilt
+            if (storedData['mainPurpose']) {
+                document.getElementById('mainPurpose').value = storedData['mainPurpose'];
+                updateSubPurpose(); // rebuild sub-purpose options
+                setTimeout(() => {
+                    if (storedData['subPurpose']) {
+                        document.getElementById('subPurpose').value = storedData['subPurpose'];
+                    }
+                }, 100); // short delay to ensure subPurpose is updated
+            }
+
+            // Save on input/change
+            const inputs = document.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                const eventType = input.type === 'checkbox' ? 'change' : 'input';
+                input.addEventListener(eventType, () => {
+                    const currentData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+                    currentData[input.id] = input.type === 'checkbox' ? input.checked : input.value;
+                    localStorage.setItem(storageKey, JSON.stringify(currentData));
+
+                    if (input.type === 'checkbox' && input.id.endsWith("Date") === false) {
+                        const dateInput = document.getElementById(input.id.replace("Checkbox", "Date"));
+                        if (dateInput) dateInput.disabled = !input.checked;
+                    }
+                });
+            });
+
+            // Ensure updateSubPurpose is triggered when mainPurpose is changed
+            document.getElementById('mainPurpose').addEventListener('change', function () {
+                updateSubPurpose();
+            });
+        });
+
     </script>
 
 <script>
@@ -568,10 +630,10 @@
         //doc.line(leftMargin, footerY, pageWidth - rightMargin, footerY);    
         
         // Page number on right
-        doc.text('Page 2', pageWidth - rightMargin - 40, footerY);
-        doc.text('Ref No.', pageWidth - rightMargin - 40, footerY + 3.5);
+        doc.text('Page 2', pageWidth - rightMargin - 16, footerY + 3.5);
+        doc.text('Ref No.', leftMargin, footerY + 3.5);
         // Reference number 
-        doc.text('TP/JCB/K-BKR/R-09/12/2024-25', pageWidth - rightMargin - 40, footerY + 7);
+        doc.text('TP/JCB/K-BKR/R-09/12/2024-25',leftMargin, footerY + 7);
     }
 </script>
 
