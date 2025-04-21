@@ -46,21 +46,21 @@ function Container2(doc) {
             yPos = table.addRow('k', 'Type of structure', Container_2.structureType);
             yPos = table.addRow('l', 'Amenities provided', Container_2.amenities);
 
-            yPos = table.addRow('7', 'Tenure / Occupancy Details', '', 8, true);
-            yPos = table.addRow('', 'Status of Tenure', '', 8, true);
+            yPos = table.addRow('7', 'Tenure / Occupancy Details', '', 6, true);
+            yPos = table.addRow('', 'Status of Tenure', '', 6, true);
             yPos = table.addRow('i', 'Owned /Rented', Container_2.ownedOrRented);
             yPos = table.addRow('ii', 'No. of years of Occupancy', Container_2.occupancyYears);
             yPos = table.addRow('iii', 'Relationship of tenant or owner', Container_2.relationOfTenant);
 
-            yPos = table.addRow('8', 'Building Status', '', 8, true);
+            yPos = table.addRow('8', 'Building Status', '', 6, true);
             yPos = table.addRow('i', 'Existing building', Container_2.existingBuilding);
             yPos = table.addRow('ii', 'Stage of construction', Container_2.constructionStage);
             yPos = table.addRow('iii', 'If under construction, extent of completion ', Container_2.workCompletion);
 
-            yPos = table.addRow('9', 'Violations if any observed', '', 8, true);
+            yPos = table.addRow('9', 'Violations if any observed', '', 6, true);
             yPos = table.addRow('i', 'Nature and extent of violations', Container_2.violations);
 
-            yPos = table.addRow('10', 'Area Details of the Property', '', 8, true);
+            yPos = table.addRow('10', 'Area Details of the Property', '', 6, true);
             yPos = table.addAdjoiningPropertiesRow('a', 'Adjoining Properties:', 'As per Document', 'As per Actuals',true);
             yPos = table.addAdjoiningPropertiesRow('', 'East to West', Container_2.siteAreaDetails.asPerDocument.eastToWest, Container_2.siteAreaDetails.asPerActual.northToSouth);
             yPos = table.addAdjoiningPropertiesRow('', 'North to South', Container_2.siteAreaDetails.asPerDocument.eastToWest, Container_2.siteAreaDetails.asPerActual.northToSouth);
@@ -71,11 +71,11 @@ function Container2(doc) {
             yPos = table.addRow('iii', 'Carpet area', Container_2.carpetArea);
             yPos = table.addRow('iv', 'Saleable area', Container_2.saleableArea);
             yPos = table.addRow('v', 'Remarks', Container_2.remarks);
-            yPos = table.addRow('11', 'Valuation Note', '', 8, true);
+            yPos = table.addRow('11', 'Valuation Note', '', 6, true);
             yPos = table.addRow('a (i) ', 'Mention the value as per Government Approved Rates also', Container_2.govtValue);
 
             yPos = table.addRow('ii', 'In case of variation of 20 % or more in the valuation proposed by the valuer and the Guideline value provided in the State Govt. notification or Income Tax Gazette justification on variation has to be given',Container_2.variationJustification);
-            yPos = table.addRow('b', 'Summary of Valuation', '', 8, true);
+            yPos = table.addRow('b', 'Summary of Valuation', '', 6, true);
             yPos = table.addRow('i', 'Guideline Rate ',Container_2.guidelineRate);
             yPos = table.addRow('ii', 'Market Rate',Container_2.marketRate);
 

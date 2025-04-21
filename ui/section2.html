@@ -458,9 +458,19 @@
                 </div>
 
                 <div class="form-group">
-                    <label>vi) Fair Market Value (SAY) <span class="required">*</span></label>
-                    <input type="text" id="fairMarketValue" required>
-                </div>
+                  <label>vi) Fair Market Value (SAY) <span class="required">*</span></label>
+                  <input type="text" id="fairMarketValue" required>
+              </div>
+
+              <div class="form-group">
+                <label>vii) Realizable Value @ 90% <span class="required">*</span></label>
+                <input type="text" id="realizableValue" required>
+            </div>
+
+            <div class="form-group">
+              <label>vi) Forced Distressed Sale Value <span class="required">*</span></label>
+              <input type="text" id="forcedDistressedSaleValue" required>
+          </div>
 
                 <div class="form-group">
                     <label>vii) Expected Rental Value<span class="required">*</span></label>
@@ -531,7 +541,7 @@
                     'amenities', 'ownedOrRented', 'occupancyYears', 'relationOfTenant', 'existingBuilding',
                     'constructionStage', 'workCompletion', 'violations', 'plinthArea', 'carpetArea',
                     'saleableArea', 'remarks', 'govtValue', 'variationJustification', 'guidelineRate',
-                    'marketRate', 'landValue', 'buildingValue', 'extraItems', 'fairMarketValue', 'rentalValue'
+                    'marketRate', 'landValue', 'buildingValue', 'extraItems', 'realizableValue', 'fairMarketValue', 'rentalValue'
                 ];
                 simpleFields.forEach(id => {
                     if (storedData[id] !== undefined) restoreValue(id, storedData[id]);
@@ -689,6 +699,8 @@
               landValue: getVal('landValue'),
               buildingValue: getVal('buildingValue'),
               extraItems: getVal('extraItems'),
+              forcedDistressedSaleValue: getVal('forcedDistressedSaleValue'),
+              realizableValue: getVal('realizableValue'),
               fairMarketValue: getVal('fairMarketValue'),
               rentalValue: getVal('rentalValue'),
       
@@ -807,6 +819,8 @@
                 landValue: document.getElementById('landValue').value,
                 buildingValue: document.getElementById('buildingValue').value,
                 extraItems: document.getElementById('extraItems').value,
+                realizableValue: document.getElementById('realizableValue').value,
+                forcedDistressedSaleValue: document.getElementById('forcedDistressedSaleValue').value,
                 fairMarketValue: document.getElementById('fairMarketValue').value,
                 rentalValue: document.getElementById('rentalValue').value,
 
