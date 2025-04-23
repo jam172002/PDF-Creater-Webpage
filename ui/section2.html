@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valuation Report Generator Section 2</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body>
@@ -477,9 +479,21 @@
                     <input type="text" id="rentalValue" required>
                 </div>
 
-                <button type="button" onclick="prevSection(2)">Previous</button>
-                <button type="button" onclick="nextSection(2)">Next</button>
-                <button id="generatePdfBtn" type="submit" >Generate Pdf</button>
+               
+                 <!-- Buttons -->
+            <div class="button-group">
+              <button type="button" onclick="prevSection(2)">
+                  <i class="fa-solid fa-arrow-left"></i>
+                  Previous
+              </button>
+              
+              <button type="button" onclick="nextSection(2)">
+                  Next
+                  <i class="fa-solid fa-arrow-right"></i>
+              </button>
+          
+              <button id="generatePdfBtn"><i class="fas fa-file-pdf"></i> Generate PDF</button>
+          </div>
             </div>                    
         </form>
     </div>

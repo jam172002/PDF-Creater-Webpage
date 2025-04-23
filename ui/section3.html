@@ -6,431 +6,259 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valuation Report Generator</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
         <h1>Valuation Report Generator Section 3</h1>
         <form id="valuationForm">          
-
-            <!-- Container 3 -->
             <div class="form-section" id="section3">
-                
-                <div class="form-section" id="section4">
-                    <h3 style="color:#4169E1"><b>Building Value</b></h3>
-    
-                    <div class="table-container">
-                        <table id="buildingValueTable" class="building-value-table">
-                            <thead>
-                                <tr>                                    
-                                    <th>Particulars</th>
-                                    <th>Roof Type</th>
-                                    <th>Area (sf)</th>
-                                    <th>Rate (Rs)</th>
-                                    <th>Amount (Rs)</th>
-                                    <th>Deprin. (%)</th>
-                                    <th>Deprin. Amount</th>
-                                    <th>Net Amount</th>                                    
-                                </tr>
-                            </thead>
-                            <tbody id="buildingValueTableBody">
-                                
-                            </tbody>
-                        </table>
-                        
-                    
-    
-                        <h4>As Per Actuals</h4>
-                        <div id="actuals-container"></div>
-                        <button class="add-row-bt" onclick="addRow('actuals-container', 'APA')">Add Row (As Per Actuals)</button>
-                        <div class="total-row">
-                            
-                            <div class="form-group"><input type="number"  placeholder=" " readonly></div>
-                            <div class="form-group"><input type="number"  placeholder=" " readonly></div>
-                            <div class="form-group"><input type="number" id="totalAreaActuals" placeholder="Total Area (SFT)" readonly></div>
-                            <div class="form-group"><input type="number"  placeholder=" " readonly></div>
-                            <div class="form-group"><input type="number" id="totalAmountActuals" placeholder="Total Amount (Rs)" readonly></div>
-                            <div class="form-group"><input type="number"  placeholder=" " readonly></div>
-                            <div class="form-group"><input type="number" id="totalDeprnAmountActuals" placeholder="Total Depreciation Amount" readonly></div>
-                            <div class="form-group"><input type="number" id="totalNetAmountActuals" placeholder="Total Net Amount" readonly></div>
-                            <div> <h4>Totals</h4> </div>
+                <h3 style="color:#4169E1"><b>A. Building Value</b></h3>
+              
+                <div class="table-container">
+                  <table id="buildingValueTable" class="building-value-table">
+                    <thead>
+                      <tr>
+                        <th>Particulars</th>
+                        <th>Roof Type</th>
+                        <th>Area (sf)</th>
+                        <th>Rate (Rs)</th>
+                        <th>Amount (Rs)</th>
+                        <th>Deprin. (%)</th>
+                        <th>Deprin. Amount</th>
+                        <th>Net Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody id="buildingValueTableBody"></tbody>
+                  </table>
+              
+                  <h4>As Per Actuals</h4>
+                  <div id="actuals-container"></div>
+                  <button class="add-row-bt" onclick="addRow('actuals-container', 'APA')">Add Row (As Per Actuals)</button>
+                  <div class="total-row" id="totals-actuals">
+                    <div class="form-group"><input type="number" readonly></div>
+                    <div class="form-group"><input type="number" readonly></div>
+                    <div class="form-group"><input type="number" id="totalAreaActuals" placeholder="Total Area (SFT)" readonly></div>
+                    <div class="form-group"><input type="number" readonly></div>
+                    <div class="form-group"><input type="number" id="totalAmountActuals" placeholder="Total Amount (Rs)" readonly></div>
+                    <div class="form-group"><input type="number" readonly></div>
+                    <div class="form-group"><input type="number" id="totalDeprnAmountActuals" placeholder="Total Depreciation Amount" readonly></div>
+                    <div class="form-group"><input type="number" id="totalNetAmountActuals" placeholder="Total Net Amount" readonly></div>
+                    <div><h4>Totals</h4></div>
+                  </div>
+              
+                  <h4>As Per Plan</h4>
+                  <div id="plan-container"></div>
+                  <button class="add-row-bt" onclick="addRow('plan-container', 'APP')">Add Row (As Per Plan)</button>
+                  <div class="total-row" id="totals-plan">
+                    <div class="form-group"><input type="number" readonly></div>
+                    <div class="form-group"><input type="number" readonly></div>
+                    <div class="form-group"><input type="number" id="totalAreaPlan" placeholder="Total Area (SFT)" readonly></div>
+                    <div class="form-group"><input type="number" readonly></div>
+                    <div class="form-group"><input type="number" id="totalAmountPlan" placeholder="Total Amount (Rs)" readonly></div>
+                    <div class="form-group"><input type="number" readonly></div>
+                    <div class="form-group"><input type="number" id="totalDeprnAmountPlan" placeholder="Total Depreciation Amount" readonly></div>
+                    <div class="form-group"><input type="number" id="totalNetAmountPlan" placeholder="Total Net Amount" readonly></div>
+                    <div><h4>Totals</h4></div>
+                  </div>
+              
+                  <style>
+                    .row, .total-row {
+                      display: flex;
+                      gap: 10px;
+                      margin: 10px 0;
+                      flex-wrap: wrap;
+                    }
+                    .total-row {
+                      display: none;
+                      align-items: center;
+                    }
+                    .form-group {
+                      flex: 1;
+                      min-width: 100px;
+                    }
+                  </style>
+              
+                  <script>
+                    const floors = ["Stilt Floor", "Ground Floor", "First Floor", "Second Floor", "Third Floor", "Fourth Floor", "Fifth Floor", "Sixth Floor", "Seventh Floor", "Eighth Floor", "Ninth Floor", "Tenth Floor"];
+              
+                    function addRow(containerId, prefix) {
+                      const container = document.getElementById(containerId);
+                      const rowId = Date.now();
+                      const row = document.createElement("div");
+                      row.classList.add("row");
+                      row.setAttribute("data-id", rowId);
+                      row.innerHTML = `
+                        <div class="form-group">
+                          <select name="${prefix}_Floor">
+                            <option value="" disabled selected>Select Floor</option>
+                            ${floors.map(floor => `<option value="${floor}">${floor}</option>`).join('')}
+                          </select>
                         </div>
-
-                        <h4>As Per Plan</h4>
-                        <div id="plan-container"></div>
-                        <button class="add-row-bt" onclick="addRow('plan-container', 'APP')">Add Row (As Per Plan)</button>
-                        <div class="total-row">
-                            <div class="form-group"><input type="number"  placeholder=" " readonly></div>
-                            <div class="form-group"><input type="number"  placeholder=" " readonly></div>
-                            <div class="form-group"><input type="number" id="totalAreaPlan" placeholder="Total Area (SFT)" readonly></div>
-                            <div class="form-group"><input type="number"  placeholder=" " readonly></div>
-                            <div class="form-group"><input type="number" id="totalAmountPlan" placeholder="Total Amount (Rs)" readonly></div>
-                            <div class="form-group"><input type="number"  placeholder=" " readonly></div>
-                            <div class="form-group"><input type="number" id="totalDeprnAmountPlan" placeholder="Total Depreciation Amount" readonly></div>
-                            <div class="form-group"><input type="number" id="totalNetAmountPlan" placeholder="Total Net Amount" readonly></div>
-                            <div> <h4>Totals</h4> </div>
-                        </div>
-                        <script>
-                                const floors = ["Stilt Floor", "Ground Floor", "First Floor", "Second Floor", "Third Floor", "Fourth Floor", "Fifth Floor", "Sixth Floor", "Seventh Floor", "Eighth Floor", "Ninth Floor", "Tenth Floor"];
-
-                                function addRow(containerId, prefix) {
-                                    const container = document.getElementById(containerId);
-                                    const rowId = Date.now();
-                                    
-                                    let row = document.createElement("div");
-                                    row.classList.add("row");
-                                    row.setAttribute("data-id", rowId);
-                                    row.innerHTML = `
-                                        <div class="form-group">
-                                            <select name="${prefix}_Floor" onchange="updateNames(${rowId}, '${prefix}')">
-                                                <option value="" disabled selected>Select Floor</option>
-                                                ${floors.map(floor => `<option value="${floor}">${floor}</option>`).join('')}
-                                            </select>
-                                        </div>
-                                        <div class="form-group"><input type="text" name="${prefix}_RoofType" placeholder="Roof Type" required></div>
-                                        <div class="form-group"><input type="number" name="${prefix}_Area" placeholder="Area (SFT)" required></div>
-                                        <div class="form-group"><input type="number" name="${prefix}_Rate" placeholder="Rate (Rs)" required></div>
-                                        <div class="form-group"><input type="number" name="${prefix}_Amount" placeholder="Amount (Rs)" readonly></div>
-                                        <div class="form-group"><input type="number" name="${prefix}_Deprn" placeholder="Depreciation (%)" required></div>
-                                        <div class="form-group"><input type="number" name="${prefix}_DeprnAmount" placeholder="Depreciation Amount" readonly></div>
-                                        <div class="form-group"><input type="number" name="${prefix}_NetAmount" placeholder="Net Amount" readonly></div>
-                                        <div class="form-group"><button class="delete-row-btn" onclick="removeRow(${rowId}, '${containerId}')">X</button></div>
-                                    `;
-                                    container.appendChild(row);
-                                    saveData();
-                                     // Add event listeners to the new row's input fields
-                                    const areaInput = row.querySelector(`input[name='${prefix}_Area']`);
-                                    const rateInput = row.querySelector(`input[name='${prefix}_Rate']`);
-                                    const deprnInput = row.querySelector(`input[name='${prefix}_Deprn']`);
-
-                                    areaInput.addEventListener('input', () => {
-                                        calculateAmount(row);
-                                        calculateTotals(containerId);
-                                    });
-
-                                    rateInput.addEventListener('input', () => {
-                                        calculateAmount(row);
-                                        calculateTotals(containerId);
-                                    });
-
-                                    deprnInput.addEventListener('input', () => {
-                                        calculateDepreciation(row);
-                                        calculateTotals(containerId);
-                                    });
-
-                                    // Initial calculation of totals after adding the row
-                                    calculateTotals(containerId);
-                                }
-                                
-                            function calculateTotals(containerId) {
-                                const totalArea = document.getElementById(containerId === 'actuals-container' ? 'totalAreaActuals' : 'totalAreaPlan');
-                                const totalAmount = document.getElementById(containerId === 'actuals-container' ? 'totalAmountActuals' : 'totalAmountPlan');
-                                const totalDeprnAmount = document.getElementById(containerId === 'actuals-container' ? 'totalDeprnAmountActuals' : 'totalDeprnAmountPlan');
-                                const totalNetAmount = document.getElementById(containerId === 'actuals-container' ? 'totalNetAmountActuals' : 'totalNetAmountPlan');
-
-                                let areaTotal = 0;
-                                let amountTotal = 0;
-                                let deprnAmountTotal = 0;
-                                let netAmountTotal = 0;
-
-                                document.querySelectorAll(`#${containerId} .row`).forEach(row => {
-                                    const area = parseFloat(row.querySelector('input[name$="_Area"]').value);
-                                    const amount = parseFloat(row.querySelector('input[name$="_Amount"]').value);
-                                    const deprnAmount = parseFloat(row.querySelector('input[name$="_DeprnAmount"]').value);
-                                    const netAmount = parseFloat(row.querySelector('input[name$="_NetAmount"]').value);
-
-                                    if (!isNaN(area)) areaTotal += area;
-                                    if (!isNaN(amount)) amountTotal += amount;
-                                    if (!isNaN(deprnAmount)) deprnAmountTotal += deprnAmount;
-                                    if (!isNaN(netAmount)) netAmountTotal += netAmount;
-                                });
-
-                                totalArea.value = areaTotal.toFixed(2);
-                                totalAmount.value = amountTotal.toFixed(2);
-                                totalDeprnAmount.value = deprnAmountTotal.toFixed(2);
-                                totalNetAmount.value = netAmountTotal.toFixed(2);
-                            }
-
-                                function removeRow(rowId, containerId) {
-                                    document.querySelector(`[data-id='${rowId}']`).remove();
-                                    saveData();
-                                }
-
-                                function updateNames(rowId, prefix) {
-                                    const row = document.querySelector(`[data-id='${rowId}']`);
-                                    const floorName = row.querySelector(`select[name='${prefix}_Floor']`).value.replace(/\s+/g, '').toLowerCase();
-                                    if (!floorName) return;
-
-                                    row.querySelectorAll("input").forEach(input => {
-                                        let baseName = input.name.split('_').slice(-1)[0]; 
-                                        input.name = `${prefix}_${floorName}_${baseName}`;
-                                    });
-
-                                    saveData();
-                                }
-
-                                document.addEventListener('input', function(e) {
-                                    if (e.target.matches('input[name$="_Rate"], input[name$="_Area"]')) {
-                                        const row = e.target.closest('.row');
-                                        calculateAmount(row);
-                                        saveData();
-                                    }
-                                    if (e.target.matches('input[name$="_Deprn"]')) {
-                                        const row = e.target.closest('.row');
-                                        calculateDepreciation(row);
-                                        saveData();
-                                    }
-                                });
-
-                                function calculateAmount(row) {
-                                    const rate = parseFloat(row.querySelector('input[name$="_Rate"]').value);
-                                    const area = parseFloat(row.querySelector('input[name$="_Area"]').value);
-                                    if (!isNaN(rate) && !isNaN(area)) {
-                                        const amount = rate * area;
-                                        row.querySelector('input[name$="_Amount"]').value = amount.toFixed(2);
-                                        calculateDepreciation(row);
-                                    }
-                                }
-
-                                function calculateDepreciation(row) {
-                                    const amount = parseFloat(row.querySelector('input[name$="_Amount"]').value);
-                                    const deprnPercent = parseFloat(row.querySelector('input[name$="_Deprn"]').value);
-                                    if (!isNaN(amount) && !isNaN(deprnPercent)) {
-                                        const deprnAmount = (amount * (deprnPercent / 100)).toFixed(2);
-                                        const netAmount = (amount - deprnAmount).toFixed(2);
-                                        row.querySelector('input[name$="_DeprnAmount"]').value = deprnAmount;
-                                        row.querySelector('input[name$="_NetAmount"]').value = netAmount;
-                                    }
-                                }
-
-                                function saveData() {
-                                    let actualsData = [];
-                                    let planData = [];
-
-                                    document.querySelectorAll("#actuals-container .row").forEach(row => {
-                                        let rowData = {};
-                                        row.querySelectorAll("input, select").forEach(input => {
-                                            rowData[input.name] = input.value;
-                                        });
-                                        actualsData.push(rowData);
-                                    });
-
-                                    document.querySelectorAll("#plan-container .row").forEach(row => {
-                                        let rowData = {};
-                                        row.querySelectorAll("input, select").forEach(input => {
-                                            rowData[input.name] = input.value;
-                                        });
-                                        planData.push(rowData);
-                                    });
-                                    // Capture totals
-                                    const totalAreaActuals = document.getElementById('totalAreaActuals').value;
-                                    const totalAmountActuals = document.getElementById('totalAmountActuals').value;
-                                    const totalDeprnAmountActuals = document.getElementById('totalDeprnAmountActuals').value;
-                                    const totalNetAmountActuals = document.getElementById('totalNetAmountActuals').value;
-
-                                    const totalAreaPlan = document.getElementById('totalAreaPlan').value;
-                                    const totalAmountPlan = document.getElementById('totalAmountPlan').value;
-                                    const totalDeprnAmountPlan = document.getElementById('totalDeprnAmountPlan').value;
-                                    const totalNetAmountPlan = document.getElementById('totalNetAmountPlan').value;
-
-                                    const actualTotals = {
-                                        totalArea: totalAreaActuals,
-                                        totalAmount: totalAmountActuals,
-                                        totalDeprnAmount: totalDeprnAmountActuals,
-                                        totalNetAmount: totalNetAmountActuals
-                                    }
-
-                                    const planTotals = {
-                                        totalArea: totalAreaPlan,
-                                        totalAmount: totalAmountPlan,
-                                        totalDeprnAmount: totalDeprnAmountPlan,
-                                        totalNetAmount: totalNetAmountPlan
-                                    }
-                                    localStorage.setItem("actualsData", JSON.stringify(actualsData));
-                                    localStorage.setItem("planData", JSON.stringify(planData));
-
-                                    localStorage.setItem("actualTotals", JSON.stringify(actualTotals));
-                                    localStorage.setItem("planTotals", JSON.stringify(planTotals));
-
-
-                                    console.log(actualsData);
-                                    console.log(planData);
-                                }
-
-                                
-                            </script>
-                <h4>Valuation Details</h4>
-
-                <div class="form-group">
-                    <label>Government Approved Rate<span class="required">*</span></label>
-                    <input type="text" id="govtValue" required>
+                        <div class="form-group"><input type="text" name="${prefix}_RoofType" placeholder="Roof Type" required></div>
+                        <div class="form-group"><input type="number" name="${prefix}_Area" placeholder="Area (SFT)" required></div>
+                        <div class="form-group"><input type="number" name="${prefix}_Rate" placeholder="Rate (Rs)" required></div>
+                        <div class="form-group"><input type="number" name="${prefix}_Amount" placeholder="Amount (Rs)" readonly></div>
+                        <div class="form-group"><input type="number" name="${prefix}_Deprn" placeholder="Depreciation (%)" required></div>
+                        <div class="form-group"><input type="number" name="${prefix}_DeprnAmount" placeholder="Depreciation Amount" readonly></div>
+                        <div class="form-group"><input type="number" name="${prefix}_NetAmount" placeholder="Net Amount" readonly></div>
+                        <div class="form-group"><button class="delete-row-btn" onclick="removeRow(${rowId}, '${containerId}')">X</button></div>
+                      `;
+                      container.appendChild(row);
+                      bindInputEvents(row, containerId, prefix);
+                      toggleTotalVisibility(containerId);
+                      calculateTotals(containerId);
+                      saveData();
+                    }
+              
+                    function bindInputEvents(row, containerId, prefix) {
+                      ['Area', 'Rate', 'Deprn'].forEach(field => {
+                        const input = row.querySelector(`input[name='${prefix}_${field}']`);
+                        if (input) {
+                          input.addEventListener('input', () => {
+                            calculateAmount(row);
+                            calculateDepreciation(row);
+                            calculateTotals(containerId);
+                            saveData();
+                          });
+                        }
+                      });
+                    }
+              
+                    function removeRow(rowId, containerId) {
+                      const row = document.querySelector(`[data-id='${rowId}']`);
+                      if (row) row.remove();
+                      toggleTotalVisibility(containerId);
+                      calculateTotals(containerId);
+                      saveData();
+                    }
+              
+                    function toggleTotalVisibility(containerId) {
+                      const rowCount = document.querySelectorAll(`#${containerId} .row`).length;
+                      const totalRow = document.getElementById(`totals-${containerId.split('-')[0]}`);
+                      totalRow.style.display = rowCount > 0 ? 'flex' : 'none';
+                    }
+              
+                    function calculateAmount(row) {
+                      const rate = parseFloat(row.querySelector('input[name$="_Rate"]').value);
+                      const area = parseFloat(row.querySelector('input[name$="_Area"]').value);
+                      if (!isNaN(rate) && !isNaN(area)) {
+                        const amount = rate * area;
+                        row.querySelector('input[name$="_Amount"]').value = amount.toFixed(2);
+                        calculateDepreciation(row);
+                      }
+                    }
+              
+                    function calculateDepreciation(row) {
+                      const amount = parseFloat(row.querySelector('input[name$="_Amount"]').value);
+                      const deprn = parseFloat(row.querySelector('input[name$="_Deprn"]').value);
+                      if (!isNaN(amount) && !isNaN(deprn)) {
+                        const deprnAmount = amount * (deprn / 100);
+                        const netAmount = amount - deprnAmount;
+                        row.querySelector('input[name$="_DeprnAmount"]').value = deprnAmount.toFixed(2);
+                        row.querySelector('input[name$="_NetAmount"]').value = netAmount.toFixed(2);
+                      }
+                    }
+              
+                    function calculateTotals(containerId) {
+                      const suffix = containerId.includes('actuals') ? 'Actuals' : 'Plan';
+                      const totalArea = document.getElementById(`totalArea${suffix}`);
+                      const totalAmount = document.getElementById(`totalAmount${suffix}`);
+                      const totalDeprn = document.getElementById(`totalDeprnAmount${suffix}`);
+                      const totalNet = document.getElementById(`totalNetAmount${suffix}`);
+              
+                      let area = 0, amount = 0, deprn = 0, net = 0;
+              
+                      document.querySelectorAll(`#${containerId} .row`).forEach(row => {
+                        const get = name => parseFloat(row.querySelector(`input[name$="_${name}"]`)?.value) || 0;
+                        area += get('Area');
+                        amount += get('Amount');
+                        deprn += get('DeprnAmount');
+                        net += get('NetAmount');
+                      });
+              
+                      totalArea.value = area.toFixed(2);
+                      totalAmount.value = amount.toFixed(2);
+                      totalDeprn.value = deprn.toFixed(2);
+                      totalNet.value = net.toFixed(2);
+                    }
+              
+                    function saveData() {
+                      // Store rows and totals in localStorage (can be extended)
+                      console.log("Saving data...");
+                    }
+                  </script>
                 </div>
+              </div>
 
-                <div class="form-group">
-                    <label>Variation Justification<span class="required">*</span></label>
-                    <input type="text" id="variationJustification" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Guideline Rate<span class="required">*</span></label>
-                    <input type="text" id="guidelineRate" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Market Rate<span class="required">*</span></label>
-                    <input type="text" id="marketRate" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Land Value<span class="required">*</span></label>
-                    <input type="text" id="landValue" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Building Value<span class="required">*</span></label>
-                    <input type="text" id="buildingValue" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Extra Items, Amenities & Services<span class="required">*</span></label>
-                    <input type="text" id="extraItems" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Fair Market Value (say) <span class="required">*</span></label>
-                    <input type="text" id="fairMarketValue" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Expected Rental Value<span class="required">*</span></label>
-                    <input type="text" id="rentalValue" required>
-                </div>
-
+              <!-- B) Extra Items -->
                 <h4>B) Extra Items</h4>
-                <!-- Extra Items Section -->
-                <div class="form-group">
-                    <label>1) Portico<span class="required">*</span></label>
-                    <input type="text" id="porticoStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>2) Ornamental Front Door Status<span class="required">*</span></label>
-                    <input type="text" id="frontDoorStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>3) Sit out / Verandah with steel grills <span class="required">*</span></label>
-                    <input type="text" id="verandahStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>4) Bore well / Overhead Tank / Sump / Solar <span class="required">*</span></label>
-                    <input type="text" id="boreWellStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>5) Extra Steel / Collapsible Gates <span class="required">*</span></label>
-                    <input type="text" id="gatesStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>Extra Items Total (Rs)<span class="required">*</span></label>
-                    <input type="number" id="extraItemsTotal" required >
-                </div>
+                <table class="input-table">
+                    <tr><td>1) Portico<span class="required">*</span></td><td><input type="text" id="porticoStatus" required></td></tr>
+                    <tr><td>2) Ornamental Front Door Status<span class="required">*</span></td><td><input type="text" id="frontDoorStatus" required></td></tr>
+                    <tr><td>3) Sit out / Verandah with steel grills<span class="required">*</span></td><td><input type="text" id="verandahStatus" required></td></tr>
+                    <tr><td>4) Bore well / Overhead Tank / Sump / Solar<span class="required">*</span></td><td><input type="text" id="boreWellStatus" required></td></tr>
+                    <tr><td>5) Extra Steel / Collapsible Gates<span class="required">*</span></td><td><input type="text" id="gatesStatus" required></td></tr>
+                    <tr><td>Total (Rs)<span class="required">*</span></td><td><input type="number" id="extraItemsTotal" required></td></tr>
+                </table>
 
-                <h4> C) Amenities</h4>
-                <!-- Amenities Section -->
-                <div class="form-group">
-                    <label>1) Wardrobes Status<span class="required">*</span></label>
-                    <input type="text" id="wardrobesStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>2) Glazed Tiles Status<span class="required">*</span></label>
-                    <input type="text" id="glazedTilesStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>3) Bath Tubs Status<span class="required">*</span></label>
-                    <input type="text" id="bathTubsStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>4) Marble Flooring Status<span class="required">*</span></label>
-                    <input type="text" id="marbleFlooringStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>5) Interior Decorations Status<span class="required">*</span></label>
-                    <input type="text" id="interiorStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>6) Architectural Works Status<span class="required">*</span></label>
-                    <input type="text" id="architecturalStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>7) Paneling Works Status<span class="required">*</span></label>
-                    <input type="text" id="panelingStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>8) Aluminium Works Status<span class="required">*</span></label>
-                    <input type="text" id="aluminiumStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>9) Hand Rails Status<span class="required">*</span></label>
-                    <input type="text" id="handRailsStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>10) False Ceiling Status<span class="required">*</span></label>
-                    <input type="text" id="falseCeilingStatus" required>
-                </div>
-                <div class="form-group">
-                    <label>Amenities Total (Rs)<span class="required">*</span></label>
-                    <input type="number" id="amenitiesTotal" required readonly>
-                </div>
+                <!-- C) Amenities -->
+                <h4>C) Amenities</h4>
+                <table class="input-table">
+                    <tr><td>1) Wardrobes Status<span class="required">*</span></td><td><input type="text" id="wardrobesStatus" required></td></tr>
+                    <tr><td>2) Glazed Tiles Status<span class="required">*</span></td><td><input type="text" id="glazedTilesStatus" required></td></tr>
+                    <tr><td>3) Bath Tubs Status<span class="required">*</span></td><td><input type="text" id="bathTubsStatus" required></td></tr>
+                    <tr><td>4) Marble Flooring Status<span class="required">*</span></td><td><input type="text" id="marbleFlooringStatus" required></td></tr>
+                    <tr><td>5) Interior Decorations Status<span class="required">*</span></td><td><input type="text" id="interiorStatus" required></td></tr>
+                    <tr><td>6) Architectural Works Status<span class="required">*</span></td><td><input type="text" id="architecturalStatus" required></td></tr>
+                    <tr><td>7) Paneling Works Status<span class="required">*</span></td><td><input type="text" id="panelingStatus" required></td></tr>
+                    <tr><td>8) Aluminium Works Status<span class="required">*</span></td><td><input type="text" id="aluminiumStatus" required></td></tr>
+                    <tr><td>9) Hand Rails Status<span class="required">*</span></td><td><input type="text" id="handRailsStatus" required></td></tr>
+                    <tr><td>10) False Ceiling Status<span class="required">*</span></td><td><input type="text" id="falseCeilingStatus" required></td></tr>
+                    <tr><td>Total (Rs)<span class="required">*</span></td><td><input type="number" id="amenitiesTotal" required readonly></td></tr>
+                </table>
 
-                <!-- MISCELLANEOUS Section -->
-                <h4> D) MISCELLANEOUS  </h4>
-                <div class="form-group">
-                    <label>1) Separate toilet room  <span class="required">*</span></label>
-                    <input type="number" id="separateToilet" required>
-                </div>
-                <div class="form-group">
-                    <label>2) Separate lumber room  <span class="required">*</span></label>
-                    <input type="number" id="separateLumber" required>
-                </div>
-                <div class="form-group">
-                    <label>Miscellaneous Total <span class="required">*</span></label>
-                    <input type="number" id="miscellaneousTotal" required readonly>
-                </div>  
+                <!-- D) Miscellaneous -->
+                <h4>D) Miscellaneous</h4>
+                <table class="input-table">
+                    <tr><td>1) Separate toilet room<span class="required">*</span></td><td><input type="number" id="separateToilet" required></td></tr>
+                    <tr><td>2) Separate lumber room<span class="required">*</span></td><td><input type="number" id="separateLumber" required></td></tr>
+                    <tr><td>Total<span class="required">*</span></td><td><input type="number" id="miscellaneousTotal" required readonly></td></tr>
+                </table>
 
-                <!-- SERVICES Section -->
-                <h4> E) SERVICES   </h4>
-                <div class="form-group">
-                    <label>1) Water supply arrangements <span class="required">*</span></label>
-                    <input type="number" id="waterSupplyArrangement" required>
-                </div>
-                <div class="form-group">
-                    <label>2) Drainage arrangements <span class="required">*</span></label>
-                    <input type="number" id="drainageArrangements" required>
-                </div>
-                <div class="form-group">
-                    <label>3) Compound wall / Gate <span class="required">*</span></label>
-                    <input type="number" id="compoundWall" required>
-                </div>
-                <div class="form-group">
-                    <label>4) C.B. Deposits, Fittings, Power etc., <span class="required">*</span></label>
-                    <input type="number" id="depositsFittings" required>
-                </div>
-                <div class="form-group">
-                    <label>5) Pavement <span class="required">*</span></label>
-                    <input type="number" id="pavement" required>
-                </div>
-                <div class="form-group">
-                    <label>Services Total<span class="required">*</span></label>
-                    <input type="number" id="servicesTotal" required readonly>
-                </div>
+                <!-- E) Services -->
+                <h4>E) Services</h4>
+                <table class="input-table">
+                    <tr><td>1) Water supply arrangements<span class="required">*</span></td><td><input type="number" id="waterSupplyArrangement" required></td></tr>
+                    <tr><td>2) Drainage arrangements<span class="required">*</span></td><td><input type="number" id="drainageArrangements" required></td></tr>
+                    <tr><td>3) Compound wall / Gate<span class="required">*</span></td><td><input type="number" id="compoundWall" required></td></tr>
+                    <tr><td>4) C.B. Deposits, Fittings, Power etc.<span class="required">*</span></td><td><input type="number" id="depositsFittings" required></td></tr>
+                    <tr><td>5) Pavement<span class="required">*</span></td><td><input type="number" id="pavement" required></td></tr>
+                    <tr><td>Total<span class="required">*</span></td><td><input type="number" id="servicesTotal" required readonly></td></tr>
+                </table>
 
-                <!-- Grand Total Section -->
-                <h4>Grand Total</h4>
-                <div class="form-group">
-                    <label>Grand Total (Rs)<span class="required">*</span></label>
-                    <input type="number" id="grandTotal" required readonly>
-                </div>     
-                <button type="button" onclick="prevSection(4)">Previous</button>
-                <button type="button" onclick="nextSection(4)">Next</button> 
-                <button id="generatePdfBtn" type="submit" >Generate Pdf</button>
+                <!-- Buttons -->
+                <div class="button-group">
+                    <button type="button" onclick="prevSection(4)"><i class="fa fa-arrow-left"></i> Previous</button>
+                    <button type="button" onclick="nextSection(4)"><i class="fa fa-arrow-right"></i> Next</button>
+                    <button id="generatePdfBtn" type="submit"><i class="fa fa-file-pdf"></i> Generate PDF</button>
+                </div>
+                 <!-- Buttons -->
+            <div class="button-group">
+                <button type="button" onclick="prevSection(2)">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Previous
+                </button>
+                
+                <button type="button" onclick="nextSection(2)">
+                    Next
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            
+                <button id="generatePdfBtn"><i class="fas fa-file-pdf"></i> Generate PDF</button>
+            </div>
         </form>
     </div>
 
