@@ -219,7 +219,7 @@ function Container3(doc) {
             // Add title
             doc.setFont('helvetica', 'bold');
             doc.setFontSize(10);
-            doc.text('BUILDING VALUE:', leftMargin, yPosition);
+            doc.text('A. BUILDING VALUE:', leftMargin, yPosition);
             yPosition += 2;
                 // Header row
             doc.setFontSize(7);

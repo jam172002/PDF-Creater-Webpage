@@ -83,7 +83,9 @@ function Container2(doc) {
             yPos = table.addRow('iv', 'Building Value ',Container_2.buildingValue);
             yPos = table.addRow('v', 'Extra items, Amenities & Services',Container_2.extraItems);
             yPost = table.addRow('vi', 'Fair Market Value (SAY)', Container_2.fairMarketValue);
-            yPost = table.addRow('(vii)', ' Expected Rental Value ', Container_2.rentalValue);
+            yPost = table.addRow('(vii)', ' Realizable Value @ 90% ', Container_2.realizableValue);
+            yPost = table.addRow('(viii)', ' Forced Distressed Sale Value ', Container_2.forcedDistressedSaleValue);
+            yPost = table.addRow('(ix)', ' Expected Rental Value ', Container_2.rentalValue);
 
         // Resolve the promise after the table is completed
         resolve(yPos);

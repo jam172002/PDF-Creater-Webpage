@@ -166,6 +166,10 @@ button:hover {
     border: 1px solid #ddd; /* Optional: Add a border around the total row */
     background-color: #f9f9f9; /* Optional: Light background color for visibility */
 }
+.total-row {
+    display: none;
+    align-items: center;
+  }
 
 #previewContainer img {
     width: 1000px; /* Adjust the width as needed */
