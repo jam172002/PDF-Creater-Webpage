@@ -14,7 +14,11 @@
     <div class="container">
         <h1>Valuation Report Generator Section 1</h1>
         <form id="valuationFormSection1">
-
+          <div class="form-group">
+            <label>Report Number <span class="required">*</span></label>
+            <input type="text" id="reportNumber" placeholder="Enter unique report number" required>
+          </div>
+          
             <div class="form-group">
                 <label>Bank Details<span class="required">*</span></label>
                 <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -67,7 +71,7 @@
 
                 <div class="form-group">
                     <label>Type of Property<span class="required">*</span></label>
-                    <select id="propertyType" required>                        
+                    <select id="propertyTypeHeader" required>                        
                         <option value="SITE / LAND">SITE / LAND</option>
                         <option value="LAND & BUILDING">LAND & BUILDING</option>
                         <option value="UNDER CONSTRUCTION LAND & BUILDING">UNDER CONSTRUCTION LAND & BUILDING</option>
@@ -560,6 +564,13 @@
     document.getElementById('valuationFormSection1').addEventListener('submit', async function (e) {
       e.preventDefault();
       const fields = {};
+      const reportNumber = document.getElementById('reportNumber').value.trim();
+                if (!reportNumber) {
+                  alert('Report number is required.');
+                  return;
+                }
+fields['reportNumber'] = { label: 'Report Number', value: reportNumber };
+
       const inputs = this.querySelectorAll('input, select, textarea');
       inputs.forEach(input => {
         const label = cleanLabel(input);
@@ -581,7 +592,11 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ fields })
         });
+        const result = await res.json(); 
+
         if (res.ok) {
+          localStorage.setItem('formId', result.id);
+          localStorage.setItem('reportNumber', reportNumber);
           alert('Form saved to MongoDB! Now generating PDF...');
           generatePdfFromServer();
         } else {
