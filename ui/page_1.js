@@ -1,7 +1,5 @@
-function Container1(doc) {
-
-    const Container_1 = JSON.parse(localStorage.getItem('Container_1'));
-    console.log(Container_1);
+export function Container1(doc, fields) {
+    return new Promise((resolve) => {
     // Initial settings
     const leftMargin = 25.7;  
     const rightMargin = 17.5; 
@@ -13,7 +11,6 @@ function Container1(doc) {
     const img = new Image();
     img.src = 'images/logo.png';
 
-    return new Promise((resolve) => {
         img.onload = function() {
             // Logo dimensions
             const logoWidth = 30;
@@ -57,9 +54,9 @@ function Container1(doc) {
             doc.setFont('helvetica', 'normal');
             doc.text('To,', leftMargin + 2, yPosition + 4);
             doc.setFont('times', 'bold');
-            doc.text(Container_1.bankInfo.managerDesignation.toUpperCase(), leftMargin + 2, yPosition + 8);
-            doc.text(Container_1.bankInfo.bankName.toUpperCase(), leftMargin + 2, yPosition + 12);
-            doc.text(Container_1.bankInfo.branchLocation.toUpperCase(), leftMargin + 2, yPosition + 16);
+            doc.text(fields.managerDesignation?.value.toUpperCase() || '', leftMargin + 2, yPosition + 8);
+            doc.text(fields.bankName?.value.toUpperCase() || '', leftMargin + 2, yPosition + 12);
+            doc.text(fields.branchLocation?.value.toUpperCase() || '', leftMargin + 2, yPosition + 16);
         
             // Title section
             yPosition += 20;
@@ -93,38 +90,38 @@ function Container1(doc) {
             ]);
 
             // Accompanying Person
-            yPos = table.addRow('2', 'Name of Customer (s)/ Borrower unit (for which valuation report is sought) ', Container_1.propertyDetails.nameOfBorrower);
+            yPos = table.addRow('2', 'Name of Customer (s)/ Borrower unit (for which valuation report is sought) ', fields.name_of_borrower?.value || '');
 
             // Customer Details
             yPos = table.addRow('3', 'Customer Details', '', null, true);
-            yPos = table.addRow('a', 'Name of Owner', Container_1.customerDetails.customerName);
+            yPos = table.addRow('a', fields.customerName?.label || '', fields.customerName?.value || '');
             // Accompanying Person
-            yPos = table.addRow('b', 'Persons Accompanying / Contact No.', Container_1.customerDetails.personAccompanyingContactNo);
-            yPos = table.addRow('c', 'Name of Purchaser', Container_1.customerDetails.nameOfPurchaser);
-            yPos = table.addRow('d', 'Application No', Container_1.customerDetails.applicationNo);
+            yPos = table.addRow('b', fields.person_accompanying_contact_no?.label || '', fields.person_accompanying_contact_no?.value || '');
+            yPos = table.addRow('c', fields.name_of_purchaser?.label || '', fields.name_of_purchaser?.value || '');
+            yPos = table.addRow('d', fields.application_no?.label || '', fields.application_no?.value || '');
 
             // Property Details with Address Array
             yPos = table.addRow('4', 'Property Details', '', null, true);
-            yPos = table.addAddressRow('a', 'Address', Container_1.propertyLocation.address);
+            yPos = table.addAddressRow('a', 'Address', fields.address?.value || '');
 
-            yPos = table.addRow('b', 'Nearby Landmark/Google Map / Independent access to the property', Container_1.propertyLocation.nearbyLandmark);
+            yPos = table.addRow('b', fields.nearby_landmark?.label || '', fields.nearby_landmark?.value || '');
 
             // Document Details
             yPos = table.addRow('5', 'Document Details', '', null, true);
             
             //Layout Plan
             yPos = table.addRow('a', 'Layout Plan',  null, true);
-            yPos = table.addRow('i)', 'Yes/No', Container_1.documentDetails.lp_yesNo);
-            yPos = table.addRow('ii)', 'Name of Approving Authority', Container_1.documentDetails.lp_nameOfApprovingAuthority);
-            yPos = table.addRow('iii)', 'Approval No / Date / Details', Container_1.documentDetails.lp_approvalNoDetails);
+            yPos = table.addRow('i)', fields.lp_yesNo?.label || '', fields.lp_yesNo?.label || '');
+            yPos = table.addRow('ii)', fields.lp_name_of_approving_authority?.label || '', fields.lp_name_of_approving_authority?.value || '');
+            yPos = table.addRow('iii)', fields.lp_approval_no_details?.label || '', fields.lp_approval_no_details?.value || '');
 
             //Building Plan
             yPos = table.addRow('b', 'Building Plan',  null, true);
-            yPos = table.addRow('i)', 'Yes/No', Container_1.documentDetails.bp_yesNo);
-            yPos = table.addRow('ii)', 'Name of Approving Authority', Container_1.documentDetails.bp_nameOfApprovingAuthority);
-            yPos = table.addRow('iii)', 'Approval No / Date / Details', Container_1.documentDetails.bp_approvalNoDetails);
+            yPos = table.addRow('i)', fields.bp_yesNo?.label || '', fields.bp_yesNo?.value || '');
+            yPos = table.addRow('ii)', fields.bp_name_of_approving_authority?.label || '', fields.bp_name_of_approving_authority?.value || '');
+            yPos = table.addRow('iii)', fields.bp_approval_no_details?.label || '', fields.bp_approval_no_details?.value || '');
 
-            yPos = table.addRow('c', 'Legal & Other Documents', Container_1.documentDetails.legalDocuments);
+            yPos = table.addRow('c', fields.legalDocuments?.label || '', fields.legalDocuments?.value || '');
 
             // Add Physical Details section
             yPos = table.addRow('6', 'Physical Details', '', null, true);
@@ -133,14 +130,14 @@ function Container1(doc) {
             yPos = table.addAdjoiningPropertiesRow('a', 'Adjoining Properties:', 'As per Document', 'As per Actuals');
             
             // Add direction rows
-            yPos = table.addAdjoiningPropertiesRow('i', 'East', Container_1.boundaries.east.doc, Container_1.boundaries.east.actual);
-            yPos = table.addAdjoiningPropertiesRow('ii', 'West', Container_1.boundaries.west.doc, Container_1.boundaries.west.actual);
-            yPos = table.addAdjoiningPropertiesRow('iii', 'North', Container_1.boundaries.north.doc, Container_1.boundaries.north.actual);
-            yPos = table.addAdjoiningPropertiesRow('iv', 'South', Container_1.boundaries.south.doc, Container_1.boundaries.south.actual);
-            yPos = table.addRow('b', 'Matching of Boundaries', Container_1.otherDetails.boundaryMatch);
-            yPos = table.addRow('c', 'Plot Demarcated', Container_1.otherDetails.plotDemarcation);
-            yPos = table.addRow('d)', 'Approved and Land Use', Container_1.otherDetails.landUse);
-            yPos = table.addRow('e)', 'Types of property', Container_1.otherDetails.typeOfProperty);
+            yPos = table.addAdjoiningPropertiesRow('i', 'East',fields.eastBoundaryDoc?.value || '', fields.eastBoundaryActual?.value || '');
+            yPos = table.addAdjoiningPropertiesRow('ii', 'West', fields.westBoundaryDoc?.value || '', fields.westBoundaryActual?.value || '');
+            yPos = table.addAdjoiningPropertiesRow('iii', 'North', fields.northBoundaryDoc?.value || '', fields.northBoundaryActual?.value || '');
+            yPos = table.addAdjoiningPropertiesRow('iv', 'South', fields.southBoundaryDoc?.value || '', fields.southBoundaryActual?.value || '');
+            yPos = table.addRow('b', fields.boundaryMatch?.label || '', fields.boundaryMatch?.value || '');
+            yPos = table.addRow('c', fields.plotDemarcation?.label || '',  fields.plotDemarcation?.value || '');
+            yPos = table.addRow('d)', fields.landUse?.label || '', fields.landUse?.value || '');
+            yPos = table.addRow('e)', fields.propertyType?.label || '', fields.propertyType?.value || '');
 
                                 
             resolve(yPos);
@@ -433,8 +430,5 @@ async function generatePDF() {
    const { jsPDF } = window.jspdf;
    const doc = new jsPDF();
    
-   await Container1(doc, Container_1)
-   addFooter(doc)
-   doc.save('auto-adjustment-pg-2.pdf');
-   return doc;
+   
 }

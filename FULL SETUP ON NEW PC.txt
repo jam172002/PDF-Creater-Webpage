@@ -1,0 +1,75 @@
+🛠 FULL SETUP ON NEW PC
+1. Install Required Software
+✅ Node.js
+👉 Download from https://nodejs.org/ (LTS version)
+(installs node and npm together)
+
+✅ MongoDB Server
+👉 Download from https://www.mongodb.com/try/download/community
+(Install MongoDB server + optional MongoDB Compass)
+
+✅ MongoDB Compass (optional but recommended)
+👉 GUI to visualize your collections.
+
+✅ VS Code (already installed if you're using it!)
+
+2. Open the Project in VS Code
+✅ Copy the whole project folder to your new PC.
+
+✅ Open it in VS Code:
+
+File → Open Folder → PDF CREATER WEBPAGE
+3. Install project dependencies
+Backend depends on some npm packages.
+
+✅ Open Terminal inside VS Code, then go inside your backend folder:
+
+
+cd backend
+▶️ npm install
+This will install:
+
+express
+
+mongoose
+
+cors
+
+(Automatically, based on package.json)
+
+✅ No need to manually install each library — npm install does it.
+
+4. Start MongoDB Server
+✅ Open Command Prompt or Terminal and run:
+
+▶️ mongod
+(make sure you have C:\data\db folder created, if not, create it again.)
+
+✅ MongoDB will start:
+"Waiting for connections on port 27017"
+
+5. Start Backend Server
+✅ Open a NEW terminal window (because MongoDB should stay running).
+
+Go inside backend/ folder again, then:
+
+▶️ node server.js
+✅ Should print:
+
+MongoDB Connected
+Server running on port 5000
+6. Serve Frontend
+✅ Go to your frontend/ folder:
+
+cd ../frontend
+✅ If you already installed live-server globally:
+
+▶️ live-server
+If not installed:
+
+▶️ npm install -g live-server
+▶️ live-server
+✅ Browser will automatically open http://127.0.0.1:5500
+
+✅ Fill the form ➔ Submit ➔ Save to MongoDB ➔ Auto-generate PDF.
+

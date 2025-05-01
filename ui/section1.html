@@ -67,8 +67,7 @@
 
                 <div class="form-group">
                     <label>Type of Property<span class="required">*</span></label>
-                    <select id="propertyType" required>
-                        <option value="">Select Property Type</option>
+                    <select id="propertyType" required>                        
                         <option value="SITE / LAND">SITE / LAND</option>
                         <option value="LAND & BUILDING">LAND & BUILDING</option>
                         <option value="UNDER CONSTRUCTION LAND & BUILDING">UNDER CONSTRUCTION LAND & BUILDING</option>
@@ -310,17 +309,19 @@
                             { id: 'PAHANIDate', title: 'PAHANI' }
                         ];
                 
-                        let output = [];
+                        const result = [];
+
                         documents.forEach(doc => {
+                            const checkbox = document.querySelector(`input[type="checkbox"][onchange*="${doc.id}"]`);
                             const dateInput = document.getElementById(doc.id);
-                            if (!dateInput.disabled && dateInput.value) {
-                                output.push(`${doc.title} dated: ${dateInput.value}`);
+
+                            if (checkbox && checkbox.checked && dateInput && dateInput.value) {
+                            result.push(`${doc.title} Dated ${dateInput.value}`);
                             }
                         });
-                
-                        console.log(output);
-                        document.getElementById('output').innerText = output.length > 0 ? output.join(', ') : 'No documents selected.';
-                    }
+
+                        return result.join(', ');
+                        }
                 </script>
 
                 <h3 style="color:#4169E1"><b>6 Physical Details</b></h3>
@@ -453,201 +454,227 @@
 
     </script>
    
-    <script src="page_1.js"></script>
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-    
     <script>
-        // Form submission handler
-        document.getElementById('valuationFormSection1').addEventListener('submit', function (e) {
-            e.preventDefault();
+        document.addEventListener("DOMContentLoaded", async function () {
+  try {
+    const res = await fetch('http://localhost:5000/api/getLatestForm');
+    const { fields } = await res.json();
 
-            // Validate all required fields
-            const requiredFields = this.querySelectorAll('[required]');
-            let isValid = true;
+    console.log("Fetched fields from server:", fields);
 
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.style.borderColor = 'red';
-                } else {
-                    field.style.borderColor = '#ddd';
-                }
-            });
-
-            if (!isValid) {
-                alert('Please fill in all required fields');
-                return;
-            }
-
-            // Capture form data correctly
-            const Container_1 = {
-                bankInfo: {
-                    managerDesignation: document.getElementById('managerDesignation').value,
-                    bankName: document.getElementById('bankName').value,
-                    branchLocation: document.getElementById('branchLocation').value,
-                },
-
-                propertyDetails: {
-                    propertyType: document.getElementById('propertyType').value,
-                    mainPurpose: document.getElementById('mainPurpose').value,
-                    subPurpose: document.getElementById('subPurpose').value,
-                    nameOfBorrower: document.getElementById('name_of_borrower').value,
-                },
-                customerDetails: {
-                    customerName: document.getElementById('customerName').value,
-                    personAccompanyingContactNo: document.getElementById('person_accompanying_contact_no').value,
-                    nameOfPurchaser: document.getElementById('name_of_purchaser').value,
-                    applicationNo: document.getElementById('application_no').value,
-                },
-                propertyLocation: {
-                    address: document.getElementById('address').value,
-                    nearbyLandmark: document.getElementById('nearby_landmark').value,
-                },
-                documentDetails: {                    
-                    lp_yesNo: document.getElementById('lp_yesNo').value,
-                    lp_nameOfApprovingAuthority: document.getElementById('lp_name_of_approving_authority').value,
-                    lp_approvalNoDetails: document.getElementById('lp_approval_no_details').value,
-
-                    bp_yesNo: document.getElementById('bp_yesNo').value,
-                    bp_nameOfApprovingAuthority: document.getElementById('bp_name_of_approving_authority').value,
-                    bp_approvalNoDetails: document.getElementById('bp_approval_no_details').value,
-                    legalDocuments: document.getElementById('output').innerText,
-                },
-                boundaries: {
-                    east: {
-                        doc: document.getElementById('eastBoundaryDoc').value,
-                        actual: document.getElementById('eastBoundaryActual').value,
-                    },
-                    west: {
-                        doc: document.getElementById('westBoundaryDoc').value,
-                        actual: document.getElementById('westBoundaryActual').value,
-                    },
-                    north: {
-                        doc: document.getElementById('northBoundaryDoc').value,
-                        actual: document.getElementById('northBoundaryActual').value,
-                    },
-                    south: {
-                        doc: document.getElementById('southBoundaryDoc').value,
-                        actual: document.getElementById('southBoundaryActual').value,
-                    }
-                },
-                otherDetails: {
-                    boundaryMatch: document.getElementById('boundaryMatch').value,
-                    plotDemarcation: document.getElementById('plotDemarcation').value,
-                    landUse: document.getElementById('landUse').value,
-                    typeOfProperty: document.getElementById('typeOfProperty').value,
-                }
-            };
-            localStorage.removeItem('Container_1');
-            // Save data to localStorage
-            localStorage.setItem('Container_1', JSON.stringify(Container_1));
-            console.log("Captured Data:", Container_1);
-       
-        });
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const storageKey = 'Container_1';
-            const storedData = JSON.parse(localStorage.getItem(storageKey) || '{}');
-
-            // Function to set field value
-            function setFieldValue(id, value) {
-                const el = document.getElementById(id);
-                if (!el) return;
-
-                if (el.type === 'checkbox') {
-                    el.checked = value;
-                    const dateInput = document.getElementById(id.replace("Checkbox", "Date"));
-                    if (dateInput) {
-                        dateInput.disabled = !value;
-                    }
-                } else if (el.type === 'date') {
-                    el.value = value;
-                    el.disabled = false;
-                } else {
-                    el.value = value;
-                }
-            }
-
-            // Load values into UI
-            for (const key in storedData) {
-                setFieldValue(key, storedData[key]);
-            }
-
-            // Delay sub-purpose restore until after it's rebuilt
-            if (storedData['mainPurpose']) {
-                document.getElementById('mainPurpose').value = storedData['mainPurpose'];
-                updateSubPurpose(); // rebuild sub-purpose options
-                setTimeout(() => {
-                    if (storedData['subPurpose']) {
-                        document.getElementById('subPurpose').value = storedData['subPurpose'];
-                    }
-                }, 100); // short delay to ensure subPurpose is updated
-            }
-
-            // Save on input/change
-            const inputs = document.querySelectorAll('input, select, textarea');
-            inputs.forEach(input => {
-                const eventType = input.type === 'checkbox' ? 'change' : 'input';
-                input.addEventListener(eventType, () => {
-                    const currentData = JSON.parse(localStorage.getItem(storageKey) || '{}');
-                    currentData[input.id] = input.type === 'checkbox' ? input.checked : input.value;
-                    localStorage.setItem(storageKey, JSON.stringify(currentData));
-
-                    if (input.type === 'checkbox' && input.id.endsWith("Date") === false) {
-                        const dateInput = document.getElementById(input.id.replace("Checkbox", "Date"));
-                        if (dateInput) dateInput.disabled = !input.checked;
-                    }
-                });
-            });
-
-            // Ensure updateSubPurpose is triggered when mainPurpose is changed
-            document.getElementById('mainPurpose').addEventListener('change', function () {
-                updateSubPurpose();
-            });
-        });
-
-    </script>
-
-<script>
-    const Container_1 = JSON.parse(localStorage.getItem('Container_1'));
-    console.log(Container_1);
-
-    document.getElementById("generatePdfBtn").addEventListener("click", function() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        //const pageWidth = doc.internal.pageSize.getWidth();
-        //const pageHeight = doc.internal.pageSize.getHeight();
-        //console.log("Page Width in Points:", pageWidth);
-        //console.log("Page Height in Points:", pageHeight);
-        Container1(doc).then(() => {
-            addFooter(doc); // Ensure footer is added after content is placed
-            doc.save("generated_report.pdf");
-        }).catch(error => console.error("Error generating PDF:", error));
-    });
-
-    function addFooter(doc) {
-        const leftMargin = 25.7;  
-        const rightMargin = 17.5; 
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
-         // Add horizontal line at the bottom
-         const footerY = pageHeight - 28.7 ;
-        doc.setLineWidth(0.1);
-        //doc.line(leftMargin, footerY, pageWidth - rightMargin, footerY);    
-        
-        // Page number on right
-        doc.text('Page 2', pageWidth - rightMargin - 16, footerY + 3.5);
-        doc.text('Ref No.', leftMargin, footerY + 3.5);
-        // Reference number 
-        doc.text('TP/JCB/K-BKR/R-09/12/2024-25',leftMargin, footerY + 7);
+    if (!fields) {
+      console.log("No form data available yet.");
+      return;
     }
+
+    for (const id in fields) {
+      const element = document.getElementById(id);
+      if (!element) continue;
+
+      const fieldValue = fields[id].value;
+
+      if (element.type === 'checkbox') {
+        element.checked = fieldValue;
+        // Also enable/disable corresponding date input if needed
+        const dateInput = document.getElementById(id.replace('Checkbox', 'Date'));
+        if (dateInput) {
+          dateInput.disabled = !fieldValue;
+        }
+      } else if (element.type === 'date') {
+        element.value = fieldValue;
+        element.disabled = false;
+      } else {
+        element.value = fieldValue;
+      }
+    }
+
+    // Special case: if mainPurpose exists, rebuild subPurpose
+    if (fields['mainPurpose']) {
+      document.getElementById('mainPurpose').value = fields['mainPurpose'].value;
+      updateSubPurpose(); // Rebuild subPurpose options based on mainPurpose
+      setTimeout(() => {
+        if (fields['subPurpose']) {
+          document.getElementById('subPurpose').value = fields['subPurpose'].value;
+        }
+      }, 100);
+    }
+
+  } catch (error) {
+    console.error('Error loading saved form data:', error);
+  }
+});
 </script>
 
+  <!-- Save + Load Script -->
+  <script type="module">
+    import { Container1 } from './page_1.js';
 
+    function cleanLabel(input) {
+      let labelText = '';
+      if (input.id) {
+        const labelByFor = document.querySelector(`label[for="${input.id}"]`);
+        if (labelByFor) labelText = labelByFor.innerText;
+      }
+      if (!labelText && input.previousElementSibling?.tagName === 'LABEL') {
+        labelText = input.previousElementSibling.innerText;
+      }
+      if (!labelText) {
+        const nearest = input.closest('.form-group')?.querySelector('label');
+        labelText = nearest ? nearest.innerText : input.id;
+      }
+      labelText = labelText.replace(/^[0-9a-z.\s]+\)\s*/i, '').replace(/\*$/, '').trim();
+      return labelText;
+    }
 
+    function getLegalDocumentSummary() {
+      const documents = [
+        { id: 'saleAgreementDate', title: 'Sale Agreement' },
+        { id: 'absoluteSaleDeedDate', title: 'Absolute Sale Deed' },
+        { id: 'motherDeedDate', title: 'Mother Deed' },
+        { id: 'saleDeedDate', title: 'Sale Deed' },
+        { id: 'giftDeedDate', title: 'Gift Deed' },
+        { id: 'partitionDeedDate', title: 'Partition Deed' },
+        { id: 'khataCertificateDate', title: 'Khata Certificate' },
+        { id: 'khataExtractDate', title: 'Khata Extract' },
+        { id: 'formA', title: 'Form A' },
+        { id: 'taxPaidReceiptDate', title: 'Tax Paid Receipt' },
+        { id: 'ECDate', title: 'E.C' },
+        { id: 'RTCDate', title: 'RTC' },
+        { id: 'podiKathatDate', title: 'PODI KATHA' },
+        { id: 'PAHANIDate', title: 'PAHANI' }
+      ];
+      const selected = [];
+      documents.forEach(doc => {
+        const checkbox = document.querySelector(`input[type="checkbox"][onchange*="${doc.id}"]`);
+        const dateInput = document.getElementById(doc.id);
+        if (checkbox && checkbox.checked && dateInput && dateInput.value) {
+          selected.push({ id: doc.id, title: doc.title, date: dateInput.value });
+        }
+      });
+      return selected;
+    }
+
+    document.getElementById('valuationFormSection1').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const fields = {};
+      const inputs = this.querySelectorAll('input, select, textarea');
+      inputs.forEach(input => {
+        const label = cleanLabel(input);
+        const value = input.type === 'checkbox' ? input.checked : input.value.trim();
+        fields[input.id] = { label, value };
+      });
+      const selectedDocs = getLegalDocumentSummary();
+      fields['legalDocuments'] = {
+        label: 'Legal & Other Documents',
+        value: selectedDocs.map(d => `${d.title} Dated ${d.date}`).join(', ')
+      };
+      fields['legalDocumentsRaw'] = {
+        label: 'Legal Documents Raw Data',
+        value: selectedDocs
+      };
+      try {
+        const res = await fetch('http://localhost:5000/api/saveForm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fields })
+        });
+        if (res.ok) {
+          alert('Form saved to MongoDB! Now generating PDF...');
+          generatePdfFromServer();
+        } else {
+          alert('Error saving form data.');
+        }
+      } catch (error) {
+        console.error('Error saving form:', error);
+        alert('Server error.');
+      }
+    });
+
+    async function generatePdfFromServer() {
+      try {
+        const res = await fetch('http://localhost:5000/api/getLatestForm');
+        const { fields } = await res.json();
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        await Container1(doc, fields);
+        addFooter(doc);
+        doc.save("generated_report.pdf");
+      } catch (error) {
+        console.error('Error generating PDF:', error);
+        alert('Error generating PDF.');
+      }
+    }
+
+    function addFooter(doc) {
+      const leftMargin = 25.7;
+      const rightMargin = 17.5;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const footerY = pageHeight - 28.7;
+      doc.setLineWidth(0.1);
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8);
+      doc.text('Page 2', pageWidth - rightMargin - 16, footerY + 3.5);
+      doc.text('Ref No.', leftMargin, footerY + 3.5);
+      doc.text('TP/JCB/K-BKR/R-09/12/2024-25', leftMargin, footerY + 7);
+    }
+
+    // Restore form on load
+    document.addEventListener("DOMContentLoaded", async function () {
+      try {
+        const res = await fetch('http://localhost:5000/api/getLatestForm');
+        const { fields } = await res.json();
+        if (!fields) return;
+
+        for (const id in fields) {
+          const element = document.getElementById(id);
+          if (!element) continue;
+          const value = fields[id].value;
+
+          if (element.type === 'checkbox') {
+            element.checked = value;
+            const dateInput = document.getElementById(id.replace('Checkbox', 'Date'));
+            if (dateInput) dateInput.disabled = !value;
+          } else if (element.type === 'date') {
+            element.value = value;
+            element.disabled = false;
+          } else {
+            element.value = value;
+          }
+        }
+
+        if (fields['mainPurpose']) {
+          document.getElementById('mainPurpose').value = fields['mainPurpose'].value;
+          updateSubPurpose();
+          setTimeout(() => {
+            if (fields['subPurpose']) {
+              document.getElementById('subPurpose').value = fields['subPurpose'].value;
+            }
+          }, 100);
+        }
+
+        // ✅ Restore legal document selections
+        if (fields['legalDocumentsRaw']?.value?.length > 0) {
+          fields['legalDocumentsRaw'].value.forEach(doc => {
+            const checkbox = document.querySelector(`input[type="checkbox"][onchange*="${doc.id}"]`);
+            const dateInput = document.getElementById(doc.id);
+            if (checkbox && dateInput) {
+              checkbox.checked = true;
+              dateInput.value = doc.date;
+              dateInput.disabled = false;
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error loading form data:', error);
+      }
+    });
+  </script>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 
 </html>
