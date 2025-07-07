@@ -424,272 +424,72 @@
         </form>
     </div>
 
-    <script>
-        function nextSection(currentSection) {
-            // Validate current section
-            const currentDiv = document.getElementById(`section${currentSection}`);
-            const requiredFields = currentDiv.querySelectorAll('[required]');
-            let isValid = true;
-            let missingFields = [];
-
-            // Check all required fields
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.style.borderColor = 'red';
-                    // Get the field label
-                    const label = field.previousElementSibling ? field.previousElementSibling.textContent.replace('*', '').trim() : field.id;
-                    missingFields.push(label);
-                } else {
-                    field.style.borderColor = '#ddd';
-                }
-            });
-
-            if (!isValid) {
-                alert('Please fill in the following fields:\n\n' + missingFields.join('\n'));
-                return;
-            }
-
-            // If validation passes, load the next section page
-            window.location.href = 'section2.html';
-        }
-
-        
-
-    </script>
-   
-   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", async function () {
-  try {
-    const res = await fetch('http://localhost:5000/api/getLatestForm');
-    const { fields } = await res.json();
-
-    console.log("Fetched fields from server:", fields);
-
-    if (!fields) {
-      console.log("No form data available yet.");
-      return;
+      <!-- Helper scripts for dropdowns / checkboxes -->
+  <script>
+    function updateSubPurpose() {
+      const main = document.getElementById('mainPurpose').value;
+      const sub = document.getElementById('subPurpose');
+      const own = ["CAPITAL GAINS","NETWORTH","TO KNOW THE FMV"];
+      const bank = ["PURCHASE","CONSTRUCTION","MORTGAGE","REVALUATION","COLLATERAL"];
+      sub.innerHTML = "<option value=''>Select Sub Purpose</option>";
+      const opts = main==="Own Purpose"? own : main==="Bank's Purpose"? bank : [];
+      opts.forEach(o=>{
+        const opt = document.createElement('option');
+        opt.value = o; opt.textContent = o;
+        sub.appendChild(opt);
+      });
+      sub.disabled = opts.length===0;
     }
+    document.addEventListener('DOMContentLoaded', ()=> updateSubPurpose());
+  </script>
 
-    for (const id in fields) {
-      const element = document.getElementById(id);
-      if (!element) continue;
-
-      const fieldValue = fields[id].value;
-
-      if (element.type === 'checkbox') {
-        element.checked = fieldValue;
-        // Also enable/disable corresponding date input if needed
-        const dateInput = document.getElementById(id.replace('Checkbox', 'Date'));
-        if (dateInput) {
-          dateInput.disabled = !fieldValue;
-        }
-      } else if (element.type === 'date') {
-        element.value = fieldValue;
-        element.disabled = false;
-      } else {
-        element.value = fieldValue;
-      }
-    }
-
-    // Special case: if mainPurpose exists, rebuild subPurpose
-    if (fields['mainPurpose']) {
-      document.getElementById('mainPurpose').value = fields['mainPurpose'].value;
-      updateSubPurpose(); // Rebuild subPurpose options based on mainPurpose
-      setTimeout(() => {
-        if (fields['subPurpose']) {
-          document.getElementById('subPurpose').value = fields['subPurpose'].value;
-        }
-      }, 100);
-    }
-
-  } catch (error) {
-    console.error('Error loading saved form data:', error);
-  }
-});
-</script>
-
-  <!-- Save + Load Script -->
+  <!-- Your formService and section-specific save/load logic -->
   <script type="module">
-    import { Container1 } from './page_1.js';
+    import { loadForm, saveFields } from './js/formService.js';
 
-    function cleanLabel(input) {
-      let labelText = '';
-      if (input.id) {
-        const labelByFor = document.querySelector(`label[for="${input.id}"]`);
-        if (labelByFor) labelText = labelByFor.innerText;
-      }
-      if (!labelText && input.previousElementSibling?.tagName === 'LABEL') {
-        labelText = input.previousElementSibling.innerText;
-      }
-      if (!labelText) {
-        const nearest = input.closest('.form-group')?.querySelector('label');
-        labelText = nearest ? nearest.innerText : input.id;
-      }
-      labelText = labelText.replace(/^[0-9a-z.\s]+\)\s*/i, '').replace(/\*$/, '').trim();
-      return labelText;
-    }
+    const STORAGE_KEY = 'currentReport';
+    const form = document.getElementById('valuationFormSection1');
 
-    function getLegalDocumentSummary() {
-      const documents = [
-        { id: 'saleAgreementDate', title: 'Sale Agreement' },
-        { id: 'absoluteSaleDeedDate', title: 'Absolute Sale Deed' },
-        { id: 'motherDeedDate', title: 'Mother Deed' },
-        { id: 'saleDeedDate', title: 'Sale Deed' },
-        { id: 'giftDeedDate', title: 'Gift Deed' },
-        { id: 'partitionDeedDate', title: 'Partition Deed' },
-        { id: 'khataCertificateDate', title: 'Khata Certificate' },
-        { id: 'khataExtractDate', title: 'Khata Extract' },
-        { id: 'formA', title: 'Form A' },
-        { id: 'taxPaidReceiptDate', title: 'Tax Paid Receipt' },
-        { id: 'ECDate', title: 'E.C' },
-        { id: 'RTCDate', title: 'RTC' },
-        { id: 'podiKathatDate', title: 'PODI KATHA' },
-        { id: 'PAHANIDate', title: 'PAHANI' }
-      ];
-      const selected = [];
-      documents.forEach(doc => {
-        const checkbox = document.querySelector(`input[type="checkbox"][onchange*="${doc.id}"]`);
-        const dateInput = document.getElementById(doc.id);
-        if (checkbox && checkbox.checked && dateInput && dateInput.value) {
-          selected.push({ id: doc.id, title: doc.title, date: dateInput.value });
-        }
+    // 1️⃣ Prefill if editing
+    document.addEventListener('DOMContentLoaded', async () => {
+      const rpt = localStorage.getItem(STORAGE_KEY);
+      if (!rpt) return;
+      document.getElementById('reportNumber').value = rpt;
+      const fields = await loadForm(rpt);
+      Object.entries(fields).forEach(([id, entry]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.type === 'checkbox') el.checked = entry.value;
+        else el.value = entry.value;
       });
-      return selected;
-    }
-
-    document.getElementById('valuationFormSection1').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const fields = {};
-      const reportNumber = document.getElementById('reportNumber').value.trim();
-                if (!reportNumber) {
-                  alert('Report number is required.');
-                  return;
-                }
-fields['reportNumber'] = { label: 'Report Number', value: reportNumber };
-
-      const inputs = this.querySelectorAll('input, select, textarea');
-      inputs.forEach(input => {
-        const label = cleanLabel(input);
-        const value = input.type === 'checkbox' ? input.checked : input.value.trim();
-        fields[input.id] = { label, value };
-      });
-      const selectedDocs = getLegalDocumentSummary();
-      fields['legalDocuments'] = {
-        label: 'Legal & Other Documents',
-        value: selectedDocs.map(d => `${d.title} Dated ${d.date}`).join(', ')
-      };
-      fields['legalDocumentsRaw'] = {
-        label: 'Legal Documents Raw Data',
-        value: selectedDocs
-      };
-      try {
-        const res = await fetch('http://localhost:5000/api/saveForm', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ fields })
-        });
-        const result = await res.json(); 
-
-        if (res.ok) {
-          localStorage.setItem('formId', result.id);
-          localStorage.setItem('reportNumber', reportNumber);
-          alert('Form saved to MongoDB! Now generating PDF...');
-          generatePdfFromServer();
-        } else {
-          alert('Error saving form data.');
-        }
-      } catch (error) {
-        console.error('Error saving form:', error);
-        alert('Server error.');
-      }
+      updateSubPurpose();
     });
 
-    async function generatePdfFromServer() {
+    // 2️⃣ On submit, save only this page’s fields, then navigate
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const reportNumber = document.getElementById('reportNumber').value.trim();
+      if (!reportNumber) return alert('Report Number is required.');
+      localStorage.setItem(STORAGE_KEY, reportNumber);
+
+      // gather only this form’s inputs
+      const fields = {};
+      form.querySelectorAll('input, select').forEach(el => {
+        fields[el.id] = {
+          label: (el.previousElementSibling?.innerText || el.id).replace('*','').trim(),
+          value: el.type==='checkbox'? el.checked : el.value.trim()
+        };
+      });
+
       try {
-        const res = await fetch('http://localhost:5000/api/getLatestForm');
-        const { fields } = await res.json();
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        await Container1(doc, fields);
-        addFooter(doc);
-        doc.save("generated_report.pdf");
-      } catch (error) {
-        console.error('Error generating PDF:', error);
-        alert('Error generating PDF.');
-      }
-    }
-
-    function addFooter(doc) {
-      const leftMargin = 25.7;
-      const rightMargin = 17.5;
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const pageHeight = doc.internal.pageSize.getHeight();
-      const footerY = pageHeight - 28.7;
-      doc.setLineWidth(0.1);
-      doc.setFont('helvetica', 'italic');
-      doc.setFontSize(8);
-      doc.text('Page 2', pageWidth - rightMargin - 16, footerY + 3.5);
-      doc.text('Ref No.', leftMargin, footerY + 3.5);
-      doc.text('TP/JCB/K-BKR/R-09/12/2024-25', leftMargin, footerY + 7);
-    }
-
-    // Restore form on load
-    document.addEventListener("DOMContentLoaded", async function () {
-      try {
-        const res = await fetch('http://localhost:5000/api/getLatestForm');
-        const { fields } = await res.json();
-        if (!fields) return;
-
-        for (const id in fields) {
-          const element = document.getElementById(id);
-          if (!element) continue;
-          const value = fields[id].value;
-
-          if (element.type === 'checkbox') {
-            element.checked = value;
-            const dateInput = document.getElementById(id.replace('Checkbox', 'Date'));
-            if (dateInput) dateInput.disabled = !value;
-          } else if (element.type === 'date') {
-            element.value = value;
-            element.disabled = false;
-          } else {
-            element.value = value;
-          }
-        }
-
-        if (fields['mainPurpose']) {
-          document.getElementById('mainPurpose').value = fields['mainPurpose'].value;
-          updateSubPurpose();
-          setTimeout(() => {
-            if (fields['subPurpose']) {
-              document.getElementById('subPurpose').value = fields['subPurpose'].value;
-            }
-          }, 100);
-        }
-
-        // ✅ Restore legal document selections
-        if (fields['legalDocumentsRaw']?.value?.length > 0) {
-          fields['legalDocumentsRaw'].value.forEach(doc => {
-            const checkbox = document.querySelector(`input[type="checkbox"][onchange*="${doc.id}"]`);
-            const dateInput = document.getElementById(doc.id);
-            if (checkbox && dateInput) {
-              checkbox.checked = true;
-              dateInput.value = doc.date;
-              dateInput.disabled = false;
-            }
-          });
-        }
-      } catch (error) {
-        console.error('Error loading form data:', error);
+        await saveFields(reportNumber, fields);
+        window.location.href = 'section2.html';
+      } catch (err) {
+        console.error(err);
+        alert('Failed to save: ' + err.message);
       }
     });
   </script>
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 
 </html>

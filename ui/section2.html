@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <h1>Valuation Report Generator Section 2</h1>
-        <form id="valuationForm">
+        <form id="valuationFormSection2">
           <div class="form-group">
             <label>Report Number <span class="required">*</span></label>
             <input type="text" id="reportNumber" placeholder="Enter unique report number" required>
@@ -485,12 +485,12 @@
                
                  <!-- Buttons -->
             <div class="button-group">
-              <button type="button" onclick="prevSection(2)">
+              <button type="button" id="prevBtn" onclick="prevSection(2)">
                   <i class="fa-solid fa-arrow-left"></i>
                   Previous
               </button>
               
-              <button type="button" onclick="nextSection(2)">
+              <button type="button" id="nextBtn" onclick="nextSection(2)">
                   Next
                   <i class="fa-solid fa-arrow-right"></i>
               </button>
@@ -500,7 +500,7 @@
             </div>                    
         </form>
     </div>
-
+//to go to next or previous pages
     <script>
         function nextSection(currentSection) {
             // Validate current section
@@ -527,8 +527,7 @@
                 return;
             }
 
-            // If validation passes, proceed to next section
-            // If validation passes, load the next section page
+            // If validation passes, proceed to next section            
             window.location.href = 'section3.html';
         }
 
@@ -538,248 +537,76 @@
         }
 
     </script>
-<script>
-  document.getElementById('valuationForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
 
-    const requiredFields = this.querySelectorAll('[required]');
-    let isValid = true;
-    requiredFields.forEach(field => {
-      if (!field.value.trim()) {
-        field.style.borderColor = 'red';
-        isValid = false;
-      } else {
-        field.style.borderColor = '#ccc';
-      }
+
+<script type="module">
+  import { loadForm, saveFields } from './js/formService.js';
+
+  const STORAGE_KEY = 'currentReport';
+  const form = document.getElementById('valuationFormSection2');
+
+  // 1️⃣ On page load, prefill if we already have a reportNumber
+  document.addEventListener('DOMContentLoaded', async () => {
+    const rpt = localStorage.getItem(STORAGE_KEY);
+    if (!rpt) return;
+    document.getElementById('reportNumber').value = rpt;
+
+    const fields = await loadForm(rpt);
+    Object.entries(fields).forEach(([id, entry]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.type === 'checkbox') el.checked = entry.value;
+      else el.value = entry.value;
     });
+  });
 
-    if (!isValid) {
-      alert("Please fill in all required fields.");
-      return;
-    }
+  // 2️⃣ On form submit, save *only* this page’s fields, then go to Section 3
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
 
     const reportNumber = document.getElementById('reportNumber').value.trim();
     if (!reportNumber) {
-      alert("Report Number is required.");
+      alert('Report Number is required.');
       return;
     }
+    localStorage.setItem(STORAGE_KEY, reportNumber);
 
-    const containerData = getCurrentContainer2(); // see next snippet
-
-    try {
-      const response = await fetch('http://localhost:5000/save-section2', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reportNumber, section2Data: containerData })
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        alert('Section 2 saved to MongoDB!');
-        window.location.href = 'section3.html';
-      } else {
-        alert('Error saving Section 2: ' + (result.message || 'Unknown error'));
-      }
-    } catch (err) {
-      console.error("Error saving:", err);
-      alert("Failed to connect to the server.");
-    }
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const reportNumberField = document.getElementById('reportNumber');
-    let reportNumber = reportNumberField.value.trim();
-  
-    if (!reportNumber) {
-      reportNumber = localStorage.getItem('reportNumber');
-      if (reportNumber) reportNumberField.value = reportNumber;
-    }
-  
-    if (reportNumber) await loadSection2Data(reportNumber);
-  
-    reportNumberField.addEventListener('blur', async () => {
-      const reportNumber = reportNumberField.value.trim();
-      if (reportNumber) {
-        localStorage.setItem('reportNumber', reportNumber);
-        await loadSection2Data(reportNumber);
-      }
-    });
-  });
-  
-  async function loadSection2Data(reportNumber) {
-    try {
-      const res = await fetch(`http://localhost:5000/get-section2/${encodeURIComponent(reportNumber)}`);
-      if (!res.ok) return;
-      const data = await res.json();
-      if (!data) return;
-  
-      for (const key in data) {
-        if (typeof data[key] === 'object' && data[key] !== null) {
-          if (key === 'siteAreaDetails') {
-            ['asPerDocument', 'asPerActual', 'asPerPlan'].forEach(type => {
-              const suffix = type === 'asPerDocument' ? 'doc' : type === 'asPerActual' ? 'actual' : 'plan';
-              if (data[key][type]) {
-                document.getElementById(`eastToWest_${suffix}`).value = data[key][type].eastToWest || '';
-                document.getElementById(`northToSouth_${suffix}`).value = data[key][type].northToSouth || '';
-                document.getElementById(`totallyMeasuring_${suffix}`).value = data[key][type].totallyMeasuring || '';
-              }
-            });
-          } else if (key === 'accommodationDetails') {
-            data[key].forEach(item => {
-              const floorKey = item.floor.toLowerCase().split(' ')[0];
-              document.getElementById(`${floorKey}Checkbox`).checked = true;
-              document.getElementById(`${floorKey}Usage`).value = item.usage;
-            });
-          } else if (key === 'totalFloors') {
-            const plan = data[key].asPerPlan || '';
-            const actual = data[key].asPerActual || '';
-            ['Basement', 'Stilt', 'Ground', 'First', 'Second', 'Third', 'Fourth', 'Terrace'].forEach(floor => {
-              if (plan.includes(floor)) document.getElementById(`plan${floor}`).checked = true;
-              if (actual.includes(floor)) document.getElementById(`actual${floor}`).checked = true;
-            });
-          }
-        } else {
-          const el = document.getElementById(key);
-          if (el) el.value = data[key];
-        }
-      }
-    } catch (err) {
-      console.error('Error loading section 2 data:', err);
-    }
-  }
-  </script>
-
-<script>
-function getCurrentContainer2() {
-  const floors = [
-    { floor: 'Stilt Floor', key: 'stilt' },
-    { floor: 'Basement Floor', key: 'basement' },
-    { floor: 'Ground Floor', key: 'ground' },
-    { floor: 'First Floor', key: 'first' },
-    { floor: 'Second Floor', key: 'second' },
-    { floor: 'Third Floor', key: 'third' },
-    { floor: 'Fourth Floor', key: 'fourth' },
-    { floor: 'Terrace Floor', key: 'terrace' }
-  ];
-
-  return {
-    propertyFloor: getVal('propertyFloor'),
-    constructionYear: getVal('constructionYear'),
-    propertyAge: getVal('propertyAge'),
-    residualAge: getVal('residualAge'),
-    structureType: getVal('structureType'),
-    amenities: getVal('amenities'),
-    ownedOrRented: getVal('ownedOrRented'),
-    occupancyYears: getVal('occupancyYears'),
-    relationOfTenant: getVal('relationOfTenant'),
-    existingBuilding: getVal('existingBuilding'),
-    constructionStage: getVal('constructionStage'),
-    workCompletion: getVal('workCompletion'),
-    violations: getVal('violations'),
-
-    siteAreaDetails: {
-      asPerDocument: {
-        eastToWest: getVal('eastToWest_doc'),
-        northToSouth: getVal('northToSouth_doc'),
-        totallyMeasuring: getVal('totallyMeasuring_doc'),
-      },
-      asPerActual: {
-        eastToWest: getVal('eastToWest_actual'),
-        northToSouth: getVal('northToSouth_actual'),
-        totallyMeasuring: getVal('totallyMeasuring_actual'),
-      },
-      asPerPlan: {
-        eastToWest: getVal('eastToWest_plan'),
-        northToSouth: getVal('northToSouth_plan'),
-        totallyMeasuring: getVal('totallyMeasuring_plan'),
-      }
-    },
-
-    plinthArea: getVal('plinthArea'),
-    carpetArea: getVal('carpetArea'),
-    saleableArea: getVal('saleableArea'),
-    remarks: getVal('remarks'),
-    govtValue: getVal('govtValue'),
-    variationJustification: getVal('variationJustification'),
-    guidelineRate: getVal('guidelineRate'),
-    marketRate: getVal('marketRate'),
-    landValue: getVal('landValue'),
-    buildingValue: getVal('buildingValue'),
-    extraItems: getVal('extraItems'),
-    forcedDistressedSaleValue: getVal('forcedDistressedSaleValue'),
-    realizableValue: getVal('realizableValue'),
-    fairMarketValue: getVal('fairMarketValue'),
-    rentalValue: getVal('rentalValue'),
-
-    accommodationDetails: floors.map(f => ({
-      floor: f.floor,
-      included: document.getElementById(`${f.key}Checkbox`).checked,
-      usage: getVal(`${f.key}Usage`)
-    })).filter(f => f.included),
-
-    totalFloors: (() => {
-      const allFloors = [
-        { name: 'Basement Floor', plan: 'planBasement', actual: 'actualBasement' },
-        { name: 'Stilt Floor', plan: 'planStilt', actual: 'actualStilt' },
-        { name: 'Ground Floor', plan: 'planGround', actual: 'actualGround' },
-        { name: 'First Floor', plan: 'planFirst', actual: 'actualFirst' },
-        { name: 'Second Floor', plan: 'planSecond', actual: 'actualSecond' },
-        { name: 'Third Floor', plan: 'planThird', actual: 'actualThird' },
-        { name: 'Fourth Floor', plan: 'planFourth', actual: 'actualFourth' },
-        { name: 'Terrace Floor', plan: 'planTerrace', actual: 'actualTerrace' }
-      ];
-      const getFloors = type =>
-        allFloors.filter(f => document.getElementById(f[type]).checked).map(f => f.name).join(' + ');
-      return {
-        asPerPlan: getFloors('plan') + (getFloors('plan') ? ' (AS PER PLAN)' : ''),
-        asPerActual: getFloors('actual') + (getFloors('actual') ? ' (AS PER ACTUAL)' : '')
+    // Gather this Section’s inputs & selects
+    const fields = {};
+    form.querySelectorAll('input, select, textarea').forEach(el => {
+      if (!el.id) return;
+      const val = el.type === 'checkbox'
+        ? el.checked
+        : el.value.trim();
+      fields[el.id] = {
+        label: (el.previousElementSibling?.innerText || el.id)
+                 .replace('*','').trim(),
+        value: val
       };
-    })()
-  };
-}
-
-function getVal(id) {
-  const el = document.getElementById(id);
-  return el ? el.value : '';
-}
-</script>
-    
- <script src="page_2.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-<script>
- 
-
-    document.getElementById("generatePdfBtn").addEventListener("click", function() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        Container2(doc).then(() => {
-            addFooter(doc); 
-            doc.save("generated_report_Page2.pdf");
-        }).catch(error => console.error("Error generating PDF:", error));
     });
 
-    function addFooter(doc) {
-        const leftMargin = 25.7;  
-        const rightMargin = 17.5; 
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
-         // Add horizontal line at the bottom
-         const footerY = pageHeight - 28.7 ;
-        doc.setLineWidth(0.1);
-        //doc.line(leftMargin, footerY, pageWidth - rightMargin, footerY);    
-        
-        // Page number on right
-        doc.text('Page 2', pageWidth - rightMargin - 16, footerY + 3.5);
-        doc.text('Ref No.', leftMargin, footerY + 3.5);
-        // Reference number 
-        doc.text('TP/JCB/K-BKR/R-09/12/2024-25',leftMargin, footerY + 7);
+    try {
+      await saveFields(reportNumber, fields);
+      window.location.href = 'section3.html';
+    } catch (err) {
+      console.error(err);
+      alert('Failed to save Section 2: ' + err.message);
     }
+  });
+
+  // 3️⃣ Wire your Next button to trigger the form submit
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    form.requestSubmit();
+  });
+
+  // 4️⃣ (Optional) If you want Generate PDF to also save before printing:
+  document.getElementById('generatePdfBtn').addEventListener('click', async () => {
+    form.requestSubmit();               // will save and redirect, so if you need PDF *first*,
+    // you’d instead call the same saveFields logic then generate PDF here…
+  });
 </script>
 
+    
 </body>
 
 </html>
